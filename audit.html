@@ -153,9 +153,7 @@
     .cta-title { font-size: 2.2rem; font-weight: 800; color: var(--dark); letter-spacing: -0.035em; margin-bottom: .85rem; line-height: 1.2; }
     .cta-sub { font-size: 1rem; color: var(--muted); margin-bottom: .5rem; }
     .cta-promise { font-size: .85rem; color: var(--teal); font-weight: 600; margin-bottom: 2rem; }
-    .yf-wrap { max-width: 680px; margin: 0 auto 2rem; border-radius: var(--r); overflow: hidden; box-shadow: 0 4px 32px rgba(37,99,235,.12); border: 1px solid var(--teal-mid); position: relative; }
-    .yf-wrap iframe { display: block; width: 100%; border: none; margin-top: -130px; height: 720px; }
-    .yf-fallback { display: none; padding: 3rem 2rem; background: var(--teal-lt); text-align: center; }
+    .yf-wrap { max-width: 680px; margin: 0 auto 2rem; text-align: center; }
     .btn-yf { display: inline-flex; align-items: center; gap: .55rem; background: var(--teal); color: #fff; font-size: 1.05rem; font-weight: 700; padding: 1rem 2.25rem; border-radius: 12px; text-decoration: none; transition: all .2s; box-shadow: 0 4px 20px rgba(37,99,235,.3); }
     .btn-yf:hover { background: #1d55d4; transform: translateY(-2px); box-shadow: 0 6px 28px rgba(37,99,235,.4); }
     .cta-divider { display: flex; align-items: center; gap: 1rem; max-width: 400px; margin: 0 auto 1.75rem; color: var(--muted); font-size: .82rem; }
@@ -470,13 +468,10 @@
   <p class="cta-sub">Расскажите о команде и текущей ситуации — предложим формат аудита и стоимость.</p>
   <p class="cta-promise">→ 30 минут · бесплатно · без обязательств</p>
   <div class="yf-wrap">
-    <iframe src="https://forms.yandex.ru/u/6a205b2c95add568ac9f84c5/" height="580" scrolling="no"></iframe>
-    <div class="yf-fallback">
-      <a class="btn-yf" href="https://forms.yandex.ru/u/6a205b2c95add568ac9f84c5/" target="_blank" rel="noopener noreferrer">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="white" stroke-width="1.6"/><path d="M7 9h6M7 12h4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-        Заполнить заявку на встречу
-      </a>
-    </div>
+    <a class="btn-yf" href="https://forms.yandex.ru/u/6a205b2c95add568ac9f84c5/" target="_blank" rel="noopener noreferrer">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="white" stroke-width="1.6"/><path d="M7 9h6M7 12h4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+      Заполнить заявку на встречу
+    </a>
   </div>
   <div class="cta-divider">или напишите напрямую</div>
   <div class="cta-actions">
@@ -501,15 +496,6 @@
     if (!isOpen) item.classList.add('open');
   }
 
-  (function() {
-    var iframe = document.querySelector('.yf-wrap iframe');
-    var fallback = document.querySelector('.yf-fallback');
-    if (!iframe || !fallback) return;
-    if (window.location.protocol === 'file:') {
-      iframe.style.display = 'none';
-      fallback.style.display = 'block';
-    }
-  })();
 </script>
 
 </body>
