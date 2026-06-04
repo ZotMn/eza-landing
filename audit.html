@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Аудит процессов — EZA Group</title>
+  <meta name="description" content="За 2–3 недели получите полную карту процессов компании, ИИ-анализ узких мест и конкретный план автоматизации.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f7f8fc; --white: #fff; --dark: #1a1a2e; --text: #2c2c40; --muted: #6b6b8a; --border: #e5e5f0;
+      --r: 16px; --r-lg: 24px;
+      --teal: #2563eb; --teal-lt: #eff6ff; --teal-mid: #bdd5fc; --teal-dk: #1a52d4;
+      --teal-glo: rgba(37,99,235,.22);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* ── NAV ── */
+    .nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.93); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-back { display: flex; align-items: center; gap: .4rem; font-size: .875rem; font-weight: 600; color: var(--muted); text-decoration: none; transition: color .18s; }
+    .nav-back:hover { color: var(--dark); }
+    .nav-back svg { transition: transform .18s; }
+    .nav-back:hover svg { transform: translateX(-3px); }
+    .nav-cta { background: var(--teal); color: #fff; font-size: .875rem; font-weight: 600; padding: .5rem 1.25rem; border-radius: 8px; text-decoration: none; transition: all .18s; }
+    .nav-cta:hover { background: var(--teal-dk); transform: translateY(-1px); box-shadow: 0 4px 14px var(--teal-glo); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #eff6ff 0%, #f5f8ff 50%, var(--white) 100%);
+      padding: 5.5rem 2rem 5rem; text-align: center;
+      border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,.08), transparent 70%);
+      pointer-events: none;
+    }
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: .45rem;
+      background: var(--teal-lt); color: var(--teal);
+      font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      padding: .32rem .9rem; border-radius: 20px;
+      border: 1px solid rgba(10,148,104,.2);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; color: var(--dark);
+      line-height: 1.13; letter-spacing: -0.04em; max-width: 760px; margin: 0 auto 1.25rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--teal); }
+
+    .hero-desc { font-size: 1.1rem; color: var(--muted); max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.65; }
+
+    .hero-actions { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+    .btn-primary { background: var(--teal); color: #fff; font-size: .95rem; font-weight: 600; padding: .75rem 1.75rem; border-radius: 10px; text-decoration: none; transition: all .2s; }
+    .btn-primary:hover { background: var(--teal-dk); transform: translateY(-1px); box-shadow: 0 4px 18px var(--teal-glo); }
+    .btn-ghost { background: transparent; color: var(--dark); font-size: .95rem; font-weight: 600; padding: .75rem 1.75rem; border-radius: 10px; text-decoration: none; border: 1.5px solid var(--border); transition: all .2s; }
+    .btn-ghost:hover { border-color: var(--dark); transform: translateY(-1px); }
+
+    .hero-stats { display: flex; justify-content: center; gap: 0; flex-wrap: wrap; }
+    .hero-stat { text-align: center; padding: 0 2.5rem; position: relative; }
+    .hero-stat + .hero-stat::before { content: ''; position: absolute; left: 0; top: 15%; bottom: 15%; width: 1px; background: var(--border); }
+    .hero-stat strong { display: block; font-size: 1.9rem; font-weight: 800; color: var(--teal); letter-spacing: -0.04em; margin-bottom: .2rem; }
+    .hero-stat span { font-size: .78rem; color: var(--muted); line-height: 1.4; }
+
+    /* ── SHARED ── */
+    .section { padding: 5rem 2rem; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .section-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: .55rem; }
+    .section-title { font-size: 2rem; font-weight: 800; color: var(--dark); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: .75rem; }
+    .section-sub { font-size: 1rem; color: var(--muted); line-height: 1.65; max-width: 620px; }
+
+    /* ── PROBLEM ── */
+    .problem { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
+    .problem-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); padding: 1.5rem; }
+    .problem-icon { width: 40px; height: 40px; border-radius: 10px; background: #fff3f3; border: 1px solid #ffd0d0; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+    .problem-card h3 { font-size: .95rem; font-weight: 700; color: var(--dark); margin-bottom: .4rem; }
+    .problem-card p { font-size: .85rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── HERO CHECKS ── */
+    .hero-checks { display: flex; flex-direction: column; gap: .55rem; margin: 0 auto 2rem; max-width: 460px; text-align: left; }
+    .hero-check { display: flex; align-items: center; gap: .65rem; font-size: .92rem; color: var(--text); }
+    .hero-check::before { content: '✓'; font-weight: 800; color: var(--teal); font-size: 1rem; flex-shrink: 0; }
+    .hero-div { border: none; border-top: 1px solid var(--border); max-width: 520px; margin: 0 auto 2rem; }
+
+    /* ── HOW IT WORKS — visual steps ── */
+    .how { background: var(--bg); }
+    .vs { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .vs-item { display: grid; grid-template-columns: 1fr 1.25fr; gap: 2.5rem; align-items: center; background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 2rem; }
+    .vs-item:nth-child(even) .vs-info { order: 2; }
+    .vs-item:nth-child(even) .vs-screen { order: 1; }
+    .vs-info { display: flex; gap: 1.1rem; align-items: flex-start; }
+    .vs-num {
+      width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+      background: var(--teal-lt); border: 2px solid var(--teal-mid);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .95rem; font-weight: 800; color: var(--teal);
+      margin-top: .15rem;
+    }
+    .vs-text h3 { font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: .35rem; }
+    .vs-text p { font-size: .88rem; color: var(--muted); line-height: 1.6; margin-bottom: .5rem; }
+    .step-badge { display: inline-block; font-size: .72rem; font-weight: 700; color: var(--teal); background: var(--teal-lt); padding: .18rem .6rem; border-radius: 8px; }
+    .vs-screen { border-radius: 10px; overflow: hidden; box-shadow: 0 6px 28px rgba(26,26,46,.13); border: 1px solid var(--border); }
+    .vs-screen img { width: 100%; display: block; }
+    .vs-placeholder { background: var(--bg); border: 1.5px dashed var(--border); border-radius: 10px; aspect-ratio: 16/10; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: .8rem; }
+
+    /* ── RESULTS ── */
+    .results { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2.5rem; }
+    .result-card { background: var(--teal-lt); border: 1.5px solid var(--teal-mid); border-radius: var(--r); padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+    .result-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--teal); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .result-card h3 { font-size: .95rem; font-weight: 700; color: var(--dark); margin-bottom: .3rem; }
+    .result-card p { font-size: .84rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── CASE ── */
+    .case-section { background: var(--dark); padding: 5rem 2rem; }
+    .case-inner { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center; }
+    .case-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: .6rem; }
+    .case-title { font-size: 1.7rem; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 1rem; }
+    .case-desc { font-size: .95rem; color: rgba(255,255,255,.7); line-height: 1.7; margin-bottom: 1.5rem; }
+    .case-metric { display: inline-flex; align-items: baseline; gap: .4rem; background: rgba(37,99,235,.25); border: 1px solid rgba(37,99,235,.4); padding: .5rem 1.1rem; border-radius: 12px; }
+    .case-metric strong { font-size: 2rem; font-weight: 800; color: #93bbff; letter-spacing: -0.04em; }
+    .case-metric span { font-size: .85rem; color: rgba(255,255,255,.7); }
+    .case-details { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: var(--r); padding: 1.75rem; }
+    .case-detail { display: flex; align-items: flex-start; gap: .75rem; padding: .75rem 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .case-detail:last-child { border-bottom: none; padding-bottom: 0; }
+    .case-detail-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: .45rem; }
+    .case-detail p { font-size: .875rem; color: rgba(255,255,255,.75); line-height: 1.5; }
+    .case-detail strong { color: #fff; }
+
+    /* ── FAQ ── */
+    .faq { background: var(--bg); }
+    .faq-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: .75rem; max-width: 720px; }
+    .faq-item { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+    .faq-q { width: 100%; text-align: left; background: none; border: none; cursor: pointer; padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: .95rem; font-weight: 700; color: var(--dark); transition: color .18s; }
+    .faq-q:hover { color: var(--teal); }
+    .faq-q svg { flex-shrink: 0; transition: transform .25s; color: var(--muted); }
+    .faq-item.open .faq-q svg { transform: rotate(45deg); color: var(--teal); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .25s; }
+    .faq-item.open .faq-a { max-height: 300px; }
+    .faq-a-inner { padding: 0 1.5rem 1.25rem; font-size: .9rem; color: var(--muted); line-height: 1.7; border-top: 1px solid var(--border); padding-top: 1rem; }
+
+    /* ── CTA ── */
+    .cta-section { background: linear-gradient(135deg, var(--teal-lt) 0%, var(--white) 100%); border-top: 1px solid var(--teal-mid); padding: 5.5rem 2rem; text-align: center; }
+    .cta-title { font-size: 2.2rem; font-weight: 800; color: var(--dark); letter-spacing: -0.035em; margin-bottom: .85rem; line-height: 1.2; }
+    .cta-sub { font-size: 1rem; color: var(--muted); margin-bottom: .5rem; }
+    .cta-promise { font-size: .85rem; color: var(--teal); font-weight: 600; margin-bottom: 2rem; }
+    .yf-wrap { max-width: 680px; margin: 0 auto 2rem; border-radius: var(--r); overflow: hidden; box-shadow: 0 4px 32px rgba(37,99,235,.12); border: 1px solid var(--teal-mid); position: relative; }
+    .yf-wrap iframe { display: block; width: 100%; border: none; }
+    .yf-fallback { display: none; padding: 3rem 2rem; background: var(--teal-lt); text-align: center; }
+    .btn-yf { display: inline-flex; align-items: center; gap: .55rem; background: var(--teal); color: #fff; font-size: 1.05rem; font-weight: 700; padding: 1rem 2.25rem; border-radius: 12px; text-decoration: none; transition: all .2s; box-shadow: 0 4px 20px rgba(37,99,235,.3); }
+    .btn-yf:hover { background: #1d55d4; transform: translateY(-2px); box-shadow: 0 6px 28px rgba(37,99,235,.4); }
+    .cta-divider { display: flex; align-items: center; gap: 1rem; max-width: 400px; margin: 0 auto 1.75rem; color: var(--muted); font-size: .82rem; }
+    .cta-divider::before, .cta-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .cta-actions { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; }
+    .btn-tg { background: #2AABEE; color: #fff; font-size: .95rem; font-weight: 700; padding: .75rem 1.75rem; border-radius: 10px; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; transition: all .2s; }
+    .btn-tg:hover { background: #18a0e6; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(42,171,238,.35); }
+    .btn-li { background: #0077B5; color: #fff; font-size: .95rem; font-weight: 700; padding: .75rem 1.75rem; border-radius: 10px; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; transition: all .2s; }
+    .btn-li:hover { background: #005f91; transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); padding: 2rem 2rem; text-align: center; color: rgba(255,255,255,.45); }
+    .footer-logo { display: flex; justify-content: center; margin-bottom: .5rem; }
+    .footer-logo img { height: 32px; width: auto; filter: brightness(0) invert(1); opacity: .8; }
+    footer p { font-size: .78rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 820px) {
+      .problem-grid { grid-template-columns: 1fr; }
+      .results-grid { grid-template-columns: 1fr; }
+      .case-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-back span { display: none; }
+      .vs-item { grid-template-columns: 1fr; gap: 1.5rem; }
+      .vs-item:nth-child(even) .vs-info { order: 0; }
+      .vs-item:nth-child(even) .vs-screen { order: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="index.html">
+    <img src="assets/logo-eza.png" alt="EZA Group">
+  </a>
+  <a class="nav-back" href="index.html">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Все маршруты</span>
+  </a>
+  <a class="nav-cta" href="#cta">Обсудить аудит</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5"/><line x1="6" y1="3.5" x2="6" y2="6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="4" y1="6.5" x2="8.5" y2="6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Аудит процессов
+  </div>
+  <h1>Ясность в бизнес-процессах<br>за <em>1 день</em></h1>
+  <p class="hero-desc">Без интервью и таблиц. Каждый сотрудник тратит 20 минут — вы получаете полную карту процессов и конкретный план автоматизации.</p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="#cta">Обсудить аудит →</a>
+    <a class="btn-ghost" href="#how">Как это работает</a>
+  </div>
+  <div class="hero-checks">
+    <div class="hero-check">Полная карта процессов команды</div>
+    <div class="hero-check">Видимость перегрузок и хаоса</div>
+    <div class="hero-check">Приоритеты автоматизации с оценкой потенциала</div>
+    <div class="hero-check">Психологический профиль и точные вопросы для интервью</div>
+  </div>
+  <hr class="hero-div">
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>20–30%</strong><span>процессов под<br>автоматизацию в среднем</span></div>
+    <div class="hero-stat"><strong>2–3 нед.</strong><span>от старта<br>до готового отчёта</span></div>
+    <div class="hero-stat"><strong>20 мин</strong><span>от каждого<br>сотрудника</span></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section problem">
+  <div class="section-inner">
+    <p class="section-label">Почему это важно</p>
+    <h2 class="section-title">Три признака, что пора делать аудит</h2>
+    <div class="problem-grid">
+
+      <div class="problem-card">
+        <div class="problem-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#e02444" stroke-width="1.6"/><line x1="10" y1="6" x2="10" y2="10.5" stroke="#e02444" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="13.5" r="1" fill="#e02444"/></svg>
+        </div>
+        <h3>Решения принимаются по ощущениям</h3>
+        <p>Вы не знаете точно, сколько времени уходит на конкретный процесс и кто является узким местом в команде.</p>
+      </div>
+
+      <div class="problem-card">
+        <div class="problem-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#e02444" stroke-width="1.6"/><line x1="10" y1="6" x2="10" y2="10.5" stroke="#e02444" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="13.5" r="1" fill="#e02444"/></svg>
+        </div>
+        <h3>Всё держится на одном человеке</h3>
+        <p>Если ключевой сотрудник уходит — процессы рассыпаются. Вы не знаете кто и что знает только он один.</p>
+      </div>
+
+      <div class="problem-card">
+        <div class="problem-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#e02444" stroke-width="1.6"/><line x1="10" y1="6" x2="10" y2="10.5" stroke="#e02444" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="13.5" r="1" fill="#e02444"/></svg>
+        </div>
+        <h3>ИИ внедряется хаотично</h3>
+        <p>Кто-то уже использует ChatGPT, кто-то нет. Нет системы — нет результата. Непонятно с чего начать автоматизацию.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how" id="how">
+  <div class="section-inner">
+    <p class="section-label">Процесс</p>
+    <h2 class="section-title">Как проходит аудит</h2>
+    <p class="section-sub">Минимум времени от команды, максимум данных для вас.</p>
+
+    <div class="vs">
+
+      <div class="vs-item">
+        <div class="vs-info">
+          <div class="vs-num">1</div>
+          <div class="vs-text">
+            <h3>Сотрудник заполняет простую форму</h3>
+            <p>Что делает, с какими инструментами, где болит. Без психологического давления — каждый описывает свои задачи за 15–20 минут в удобное время.</p>
+            <span class="step-badge">15–20 мин · без вашего участия</span>
+          </div>
+        </div>
+        <div class="vs-screen">
+          <img src="assets/audit-step1.png" alt="Форма сбора данных EZA Group">
+        </div>
+      </div>
+
+      <div class="vs-item">
+        <div class="vs-info">
+          <div class="vs-num">2</div>
+          <div class="vs-text">
+            <h3>Всё собирается в аналитическую схему</h3>
+            <p>Видите полную карту процессов, перегруженных сотрудников и дублирование функций. Как задачи «гуляют» по отделу — на одном экране.</p>
+            <span class="step-badge">Автоматически · в реальном времени</span>
+          </div>
+        </div>
+        <div class="vs-screen">
+          <img src="assets/audit-step2.png" alt="Аналитическая схема процессов">
+        </div>
+      </div>
+
+      <div class="vs-item">
+        <div class="vs-info">
+          <div class="vs-num">3</div>
+          <div class="vs-text">
+            <h3>GPT анализирует данные и даёт рекомендации</h3>
+            <p>ИИ находит реальные проблемы и приоритеты автоматизации, которые Excel не покажет. Мнение GPT основано на данных, а не ощущениях.</p>
+            <span class="step-badge">ИИ-анализ · 5–7 дней</span>
+          </div>
+        </div>
+        <div class="vs-screen">
+          <img src="assets/audit-step3.png" alt="GPT-анализ процессов">
+        </div>
+      </div>
+
+      <div class="vs-item">
+        <div class="vs-info">
+          <div class="vs-num">4</div>
+          <div class="vs-text">
+            <h3>Готовый PDF-отчёт с дорожной картой</h3>
+            <p>Исполнительное резюме, список проблем, приоритеты автоматизации. Готовый план действий — что внедрять первым и почему.</p>
+            <span class="step-badge">Финальная встреча + документ</span>
+          </div>
+        </div>
+        <div class="vs-screen">
+          <img src="assets/audit-step4.png" alt="PDF-отчёт EZA Group">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section results">
+  <div class="section-inner">
+    <p class="section-label">Что вы получаете</p>
+    <h2 class="section-title">Конкретный результат, не слайды</h2>
+    <div class="results-grid">
+
+      <div class="result-card">
+        <div class="result-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="2" stroke="white" stroke-width="1.6"/><line x1="5" y1="9" x2="13" y2="9" stroke="white" stroke-width="1.6" stroke-linecap="round"/><line x1="5" y1="6" x2="10" y2="6" stroke="white" stroke-width="1.6" stroke-linecap="round"/><line x1="5" y1="12" x2="8" y2="12" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <h3>Полная карта всех процессов</h3>
+          <p>Каждый процесс, каждый сотрудник. Swimlane-диаграмма с потоками передач и точками коммуникации между отделами.</p>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="4" stroke="white" stroke-width="1.6"/><path d="M3 16C3 13.2 5.7 11 9 11C12.3 11 15 13.2 15 16" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <h3>Выявлены «одиночки» (SPOF)</h3>
+          <p>Сотрудники, на которых держится критичный процесс и которых нечем заменить. Риск для бизнеса виден явно.</p>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 13L7 9L10 12L15 5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h3>Приоритеты автоматизации</h3>
+          <p>ИИ-скоринг каждого процесса: потенциал автоматизации, частота, боль сотрудников. Список от «сделать первым» до «пока не трогать».</p>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="1.5" stroke="white" stroke-width="1.6"/><line x1="6" y1="6" x2="12" y2="6" stroke="white" stroke-width="1.4" stroke-linecap="round"/><line x1="6" y1="9" x2="12" y2="9" stroke="white" stroke-width="1.4" stroke-linecap="round"/><line x1="6" y1="12" x2="9" y2="12" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <h3>PDF-отчёт для решений</h3>
+          <p>Документ, который можно показать совету директоров или инвесторам. Все выводы подкреплены данными от сотрудников.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CASE -->
+<section class="case-section">
+  <div class="case-inner">
+    <div>
+      <p class="case-label">Реальный кейс</p>
+      <h2 class="case-title">Производственный завод, 60+ сотрудников</h2>
+      <p class="case-desc">Хронические простои, брак, конфликты между цехом и офисом. Руководство не понимало где именно рвётся цепочка.</p>
+      <div class="case-metric">
+        <strong>−40%</strong>
+        <span>простоев и брака<br>после внедрения</span>
+      </div>
+    </div>
+    <div class="case-details">
+      <div class="case-detail">
+        <div class="case-detail-dot"></div>
+        <p><strong>Проблема:</strong> процессы передачи между сменами нигде не были зафиксированы — каждый делал по-своему</p>
+      </div>
+      <div class="case-detail">
+        <div class="case-detail-dot"></div>
+        <p><strong>Что выявил аудит:</strong> 3 «призрака» — сотрудники с уникальными знаниями, которые нигде не задокументированы</p>
+      </div>
+      <div class="case-detail">
+        <div class="case-detail-dot"></div>
+        <p><strong>Решение:</strong> жёсткие регламенты передачи + ICF-работа с сопротивлением персонала</p>
+      </div>
+      <div class="case-detail">
+        <div class="case-detail-dot"></div>
+        <p><strong>Результат:</strong> −40% простоев и брака за 3 месяца после внедрения регламентов</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq">
+  <div class="section-inner">
+    <p class="section-label">Частые вопросы</p>
+    <h2 class="section-title">Отвечаем честно</h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Нужно ли отрывать сотрудников от работы?
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="9" y1="4" x2="9" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="4" y1="9" x2="14" y2="9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Минимально. Каждый сотрудник тратит 15–20 минут на заполнение формы — это делается в удобное для него время. Никаких групповых интервью или длинных встреч.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Подходит ли аудит для любой отрасли?
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="9" y1="4" x2="9" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="4" y1="9" x2="14" y2="9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Да. Мы работали с производством, торговлей, сервисными компаниями и digital-бизнесами. Методология универсальна — форма и анализ адаптируются под вашу специфику.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Что происходит после аудита — вы помогаете внедрять?
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="9" y1="4" x2="9" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="4" y1="9" x2="14" y2="9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Это отдельная услуга. Многие клиенты берут отчёт и внедряют сами или с командой. Если нужна помощь с автоматизацией конкретных процессов — это уже B2B консалтинг, обсудим отдельно.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Сколько человек должно быть в команде?
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="9" y1="4" x2="9" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="4" y1="9" x2="14" y2="9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">От 5 до 200+ человек. Для небольших команд (5–15 чел.) аудит занимает меньше времени и стоит соответственно. Для крупных — аудируем поэтапно, начиная с приоритетного отдела.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Что если сотрудники заполнят форму формально?
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="9" y1="4" x2="9" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="4" y1="9" x2="14" y2="9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Система автоматически флагирует формальные ответы — мы видим качество заполнения и при необходимости делаем короткие уточняющие беседы. На практике большинство сотрудников заполняют честно — им самим интересно чтобы их боли были услышаны.</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <p class="section-label">Следующий шаг</p>
+  <h2 class="cta-title">Начнём с короткого звонка</h2>
+  <p class="cta-sub">Расскажите о команде и текущей ситуации — предложим формат аудита и стоимость.</p>
+  <p class="cta-promise">→ 30 минут · бесплатно · без обязательств</p>
+  <div class="yf-wrap">
+    <iframe src="https://forms.yandex.ru/u/6a205b2c95add568ac9f84c5/" height="580" scrolling="no"></iframe>
+    <div class="yf-fallback">
+      <a class="btn-yf" href="https://forms.yandex.ru/u/6a205b2c95add568ac9f84c5/" target="_blank" rel="noopener noreferrer">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="white" stroke-width="1.6"/><path d="M7 9h6M7 12h4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+        Заполнить заявку на встречу
+      </a>
+    </div>
+  </div>
+  <div class="cta-divider">или напишите напрямую</div>
+  <div class="cta-actions">
+    <a class="btn-tg" href="https://t.me/Aleksei_Zotov" target="_blank" rel="noopener noreferrer">✈ Telegram</a>
+    <a class="btn-li" href="https://www.linkedin.com/in/alexey-zotov-ai" target="_blank" rel="noopener noreferrer">in LinkedIn</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="assets/logo-eza.png" alt="EZA Group">
+  </div>
+  <p>© 2026 EZA Group · AI-трансформация для бизнеса</p>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  }
+
+  (function() {
+    var iframe = document.querySelector('.yf-wrap iframe');
+    var fallback = document.querySelector('.yf-fallback');
+    if (!iframe || !fallback) return;
+    if (window.location.protocol === 'file:') {
+      iframe.style.display = 'none';
+      fallback.style.display = 'block';
+    }
+  })();
+</script>
+
+</body>
+</html>
