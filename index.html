@@ -548,13 +548,14 @@
 
     @media (max-width: 900px) {
       .cp-cards { grid-template-columns: 1fr; }
-      .zones { grid-template-columns: 1fr; height: auto; }
-      .zone { height: 280px; }
-      .detail-inner { grid-template-columns: 1fr; }
-      .detail-col { border-right: none; border-bottom: 1px solid var(--border); }
+      .zones { display: none; }
+      .panorama { padding-bottom: 1.5rem !important; }
       .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .about-visual, .nav-links { display: none; }
       .ci-grid { grid-template-columns: repeat(2, 1fr); }
+      /* Cards become primary action on mobile */
+      .cp-card { transition: transform .18s, box-shadow .18s; }
+      .cp-card:active { transform: scale(.98); }
     }
     @media (max-width: 520px) {
       .ci-grid { grid-template-columns: 1fr; }
@@ -961,6 +962,9 @@
       <p>Мы не читаем лекции о том, как ИИ изменит мир. Мы помогаем компаниям и людям пройти этот путь прямо сейчас — с конкретным результатом на каждом этапе.</p>
       <p>Три продукта под три роли: обучение для специалистов, аудит процессов для руководителей, кастомные AI-системы для собственников.</p>
       <div class="founder">
+        <div class="founder-ava">
+          <img src="assets/photo-founder.png" alt="Алексей Зотов">
+        </div>
         <div class="founder-info">
           <strong>Алексей Зотов</strong>
           <span>Основатель EZA Group · ICF-коуч · AI-автоматизация и аналитика</span>
@@ -992,7 +996,15 @@
 <script>
   var currentPath = null;
 
+  var PATH_URLS = { specialist: 'https://alekseizotov.online', manager: 'audit.html', owner: 'consulting.html' };
+
   function selectPath(path) {
+    /* On mobile — navigate directly to product page */
+    if (window.innerWidth <= 900) {
+      if (PATH_URLS[path]) { window.location.href = PATH_URLS[path]; }
+      return;
+    }
+
     currentPath = path;
 
     /* choice panel cards */
