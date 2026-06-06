@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Записаться на онлайн-встречу — EZA Group</title>
+  <link rel="icon" type="image/png" href="assets/logo-eza.png">
   <meta name="description" content="Аналитические дашборды, автоматизация процессов и AI-агенты под задачи вашего бизнеса. От диагностики до запуска.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -198,7 +199,33 @@
       .problem-grid { grid-template-columns: 1fr; }
       .diag-grid { grid-template-columns: 1fr; }
       .cases-grid { grid-template-columns: 1fr; }
+      /* Nav */
+      .nav { padding: 0 1.1rem; }
+      .nav-cta { font-size: .78rem; padding: .42rem .85rem; }
+      /* Hero */
+      .hero { padding: 3.5rem 1.25rem 2.75rem; }
+      .hero h1 { font-size: clamp(1.85rem, 8vw, 2.3rem); }
+      .hero-desc { font-size: 1rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; gap: .6rem; }
+      .btn-primary, .btn-ghost { text-align: center; justify-content: center; }
+      .hero-checks { max-width: 100%; }
+      .hero-stats { flex-direction: column; gap: 1.1rem; align-items: center; }
+      .hero-stat { padding: 0; }
+      .hero-stat + .hero-stat::before { display: none; }
+      /* Sections */
+      .section { padding: 3.5rem 1.25rem; }
+      .diag { padding: 3.5rem 1.25rem; }
+      .case-section, .cases-section { padding: 3.5rem 1.25rem; }
+      .cta-section { padding: 3.5rem 1.25rem; }
+      /* CTA */
+      .cta-actions { flex-direction: column; align-items: stretch; }
+      .btn-tg, .btn-li { justify-content: center; }
+      .btn-yf { width: 100%; justify-content: center; }
     }
+
+    /* ── SCROLL REVEAL ── */
+    .sr { opacity: 0; transform: translateY(20px); transition: opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1); }
+    .sr.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
@@ -608,6 +635,32 @@
     if (!isOpen) item.classList.add('open');
   }
 
+  // ── SCROLL REVEAL ──
+  (function() {
+    function sg(sel, ms) {
+      document.querySelectorAll(sel).forEach(function(p) {
+        Array.from(p.children).forEach(function(c, i) { c.classList.add('sr'); c.style.transitionDelay = i * ms + 'ms'; });
+      });
+    }
+    function rv(sel) { document.querySelectorAll(sel).forEach(function(el) { el.classList.add('sr'); }); }
+
+    sg('.problem-grid', 80);
+    sg('.services-grid', 90);
+    sg('.vs', 110);
+    sg('.cases-grid', 100);
+    sg('.diag-grid', 80);
+    sg('.faq-list', 70);
+    rv('.diag-output, .case-inner > div');
+    document.querySelectorAll('.section-title, .section-sub, .section-label, .diag-title, .diag-sub, .cases-head-title, .cases-head-sub').forEach(function(el) {
+      if (!el.closest('.hero')) el.classList.add('sr');
+    });
+
+    if (!window.IntersectionObserver) { document.querySelectorAll('.sr').forEach(function(e) { e.classList.add('visible'); }); return; }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+    document.querySelectorAll('.sr').forEach(function(el) { io.observe(el); });
+  })();
 </script>
 
 </body>
