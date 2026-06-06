@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EZA Group — AI-трансформация бизнеса</title>
+  <link rel="icon" type="image/png" href="assets/logo-eza.png">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -469,6 +470,63 @@
     .footer-logo img { height: 36px; width: auto; filter: brightness(0) invert(1); opacity: .85; }
     footer p { font-size: .78rem; }
 
+    /* ── INTRO ── */
+    .intro-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(135deg, rgba(26,26,46,.92) 0%, rgba(60,50,120,.88) 50%, rgba(26,26,46,.92) 100%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .9s ease;
+      pointer-events: none;
+    }
+    .intro-overlay > * { pointer-events: auto; }
+    .intro-overlay video {
+      height: 100%; width: auto; max-width: 56vh;
+      object-fit: contain; display: block;
+      border-radius: 12px;
+      box-shadow: 0 32px 100px rgba(26,26,46,.32), 0 8px 32px rgba(26,26,46,.18);
+    }
+    .intro-skip {
+      position: absolute; bottom: 2rem; right: 1.5rem;
+      background: rgba(255,255,255,.92); color: var(--dark);
+      border: 1px solid rgba(26,26,46,.14);
+      padding: .5rem 1.25rem; border-radius: 20px;
+      font-size: .85rem; font-weight: 600; cursor: pointer;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 2px 12px rgba(26,26,46,.12);
+      transition: all .18s; font-family: inherit;
+    }
+    .intro-skip:hover { background: #fff; box-shadow: 0 4px 20px rgba(26,26,46,.18); }
+    .intro-sound {
+      position: absolute; bottom: 2rem; left: 1.5rem;
+      background: rgba(255,255,255,.92); color: var(--dark);
+      border: 1px solid rgba(26,26,46,.14);
+      padding: .5rem .9rem; border-radius: 20px;
+      font-size: 1.1rem; cursor: pointer;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 2px 12px rgba(26,26,46,.12);
+      transition: all .18s; font-family: inherit; line-height: 1;
+    }
+    .intro-sound:hover { background: #fff; box-shadow: 0 4px 20px rgba(26,26,46,.18); }
+    .intro-overlay.fade-out { opacity: 0; pointer-events: none; }
+    @media (max-width: 600px) {
+      .intro-overlay video { width: 100%; height: 100%; object-fit: cover; border-radius: 0; box-shadow: none; }
+    }
+
+    /* ── PAGE REVEAL after intro ── */
+    @keyframes revealUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    body.intro-done .nav          { animation: revealUp .5s cubic-bezier(.16,1,.3,1) .05s both; }
+    body.intro-done .hero .badge  { animation: revealUp .5s cubic-bezier(.16,1,.3,1) .22s both; }
+    body.intro-done .hero h1      { animation: revealUp .6s cubic-bezier(.16,1,.3,1) .34s both; }
+    body.intro-done .hero-desc    { animation: revealUp .5s cubic-bezier(.16,1,.3,1) .46s both; }
+    body.intro-done .hero-actions { animation: revealUp .5s cubic-bezier(.16,1,.3,1) .56s both; }
+    body.intro-done .hero-divider { animation: revealUp .45s ease .65s both; }
+    body.intro-done .hero-stats   { animation: revealUp .5s cubic-bezier(.16,1,.3,1) .72s both; }
+
     /* ── RESPONSIVE ── */
     /* ── CASES INDEX ── */
     .cases-idx { background: var(--white); padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
@@ -500,10 +558,47 @@
     }
     @media (max-width: 520px) {
       .ci-grid { grid-template-columns: 1fr; }
+      /* Nav */
+      .nav { padding: 0 1.1rem; }
+      .nav-btn { font-size: .78rem; padding: .42rem .85rem; }
+      /* Hero */
+      .hero { padding: 3.5rem 1.25rem 2.75rem; }
+      .hero h1 { font-size: clamp(1.9rem, 8vw, 2.4rem); }
+      .hero-desc { font-size: 1rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; gap: .6rem; }
+      .btn-primary, .btn-ghost { text-align: center; justify-content: center; }
+      .hero-stats { flex-direction: column; gap: 1.1rem; align-items: center; }
+      .hero-stat { padding: 0; }
+      .hero-stat + .hero-stat::before { display: none; }
+      /* Panorama */
+      .panorama { padding-left: .75rem !important; padding-right: .75rem !important; }
+      .choice-panel { padding: 0 .25rem; }
+      .cp-title { font-size: 1.35rem; }
+      /* CTA */
+      .cta-wrap { padding: 3.5rem 1.25rem; }
+      .cta-actions { flex-direction: column; align-items: stretch; }
+      .btn-tg, .btn-li { justify-content: center; }
+      /* Cases */
+      .cases-idx { padding: 3.5rem 1.25rem; }
+      /* About */
+      .about { padding: 3.5rem 1.25rem; }
     }
+
+    /* ── SCROLL REVEAL ── */
+    .sr { opacity: 0; transform: translateY(20px); transition: opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1); }
+    .sr.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
+
+<!-- INTRO -->
+<div id="intro" class="intro-overlay">
+  <video id="intro-video" autoplay muted playsinline>
+    <source src="assets/intro.mp4" type="video/mp4">
+  </video>
+  <button class="intro-sound" id="intro-sound-btn" onclick="toggleSound()" title="Включить звук">🔇</button>
+  <button class="intro-skip" onclick="skipIntro()">Пропустить →</button>
+</div>
 
 <!-- NAV -->
 <nav class="nav">
@@ -923,6 +1018,45 @@
     });
     currentPath = null;
   }
+
+  // Intro
+  function skipIntro() {
+    var el = document.getElementById('intro');
+    el.classList.add('fade-out');
+    document.body.classList.add('intro-done');
+    setTimeout(function() { el.style.display = 'none'; }, 900);
+  }
+  function toggleSound() {
+    var v = document.getElementById('intro-video');
+    var btn = document.getElementById('intro-sound-btn');
+    v.muted = !v.muted;
+    btn.textContent = v.muted ? '🔇' : '🔊';
+  }
+  (function() {
+    var v = document.getElementById('intro-video');
+    if (!v) return;
+    v.addEventListener('ended', skipIntro);
+    v.addEventListener('error', skipIntro);
+  })();
+
+  // ── SCROLL REVEAL ──
+  (function() {
+    function sg(sel, ms) {
+      document.querySelectorAll(sel).forEach(function(p) {
+        Array.from(p.children).forEach(function(c, i) { c.classList.add('sr'); c.style.transitionDelay = i * ms + 'ms'; });
+      });
+    }
+    function rv(sel) { document.querySelectorAll(sel).forEach(function(el) { el.classList.add('sr'); }); }
+
+    sg('.ci-grid', 80);
+    rv('.cases-idx-head, .about-inner, .cta-wrap');
+
+    if (!window.IntersectionObserver) { document.querySelectorAll('.sr').forEach(function(e) { e.classList.add('visible'); }); return; }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+    document.querySelectorAll('.sr').forEach(function(el) { io.observe(el); });
+  })();
 </script>
 
 </body>
