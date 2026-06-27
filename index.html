@@ -262,6 +262,55 @@
     .cp-card[data-path="manager"]    .cp-action { color: var(--blue); }
     .cp-card[data-path="owner"]      .cp-action { color: var(--teal); }
 
+    /* ── AI-Mentoring banner card (4th card, full-width on desktop) ── */
+    .cp-card-mentoring {
+      grid-column: 1 / -1;
+      border: 1.5px solid rgba(108,99,255,.32) !important;
+      background: linear-gradient(135deg, rgba(255,255,255,.97) 55%, var(--purple-lt) 100%) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.98), 0 4px 20px rgba(108,99,255,.14) !important;
+    }
+    .cp-card-mentoring::before { background: linear-gradient(90deg, var(--purple), #9b95ff) !important; }
+    .cp-card-mentoring::after { display: none; }
+    .cp-card-mentoring:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.98), 0 14px 40px rgba(108,99,255,.22) !important;
+    }
+    .cp-mentoring-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem; gap: 1.5rem; width: 100%;
+    }
+    .cp-mentoring-left { display: flex; align-items: center; gap: 1rem; }
+    .cp-mentoring-icon {
+      width: 46px; height: 46px; border-radius: 13px; flex-shrink: 0;
+      background: var(--purple-lt); border: 1.5px solid var(--purple-mid);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 10px rgba(108,99,255,.2);
+    }
+    .cp-mentoring-icon svg { width: 22px; height: 22px; color: var(--purple); }
+    .cp-mentoring-tag { font-size: .6rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--purple); margin-bottom: .18rem; }
+    .cp-mentoring-title { font-size: .95rem; font-weight: 800; color: var(--dark); letter-spacing: -.01em; }
+    .cp-mentoring-sub { font-size: .75rem; color: var(--muted); margin-top: .1rem; }
+    .cp-mentoring-right { display: flex; align-items: center; gap: 1.25rem; flex-shrink: 0; }
+    .cp-mentoring-price { text-align: right; }
+    .cp-mentoring-price strong { display: block; font-size: 1rem; font-weight: 800; color: var(--dark); letter-spacing: -.02em; }
+    .cp-mentoring-price span { font-size: .7rem; color: var(--muted); }
+    .cp-mentoring-btn {
+      background: var(--purple); color: #fff;
+      font-size: .78rem; font-weight: 700; padding: .55rem 1.1rem;
+      border-radius: 8px; white-space: nowrap;
+      box-shadow: 0 3px 10px rgba(108,99,255,.35);
+    }
+    @media (max-width: 900px) {
+      .cp-card-mentoring { grid-column: auto; }
+      .cp-mentoring-right { flex-direction: column; align-items: flex-end; gap: .5rem; }
+      .cp-mentoring-price { text-align: right; }
+    }
+    @media (max-width: 520px) {
+      .cp-mentoring-inner { padding: .9rem 1.1rem; gap: .75rem; }
+      .cp-mentoring-icon { width: 38px; height: 38px; border-radius: 10px; }
+      .cp-mentoring-btn { font-size: .72rem; padding: .42rem .8rem; }
+    }
+
     /* ── Three-zone background strip ── */
     .zones {
       display: grid;
@@ -776,6 +825,34 @@
           <div class="cp-name">Я — собственник</div>
           <div class="cp-desc">Нужны системы, автоматизация и конкретный результат — не теория</div>
           <div class="cp-action">Мой маршрут →</div>
+        </div>
+      </div>
+
+      <!-- AI-Наставничество — banner card, full-width on desktop -->
+      <div class="cp-card cp-card-mentoring" onclick="window.location.href='ai-mentoring.html'">
+        <div class="cp-mentoring-inner">
+          <div class="cp-mentoring-left">
+            <div class="cp-mentoring-icon">
+              <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+                <circle cx="9" cy="6.5" r="3.5"/>
+                <path d="M1.5 20C1.5 16.1 4.9 13 9 13"/>
+                <path d="M14 17.5L16 19.5L20 15.5"/>
+                <circle cx="17" cy="12.5" r="4.5" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <div>
+              <div class="cp-mentoring-tag">Индивидуально</div>
+              <div class="cp-mentoring-title">AI-Наставничество — обучение нейросетям под ваши задачи</div>
+              <div class="cp-mentoring-sub">4–12 встреч · ChatGPT, Claude, автоматизация, контент, сайты</div>
+            </div>
+          </div>
+          <div class="cp-mentoring-right">
+            <div class="cp-mentoring-price">
+              <strong>от 22 000 ₽</strong>
+              <span>за программу</span>
+            </div>
+            <span class="cp-mentoring-btn">Подробнее →</span>
+          </div>
         </div>
       </div>
 
