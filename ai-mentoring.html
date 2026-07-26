@@ -5,18 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI-Наставничество — EZA Group</title>
   <link rel="icon" type="image/png" href="assets/logo-eza.png">
-  <meta name="description" content="Индивидуальное наставничество по нейросетям и ИИ для экспертов и предпринимателей. 3 пакета — от первого знакомства до автоматизации контента.">
+  <meta name="description" content="Индивидуальное наставничество по нейросетям и ИИ для экспертов и предпринимателей. От экспресс-разбора одной задачи за 3 000 ₽ до полной автоматизации контента и данных.">
   <style>
+    @font-face { font-family: 'Golos Text'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('assets/fonts/golos-text-cyrillic.woff2') format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+    @font-face { font-family: 'Golos Text'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('assets/fonts/golos-text-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('assets/fonts/unbounded-cyrillic.woff2') format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+    @font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('assets/fonts/unbounded-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
+      --font-display: 'Unbounded', 'Segoe UI', sans-serif;
+      --font-body: 'Golos Text', 'Segoe UI', sans-serif;
       --bg: #f7f8fc; --white: #fff; --dark: #1a1a2e; --text: #2c2c40; --muted: #6b6b8a; --border: #e5e5f0;
       --r: 16px; --r-lg: 24px;
       --purple: #6c63ff; --purple-lt: #f0efff; --purple-mid: #dddaff; --purple-glo: rgba(108,99,255,.28);
       --teal:   #0a9468; --teal-lt:   #e8f7f2; --teal-mid:   #b8e8d6; --teal-glo:   rgba(10,148,104,.28);
       --blue:   #2563eb; --blue-lt:   #eff6ff; --blue-mid:   #bdd5fc; --blue-glo:   rgba(37,99,235,.28);
+      --amber:  #d97706; --amber-lt:  #fef3c7; --amber-mid:  #fbd38d; --amber-glo:  rgba(217,119,6,.28);
+      --grey-lt: #f1f1f5;
     }
     html { scroll-behavior: smooth; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, .pkg-name, .pkg-price-main, .pkg-num, .section-title, .cta-section h2, .faq-q, .complex-body strong, .complex-price, .entry-banner-text strong, .entry-banner-price, .value-vs-price, .hero-stat strong { font-family: var(--font-display); }
 
     /* ── NAV ── */
     .nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.93); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; }
@@ -43,6 +52,30 @@
       pointer-events: none; z-index: 1;
     }
     .hero > * { position: relative; z-index: 2; }
+
+    /* до-иллюстрация — в свободном левом поле hero */
+    .hero-pain-note { position: absolute; left: 2rem; top: calc(50% - 189px); transform: translateY(-50%); width: min(28vw, 380px); z-index: 2; }
+    .hero-pain-note img { width: 100%; display: block; border-radius: 18px; box-shadow: 0 20px 50px rgba(26,26,46,.14), 0 4px 16px rgba(26,26,46,.07); }
+    .hero-pain-note-tag {
+      position: absolute; top: -13px; left: -13px;
+      font-family: var(--font-display); font-size: .74rem; font-weight: 600; letter-spacing: .01em;
+      color: #fff; background: var(--dark);
+      padding: .4rem .9rem; border-radius: 20px;
+      box-shadow: 0 4px 14px rgba(26,26,46,.25);
+    }
+
+    /* после-иллюстрация — на одном уровне с "До", в свободном правом поле hero */
+    .hero-after-note { position: absolute; right: 2rem; top: calc(50% - 189px); transform: translateY(-50%); width: min(28vw, 380px); z-index: 2; }
+    .hero-after-note img { width: 100%; display: block; border-radius: 18px; box-shadow: 0 20px 50px rgba(26,26,46,.14), 0 4px 16px rgba(26,26,46,.07); }
+    .hero-after-note-tag {
+      position: absolute; top: -13px; right: -13px;
+      font-family: var(--font-display); font-size: .74rem; font-weight: 600; letter-spacing: .01em;
+      color: #fff; background: var(--purple);
+      padding: .4rem .9rem; border-radius: 20px;
+      box-shadow: 0 4px 14px var(--purple-glo);
+    }
+    @media (max-width: 1240px) { .hero-after-note { display: none; } }
+    @media (max-width: 1240px) { .hero-pain-note { display: none; } }
 
     .hero-tag {
       display: inline-flex; align-items: center; gap: .45rem;
@@ -219,9 +252,51 @@
       .nc-col-yes { border-left: none; border-top: 1px solid rgba(108,99,255,.25); }
     }
 
+    /* ── SKILLS STRIP (видео-переход перед пакетами) ── */
+    /* aspect-ratio совпадает с обрезанным видео (1280×350) — видео ложится ровно по ширине,
+       без полей по бокам и без обрезки кадра сверху/снизу */
+    .skills-strip { width: 100%; aspect-ratio: 1280 / 350; overflow: hidden; background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .skills-strip video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
     /* ── PACKAGES ── */
     .packages { background: var(--bg); }
-    .pkg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: start; }
+
+    /* Уровень 0 — вход */
+    .entry-banner {
+      display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; flex-wrap: wrap;
+      background: var(--white); border: 1.5px dashed var(--border); border-radius: var(--r-lg);
+      padding: 1.25rem 1.5rem; margin-bottom: 1.75rem;
+    }
+    .entry-banner-left { display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 240px; }
+    .entry-banner-icon {
+      width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+      background: var(--grey-lt); color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .entry-banner-icon svg { width: 20px; height: 20px; }
+    .entry-banner-text strong { display: block; font-size: .95rem; font-weight: 800; color: var(--dark); letter-spacing: -.01em; }
+    .entry-banner-text span { font-size: .82rem; color: var(--muted); line-height: 1.5; }
+    .entry-banner-right { display: flex; align-items: center; gap: 1.1rem; flex-shrink: 0; }
+    .entry-banner-price { font-size: 1.3rem; font-weight: 800; color: var(--dark); white-space: nowrap; }
+    .entry-banner-btn {
+      display: inline-flex; align-items: center; gap: .4rem; white-space: nowrap;
+      background: var(--bg); color: var(--dark); border: 1.5px solid var(--border);
+      font-size: .85rem; font-weight: 700; padding: .65rem 1.15rem; border-radius: 10px;
+      text-decoration: none; transition: all .2s;
+    }
+    .entry-banner-btn:hover { background: var(--dark); color: #fff; border-color: var(--dark); transform: translateY(-1px); }
+
+    .pkg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: start; position: relative; }
+
+    /* маршрут — соединительная линия между карточками-остановками.
+       Красится позади карточек (обычный порядок покраски ::before) и видна только в зазорах,
+       т.к. непрозрачный фон карточек перекрывает её везде, кроме gap. */
+    .pkg-grid::before {
+      content: '';
+      position: absolute; left: 0; right: 0; top: 56px; height: 2px;
+      background: repeating-linear-gradient(90deg, var(--muted) 0 5px, transparent 5px 10px);
+      opacity: .4;
+    }
 
     .pkg-card {
       background: var(--white);
@@ -239,9 +314,14 @@
     .pkg-card.featured {
       border-color: rgba(108,99,255,.35);
       box-shadow: 0 8px 32px rgba(108,99,255,.18), 0 2px 8px rgba(26,26,46,.07);
+      transform: scale(1.045); transform-origin: top center; z-index: 3; margin: 0 .1rem;
     }
     .pkg-card.featured:hover {
+      transform: scale(1.045) translateY(-6px);
       box-shadow: 0 24px 64px rgba(108,99,255,.25), 0 6px 16px rgba(26,26,46,.09);
+    }
+    @media (max-width: 860px) {
+      .pkg-card.featured, .pkg-card.featured:hover { transform: none; margin: 0; }
     }
 
     .pkg-stripe { height: 5px; }
@@ -257,18 +337,35 @@
       box-shadow: 0 2px 8px rgba(108,99,255,.45);
     }
 
-    .pkg-body { padding: 1.75rem 1.75rem 0; flex: 1; }
+    .pkg-body { padding: 1.75rem 1.75rem 0; flex: 1; position: relative; }
+
+    /* объёмная фоновая цифра-текстура — не для чтения, для глубины */
+    .pkg-ghost {
+      position: absolute; top: -.4rem; right: -.3rem;
+      font-family: var(--font-display); font-weight: 700; font-size: 6.5rem; line-height: 1;
+      color: transparent; -webkit-text-stroke: 1.5px currentColor; opacity: .08;
+      pointer-events: none; user-select: none; z-index: 0;
+    }
+    .pkg-card:nth-child(1) .pkg-ghost { color: var(--teal); }
+    .pkg-card:nth-child(2) .pkg-ghost { color: var(--purple); }
+    .pkg-card:nth-child(3) .pkg-ghost { color: var(--blue); }
+    .pkg-body > *:not(.pkg-ghost) { position: relative; z-index: 1; }
 
     .pkg-num {
-      width: 36px; height: 36px; border-radius: 11px;
+      width: 36px; height: 36px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-size: .78rem; font-weight: 800; color: #fff;
       margin-bottom: 1.25rem;
-      box-shadow: 0 3px 10px rgba(0,0,0,.18);
+      position: relative; z-index: 8;
+      box-shadow: 0 0 0 5px var(--white), 0 3px 10px rgba(0,0,0,.18);
     }
-    .pkg-card:nth-child(1) .pkg-num { background: linear-gradient(135deg, var(--teal), #34d399); }
-    .pkg-card:nth-child(2) .pkg-num { background: linear-gradient(135deg, var(--purple), #9b95ff); }
-    .pkg-card:nth-child(3) .pkg-num { background: linear-gradient(135deg, var(--blue), #60a5fa); }
+    .pkg-num::before {
+      content: ''; position: absolute; inset: -8px;
+      border-radius: 50%; border: 1.5px dashed var(--accent, var(--purple)); opacity: .35;
+    }
+    .pkg-card:nth-child(1) .pkg-num { background: linear-gradient(135deg, var(--teal), #34d399); --accent: var(--teal); }
+    .pkg-card:nth-child(2) .pkg-num { background: linear-gradient(135deg, var(--purple), #9b95ff); --accent: var(--purple); }
+    .pkg-card:nth-child(3) .pkg-num { background: linear-gradient(135deg, var(--blue), #60a5fa); --accent: var(--blue); }
 
     .pkg-name { font-size: 1.25rem; font-weight: 800; color: var(--dark); letter-spacing: -0.02em; margin-bottom: .3rem; }
     .pkg-target { font-size: .82rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.5; }
@@ -277,15 +374,24 @@
       display: flex; gap: .75rem; margin-bottom: 1.4rem; flex-wrap: wrap;
     }
     .pkg-pill {
-      display: flex; align-items: center; gap: .3rem;
+      display: flex; align-items: center; gap: .35rem;
       font-size: .75rem; font-weight: 600; padding: .3rem .7rem;
       border-radius: 8px;
     }
+    .pkg-pill svg { width: 13px; height: 13px; flex-shrink: 0; }
     .pkg-card:nth-child(1) .pkg-pill { background: var(--teal-lt); color: var(--teal); }
     .pkg-card:nth-child(2) .pkg-pill { background: var(--purple-lt); color: var(--purple); }
     .pkg-card:nth-child(3) .pkg-pill { background: var(--blue-lt); color: var(--blue); }
 
     .pkg-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 1.25rem; }
+
+    .pkg-inherit {
+      display: flex; align-items: center; gap: .5rem;
+      font-size: .78rem; font-weight: 600; color: var(--muted);
+      background: var(--bg); border: 1px dashed var(--border); border-radius: 8px;
+      padding: .55rem .8rem; margin-bottom: 1.1rem;
+    }
+    .pkg-inherit svg { width: 14px; height: 14px; flex-shrink: 0; }
 
     .pkg-features { list-style: none; display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1.5rem; }
     .pkg-features li { display: flex; align-items: flex-start; gap: .6rem; font-size: .875rem; color: var(--text); line-height: 1.5; }
@@ -334,6 +440,45 @@
     .pkg-card:nth-child(2) .pkg-btn:hover { background: #5b52e0; transform: translateY(-1px); box-shadow: 0 4px 14px var(--purple-glo); }
     .pkg-card:nth-child(3) .pkg-btn { background: var(--blue-lt); color: var(--blue); border: 1.5px solid var(--blue-mid); }
     .pkg-card:nth-child(3) .pkg-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); transform: translateY(-1px); box-shadow: 0 4px 14px var(--blue-glo); }
+
+    .pkg-trust {
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+      margin-top: 1.5rem; font-size: .8rem; color: var(--muted); font-weight: 600;
+    }
+    .pkg-trust-item { display: flex; align-items: center; gap: .4rem; }
+    .pkg-trust-item svg { width: 15px; height: 15px; color: var(--teal); flex-shrink: 0; }
+
+    /* Комплекс — премиум-колл-аут */
+    .complex-callout {
+      margin-top: 1.75rem; display: flex; align-items: center; gap: 1.75rem; flex-wrap: wrap;
+      background: linear-gradient(135deg, var(--amber-lt) 0%, #fffaf0 100%);
+      border: 1.5px solid var(--amber-mid); border-radius: var(--r-lg);
+      padding: 1.75rem 2rem;
+    }
+    .complex-icon {
+      width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
+      background: #fff; border: 1.5px solid var(--amber-mid);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--amber); box-shadow: 0 3px 12px rgba(217,119,6,.15);
+    }
+    .complex-icon svg { width: 24px; height: 24px; }
+    .complex-body { flex: 1; min-width: 240px; }
+    .complex-body strong { display: block; font-size: 1.05rem; font-weight: 800; color: var(--dark); margin-bottom: .3rem; letter-spacing: -.01em; }
+    .complex-body p { font-size: .87rem; color: var(--text); line-height: 1.55; }
+    .complex-right { display: flex; flex-direction: column; align-items: flex-end; gap: .6rem; flex-shrink: 0; }
+    .complex-price { font-size: 1.4rem; font-weight: 800; color: var(--amber); white-space: nowrap; }
+    .complex-btn {
+      display: inline-flex; align-items: center; gap: .4rem; white-space: nowrap;
+      background: var(--amber); color: #fff; font-size: .87rem; font-weight: 700;
+      padding: .7rem 1.3rem; border-radius: 10px; text-decoration: none; transition: all .2s;
+    }
+    .complex-btn:hover { background: #b96305; transform: translateY(-1px); box-shadow: 0 4px 16px var(--amber-glo); }
+
+    @media (max-width: 640px) {
+      .entry-banner-right, .complex-right { width: 100%; align-items: stretch; }
+      .entry-banner-btn, .complex-btn { justify-content: center; }
+      .complex-right { flex-direction: row; justify-content: space-between; align-items: center; }
+    }
 
     /* ── HOW IT WORKS ── */
     .how { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -512,7 +657,7 @@
       border: 1.5px solid var(--purple-mid); border-radius: var(--r-lg);
       padding: 1.25rem 1.5rem; font-size: .9rem; color: var(--text); line-height: 1.65;
     }
-    .value-insight-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: .05rem; }
+    .value-insight-icon { flex-shrink: 0; margin-top: .05rem; color: var(--purple); }
     .value-insight strong { color: var(--purple); }
 
     /* ── COMPARE TABLE ── */
@@ -530,7 +675,9 @@
     .compare-table .check-txt { color: var(--text); font-weight: 600; }
     .compare-table .row-group td { background: var(--bg); font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: .55rem 1.1rem; }
     .compare-table .row-group td.col-hit { background: var(--purple-lt); }
-    .compare-wrap { border: 1.5px solid var(--border); border-radius: var(--r-lg); overflow: hidden; }
+    .compare-wrap { border: 1.5px solid var(--border); border-radius: var(--r-lg); overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+    .compare-table { min-width: 600px; }
+    .compare-hint { display: none; font-size: .74rem; color: var(--muted); text-align: center; margin-top: .6rem; }
 
     /* ── CTA ── */
     .cta-section {
@@ -577,11 +724,15 @@
     @media (max-width: 860px) {
       .nav { padding: 0 1.25rem; }
       .pkg-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .pkg-grid::before {
+        left: 56px; right: auto; top: 0; bottom: 0; height: auto; width: 2px;
+        background: repeating-linear-gradient(180deg, var(--muted) 0 5px, transparent 5px 10px);
+      }
       .value-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto 1.5rem; }
       .how-steps { grid-template-columns: 1fr 28px 1fr; grid-template-rows: auto auto; row-gap: .75rem; }
       .how-arrow:nth-child(4) { grid-column: 1 / -1; transform: rotate(90deg); justify-self: center; }
       .how-card:nth-child(5), .how-card:nth-child(7) { grid-column: span 1; }
-      .compare-table th:nth-child(3), .compare-table td:nth-child(3) { display: none; }
+      .compare-hint { display: block; }
     }
     @media (max-width: 540px) {
       .hero { padding: 4rem 1.25rem 3.5rem; }
@@ -612,6 +763,14 @@
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-pain-note" aria-hidden="true">
+    <span class="hero-pain-note-tag">До</span>
+    <img src="assets/Gemini_Generated_Image_8j0pi78j0pi78j0p.jpg" alt="">
+  </div>
+  <div class="hero-after-note" aria-hidden="true">
+    <span class="hero-after-note-tag">После</span>
+    <img src="assets/Gemini_Generated_Image_6ccho56ccho56cch.jpg" alt="">
+  </div>
   <div class="hero-tag">
     <div class="hero-tag-dot"></div>
     Индивидуальное наставничество
@@ -724,6 +883,13 @@
   </div>
 </section>
 
+<!-- SKILLS STRIP -->
+<div class="skills-strip">
+  <video autoplay muted loop playsinline aria-hidden="true">
+    <source src="assets/skills-fly-cropped.mp4" type="video/mp4">
+  </video>
+</div>
+
 <!-- PACKAGES -->
 <section class="section packages" id="packages">
   <div class="section-inner">
@@ -733,18 +899,37 @@
       <p class="section-sub">Три пакета с разной глубиной. Большинство начинают со второго — он закрывает 80% запросов экспертов.</p>
     </div>
 
+    <div class="entry-banner">
+      <div class="entry-banner-left">
+        <div class="entry-banner-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <div class="entry-banner-text">
+          <strong>Не уверены, что нужно? Начните с Экспресс-разбора</strong>
+          <span>Одна встреча 45–60 минут — берём вашу конкретную задачу и решаем её вживую, результат сразу на руках</span>
+        </div>
+      </div>
+      <div class="entry-banner-right">
+        <span class="entry-banner-price">3 000 ₽</span>
+        <a class="entry-banner-btn" href="https://t.me/Aleksei_Zotov" target="_blank">Записаться →</a>
+      </div>
+    </div>
+
     <div class="pkg-grid">
 
       <!-- ПАКЕТ 1 -->
       <div class="pkg-card">
         <div class="pkg-stripe"></div>
         <div class="pkg-body">
+          <span class="pkg-ghost">01</span>
           <div class="pkg-num">01</div>
           <div class="pkg-name">Фундамент</div>
           <div class="pkg-target">Для тех, кто слышал про ИИ и хочет разобраться — без страха, что «это не для меня»</div>
           <div class="pkg-meta">
-            <div class="pkg-pill">📅 4 встречи</div>
-            <div class="pkg-pill">⏱ 4 недели</div>
+            <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 4 встречи</div>
+            <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 4 недели</div>
           </div>
           <hr class="pkg-divider">
           <ul class="pkg-features">
@@ -753,18 +938,19 @@
             <li>Что из чего: ChatGPT, Claude, Gemini и другие — как выбирать при большом многообразии, что для чего и зачем</li>
             <li>Регистрация, оплата подписок, базовая настройка — от «как зайти» до «работает»</li>
             <li>Создание проектов, обучение ИИ своим материалом, тонкая настройка под вашу нишу</li>
+            <li>Работа с таблицами — базовый анализ, формулы, сводные таблицы через ИИ</li>
             <li>NotebookLM — личная база знаний, которая помнит всё про вашу тему</li>
           </ul>
           <div class="pkg-result">
             <div class="pkg-result-label">Вы получите</div>
-            <p>Понимаете, что выбрать из сотни инструментов и зачем. Всё настроено и оплачено. Умеете создавать проекты и обучать ИИ своим материалом. NotebookLM работает и помнит всё про вашу нишу.</p>
+            <p>Понимаете, что выбрать из сотни инструментов и зачем. Всё настроено и оплачено. Умеете создавать проекты, обучать ИИ своим материалом и работать с таблицами. NotebookLM работает и помнит всё про вашу нишу.</p>
           </div>
         </div>
         <div class="pkg-footer">
           <div class="pkg-price">
             <span class="pkg-price-main">22 000 ₽</span>
           </div>
-          <div class="pkg-price-note">коуч-сессия (7 000 ₽) + 3 AI-встречи — всё включено</div>
+          <div class="pkg-price-note">за 4 недели вы перестаёте бояться ИИ и применяете его в рутине каждый день</div>
           <a class="pkg-btn" href="https://t.me/Aleksei_Zotov" target="_blank">Выбрать пакет →</a>
         </div>
       </div>
@@ -772,27 +958,32 @@
       <!-- ПАКЕТ 2 — ХИТ -->
       <div class="pkg-card featured">
         <div class="pkg-stripe"></div>
-        <div class="pkg-badge">⭐ Хит</div>
+        <div class="pkg-badge">Хит</div>
         <div class="pkg-body">
+          <span class="pkg-ghost">02</span>
           <div class="pkg-num">02</div>
           <div class="pkg-name">Медиа-присутствие</div>
           <div class="pkg-target">Для эксперта, которому нужно быть заметным: посты, визуал, контент — без команды и дизайнера</div>
           <div class="pkg-meta">
-            <div class="pkg-pill">📅 8 встреч</div>
-            <div class="pkg-pill">⏱ 8 недель</div>
+            <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 8 встреч</div>
+            <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 8 недель</div>
           </div>
           <hr class="pkg-divider">
+          <div class="pkg-inherit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            Плюс всё из пакета «Фундамент»
+          </div>
           <ul class="pkg-features">
-            <li>Всё из пакета «Фундамент»</li>
             <li>Оформление соцсетей через ИИ — единый стиль и шаблоны</li>
             <li>AI-презентации: питч, КП, вебинар за 20 минут</li>
             <li>Карусели и графика под ваши темы</li>
             <li>Базовое видео — оживление фото, короткий ролик</li>
             <li>Первый лендинг или мини-сайт</li>
+            <li>AI-саммари — встречи, созвоны и документы в короткую выжимку</li>
           </ul>
           <div class="pkg-result">
             <div class="pkg-result-label">Вы получите</div>
-            <p>Единый визуальный стиль. Умеете делать контент самостоятельно. Сайт уже работает.</p>
+            <p>Единый визуальный стиль. Умеете делать контент самостоятельно. Сайт уже работает. Долгие встречи и документы — в понятной выжимке за минуту.</p>
           </div>
         </div>
         <div class="pkg-footer">
@@ -808,24 +999,30 @@
       <div class="pkg-card">
         <div class="pkg-stripe"></div>
         <div class="pkg-body">
+          <span class="pkg-ghost">03</span>
           <div class="pkg-num">03</div>
           <div class="pkg-name">Цифровой эксперт</div>
           <div class="pkg-target">Для активного эксперта, который хочет масштабироваться и автоматизировать контент-процессы</div>
           <div class="pkg-meta">
-            <div class="pkg-pill">📅 10–12 встреч</div>
-            <div class="pkg-pill">⏱ + месяц поддержки</div>
+            <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 10–12 встреч</div>
+            <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> + месяц поддержки</div>
           </div>
           <hr class="pkg-divider">
+          <div class="pkg-inherit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            Плюс всё из пакета «Медиа-присутствие»
+          </div>
           <ul class="pkg-features">
-            <li>Всё из пакета «Медиа-присутствие»</li>
             <li>AI-аватар — видео с вашим лицом по тексту без съёмки</li>
             <li>Комикс или бренд-персонаж</li>
+            <li>Дашборд данных — визуализация показателей бизнеса, обновляется сам</li>
+            <li>AI-агент под конкретный процесс — квалификация лидов, ответы в CRM</li>
             <li>Работа с Claude API или автоматизация через n8n</li>
             <li>2 поддерживающих созвона после окончания (1 месяц)</li>
           </ul>
           <div class="pkg-result">
             <div class="pkg-result-label">Вы получите</div>
-            <p>Автоматизированный контент-конвейер. Ваш AI-аватар. Больше не нужна команда.</p>
+            <p>Автоматизированный контент- и данных-конвейер. Дашборд считает сам. Ваш AI-аватар и AI-агент под рутинные процессы. Больше не нужна команда.</p>
           </div>
         </div>
         <div class="pkg-footer">
@@ -837,6 +1034,33 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="pkg-trust">
+      <div class="pkg-trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+        Работаем по договору
+      </div>
+      <div class="pkg-trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        Есть рассрочка
+      </div>
+    </div>
+
+    <div class="complex-callout">
+      <div class="complex-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <div class="complex-body">
+        <strong>Нужно больше, чем инструменты?</strong>
+        <p>Для тех, кому кроме техники важна работа с барьерами — страхом делегировать, «я недостаточно технический человек», тревогой отпустить контроль. Пакет «Цифровой эксперт» + коучинг-сопровождение на всём протяжении программы, а не разовая сессия на старте.</p>
+      </div>
+      <div class="complex-right">
+        <span class="complex-price">от 90 000 ₽</span>
+        <a class="complex-btn" href="https://t.me/Aleksei_Zotov" target="_blank">Обсудить формат →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -871,10 +1095,14 @@
             <span class="value-item">3 персональные AI-сессии (настройка + обучение)</span>
             <span class="value-market">15 000–21 000 ₽</span>
           </div>
+          <div class="value-row">
+            <span class="value-item">Обучение работе с таблицами у фрилансера</span>
+            <span class="value-market">5 000–10 000 ₽</span>
+          </div>
         </div>
         <div class="value-total-row">
           <div class="value-total-label">Итого у подрядчиков</div>
-          <div class="value-total-market">от 30 000 ₽</div>
+          <div class="value-total-market">от 35 000 ₽</div>
         </div>
         <div class="value-vs">
           <div class="value-vs-inner vc-teal-bg">
@@ -889,7 +1117,7 @@
       <div class="value-card value-card-featured">
         <div class="value-card-head">
           <div class="value-num vc-purple">02</div>
-          <div class="value-card-title">Медиа-присутствие ⭐</div>
+          <div class="value-card-title">Медиа-присутствие</div>
         </div>
         <div class="value-rows">
           <div class="value-row">
@@ -916,10 +1144,14 @@
             <span class="value-item">Коучинг + AI-консультант</span>
             <span class="value-market">22 000 ₽</span>
           </div>
+          <div class="value-row">
+            <span class="value-item">Настройка AI-саммари под свои встречи</span>
+            <span class="value-market">8 000–15 000 ₽</span>
+          </div>
         </div>
         <div class="value-total-row">
           <div class="value-total-label">Итого у подрядчиков</div>
-          <div class="value-total-market">от 200 000 ₽</div>
+          <div class="value-total-market">от 208 000 ₽</div>
         </div>
         <div class="value-vs">
           <div class="value-vs-inner vc-purple-bg">
@@ -950,6 +1182,14 @@
             <span class="value-market">30 000–60 000 ₽</span>
           </div>
           <div class="value-row">
+            <span class="value-item">Дашборд данных у аналитика</span>
+            <span class="value-market">40 000–80 000 ₽</span>
+          </div>
+          <div class="value-row">
+            <span class="value-item">AI-агент под процесс (разработка)</span>
+            <span class="value-market">60 000–150 000 ₽</span>
+          </div>
+          <div class="value-row">
             <span class="value-item">Настройка автоматизации n8n</span>
             <span class="value-market">40 000–80 000 ₽</span>
           </div>
@@ -960,7 +1200,7 @@
         </div>
         <div class="value-total-row">
           <div class="value-total-label">Итого у подрядчиков</div>
-          <div class="value-total-market">от 360 000 ₽</div>
+          <div class="value-total-market">от 460 000 ₽</div>
         </div>
         <div class="value-vs">
           <div class="value-vs-inner vc-blue-bg">
@@ -974,7 +1214,11 @@
     </div>
 
     <div class="value-insight">
-      <div class="value-insight-icon">💡</div>
+      <div class="value-insight-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+          <path d="M9 18h6M10 22h4M15 14c1.5-1.2 2.5-3 2.5-5A5.5 5.5 0 0 0 6.5 9c0 2 1 3.8 2.5 5 .6.5 1 1.3 1 2h4c0-.7.4-1.5 1-2z"/>
+        </svg>
+      </div>
       <div>
         <strong>Ключевое отличие:</strong> подрядчик делает за вас один раз и уходит. После наставничества вы делаете это сами — каждый следующий лендинг, ролик или презентация стоят вам ноль рублей и 20 минут.
       </div>
@@ -996,7 +1240,7 @@
           <tr>
             <th>Что включено</th>
             <th>01 Фундамент</th>
-            <th class="col-hit">02 Медиа-присутствие ⭐</th>
+            <th class="col-hit">02 Медиа-присутствие</th>
             <th>03 Цифровой эксперт</th>
           </tr>
         </thead>
@@ -1018,6 +1262,12 @@
           </tr>
           <tr>
             <td>NotebookLM — база знаний</td>
+            <td class="check-y">✓</td>
+            <td class="col-hit check-y">✓</td>
+            <td class="check-y">✓</td>
+          </tr>
+          <tr>
+            <td>Работа с таблицами и данными</td>
             <td class="check-y">✓</td>
             <td class="col-hit check-y">✓</td>
             <td class="check-y">✓</td>
@@ -1055,6 +1305,12 @@
             <td class="col-hit check-y">✓</td>
             <td class="check-y">✓</td>
           </tr>
+          <tr>
+            <td>AI-саммари встреч и документов</td>
+            <td class="check-n">—</td>
+            <td class="col-hit check-y">✓</td>
+            <td class="check-y">✓</td>
+          </tr>
           <tr class="row-group">
             <td colspan="4">Масштабирование</td>
           </tr>
@@ -1066,6 +1322,18 @@
           </tr>
           <tr>
             <td>Бренд-персонаж или комикс</td>
+            <td class="check-n">—</td>
+            <td class="col-hit check-n">—</td>
+            <td class="check-y">✓</td>
+          </tr>
+          <tr>
+            <td>Дашборд данных</td>
+            <td class="check-n">—</td>
+            <td class="col-hit check-n">—</td>
+            <td class="check-y">✓</td>
+          </tr>
+          <tr>
+            <td>AI-агент под процесс</td>
             <td class="check-n">—</td>
             <td class="col-hit check-n">—</td>
             <td class="check-y">✓</td>
@@ -1097,6 +1365,7 @@
         </tbody>
       </table>
     </div>
+    <p class="compare-hint">← Листайте таблицу вправо, чтобы увидеть все пакеты →</p>
   </div>
 </section>
 
@@ -1215,7 +1484,8 @@
           <p class="faq-a">Один вопрос: <strong>«Вам сейчас важнее разобраться в инструментах — или уже выглядеть профессионально в соцсетях и иметь сайт?»</strong><br><br>
           <em>Первое</em> → Пакет 1 «Фундамент».<br>
           <em>Второе</em> → Пакет 2 «Медиа-присутствие».<br>
-          Хотите всё сразу и есть бюджет → Пакет 3 «Цифровой эксперт».</p>
+          Хотите всё сразу и есть бюджет → Пакет 3 «Цифровой эксперт».<br><br>
+          Не уверены вообще ни в чём → начните с <strong>Экспресс-разбора за 3 000 ₽</strong>. Если кроме инструментов важна ещё и работа с внутренними барьерами — спросите про формат «Комплекс» с коучингом.</p>
         </div>
       </div>
 
@@ -1230,7 +1500,7 @@
         </div>
         <div class="faq-card-body">
           <div class="faq-q">Как проходит оплата?</div>
-          <p class="faq-a">Работаем с клиентами из России и из-за рубежа. <strong>Способ оплаты обсудим на знакомстве</strong> — подберём удобный для вас вариант. Оплата до старта программы.</p>
+          <p class="faq-a">Работаем <strong>по договору</strong> — фиксируем состав пакета и сроки на бумаге. Есть <strong>рассрочка</strong>, если удобнее платить частями. Работаем с клиентами из России и из-за рубежа, способ оплаты обсудим на знакомстве.</p>
         </div>
       </div>
 
@@ -1282,6 +1552,7 @@
       О нас — ezagroup.ru →
     </a>
   </div>
+  <p style="margin-top:1.75rem; font-size:.82rem; color:rgba(255,255,255,.4); position:relative; z-index:1;">Работаем по договору · есть рассрочка</p>
 </section>
 
 <!-- FOOTER -->
