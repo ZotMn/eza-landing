@@ -767,6 +767,149 @@
     .footer-link { font-size: .78rem; color: rgba(255,255,255,.45); text-decoration: none; transition: color .18s; }
     .footer-link:hover { color: rgba(255,255,255,.8); }
 
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--bg); }
+
+    .tst-video-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, 258px);
+      justify-content: center; gap: 1.5rem; margin-bottom: 3.25rem;
+    }
+
+    .tst-video {
+      position: relative; display: block; width: 100%; aspect-ratio: 9 / 16;
+      padding: 0; border: none; border-radius: 20px; overflow: hidden;
+      background: var(--dark); cursor: pointer; font: inherit; text-align: left;
+      box-shadow: 0 10px 30px rgba(26,26,46,.14);
+      transition: transform .28s cubic-bezier(.34,1.1,.64,1), box-shadow .28s;
+    }
+    .tst-video:hover { transform: translateY(-5px); box-shadow: 0 18px 44px var(--purple-glo); }
+    .tst-video:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; }
+    .tst-video video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .5s cubic-bezier(.34,1.1,.64,1);
+    }
+    .tst-video:hover video { transform: scale(1.045); }
+
+    .tst-shade {
+      position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(to top, rgba(12,12,28,.88) 0%, rgba(12,12,28,.35) 34%, rgba(12,12,28,.05) 58%, rgba(12,12,28,.28) 100%);
+    }
+
+    .tst-play {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 60px; height: 60px; border-radius: 50%;
+      background: rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.55);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      transition: all .28s cubic-bezier(.34,1.1,.64,1);
+    }
+    .tst-play svg { width: 20px; height: 20px; color: #fff; margin-left: 3px; }
+    .tst-video:hover .tst-play {
+      background: var(--purple); border-color: var(--purple);
+      transform: translate(-50%,-50%) scale(1.09);
+      box-shadow: 0 8px 26px rgba(108,99,255,.55);
+    }
+
+    .tst-pkg-chip {
+      position: absolute; top: .85rem; left: .85rem; max-width: calc(100% - 5.2rem);
+      font-size: .68rem; font-weight: 700; letter-spacing: .02em; color: #fff;
+      background: rgba(108,99,255,.85); backdrop-filter: blur(4px);
+      padding: .22rem .6rem; border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.28);
+    }
+    .tst-pkg-chip.is-biz { background: rgba(6,182,212,.85); }
+
+    .tst-dur {
+      position: absolute; top: .85rem; right: .85rem;
+      font-size: .72rem; font-weight: 700; color: #fff;
+      background: rgba(12,12,28,.55); backdrop-filter: blur(4px);
+      padding: .22rem .6rem; border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+
+    .tst-meta { position: absolute; left: 1.05rem; right: 1.05rem; bottom: 1.05rem; }
+    .tst-meta-name { display: block; font-family: var(--font-display); font-size: .95rem; font-weight: 700; color: #fff; letter-spacing: -.01em; }
+    .tst-meta-role { display: block; font-size: .76rem; color: rgba(255,255,255,.66); margin-top: .15rem; line-height: 1.4; }
+
+    /* модалка видео */
+    .tst-modal {
+      position: fixed; inset: 0; z-index: 300; display: none;
+      align-items: center; justify-content: center; padding: 4.5rem 1.5rem 2rem;
+      background: rgba(12,12,26,.9); backdrop-filter: blur(10px);
+    }
+    .tst-modal.is-open { display: flex; animation: tstFade .2s ease; }
+    @keyframes tstFade { from { opacity: 0; } to { opacity: 1; } }
+    .tst-modal-inner { position: relative; width: min(400px, 100%); animation: tstRise .28s cubic-bezier(.34,1.1,.64,1); }
+    @keyframes tstRise { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: none; } }
+    .tst-modal video {
+      width: 100%; max-height: 76vh; display: block;
+      border-radius: 20px; background: #000;
+      box-shadow: 0 30px 80px rgba(0,0,0,.6);
+    }
+    .tst-modal-inner.is-wide { width: min(880px, 100%); }
+    .tst-modal-cap { margin-top: .9rem; text-align: center; }
+    .tst-modal-cap strong { display: block; font-family: var(--font-display); font-size: .95rem; font-weight: 700; color: #fff; }
+    .tst-modal-cap span { display: block; font-size: .8rem; color: rgba(255,255,255,.6); margin-top: .15rem; }
+    .tst-modal-close {
+      position: absolute; top: -3.1rem; right: 0;
+      width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+      background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.22);
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .tst-modal-close svg { width: 18px; height: 18px; color: #fff; }
+    .tst-modal-close:hover { background: rgba(255,255,255,.2); transform: rotate(90deg); }
+
+    /* текстовые отзывы */
+    .tst-text-grid { columns: 3 292px; column-gap: 1.1rem; }
+
+    .tst-card {
+      break-inside: avoid; -webkit-column-break-inside: avoid;
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--r-lg); padding: 1.35rem 1.4rem 1.2rem;
+      margin-bottom: 1.1rem;
+      transition: all .25s cubic-bezier(.34,1.1,.64,1);
+    }
+    .tst-card:hover {
+      border-color: rgba(108,99,255,.28);
+      box-shadow: 0 8px 28px rgba(108,99,255,.12);
+      transform: translateY(-3px);
+    }
+
+    .tst-card-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .8rem; }
+    .tst-stars { position: relative; width: 83px; height: 15px; flex-shrink: 0; }
+    .tst-stars-bg, .tst-stars-fg { position: absolute; top: 0; left: 0; display: flex; gap: 2px; }
+    .tst-stars-bg { color: var(--border); }
+    .tst-stars-fg { overflow: hidden; color: #f5a623; }
+    .tst-stars svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .tst-date { font-size: .72rem; color: var(--muted); white-space: nowrap; }
+
+    .tst-card p { font-size: .875rem; color: var(--text); line-height: 1.72; }
+    .tst-card p strong { color: var(--purple-text); font-weight: 700; }
+
+    .tst-author {
+      display: flex; align-items: center; gap: .7rem;
+      margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--border);
+    }
+    .tst-avatar {
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: var(--purple-lt); border: 1.5px solid var(--purple-mid);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: .8rem; font-weight: 700; color: var(--purple-text);
+    }
+    .tst-avatar.c-teal { background: var(--teal-lt); border-color: var(--teal-mid); color: var(--teal-text); }
+    .tst-avatar.c-blue { background: var(--blue-lt); border-color: var(--blue-mid); color: var(--blue-text); }
+    .tst-avatar.c-amber { background: var(--amber-lt); border-color: var(--amber-mid); color: #a35a04; }
+    .tst-avatar.c-biz { background: var(--biz-lt); border-color: var(--biz-mid); color: #0e7490; }
+    .tst-author-name { display: block; font-size: .86rem; font-weight: 700; color: var(--dark); letter-spacing: -.01em; }
+    .tst-author-role { display: block; font-size: .76rem; color: var(--muted); margin-top: .1rem; line-height: 1.4; }
+
+    @media (max-width: 540px) {
+      .tst-video-grid { grid-template-columns: minmax(0, 280px); gap: 1.1rem; }
+      .tst-modal { padding: 4rem 1rem 1.5rem; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 860px) {
       .nav { padding: 0 1.25rem; }
@@ -1568,6 +1711,181 @@
   </div>
 </section>
 
+<!-- TESTIMONIALS -->
+<section class="section testimonials" id="testimonials">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="section-label">Отзывы</div>
+      <h2 class="section-title">Что говорят те,<br>кто уже прошёл наставничество</h2>
+      <p class="section-sub">Видео клиенты записали сами (без монтажа и заготовленного текста), нажмите на карточку, чтобы посмотреть. Ниже отзывы, которые люди оставили после работы.</p>
+    </div>
+
+    <!-- ВИДЕООТЗЫВЫ. Чтобы добавить ещё один — скопируйте <button class="tst-video"> и поменяйте data-src / имя / роль / длительность -->
+    <div class="tst-video-grid">
+
+      <button class="tst-video" type="button"
+              data-src="assets/testimonial-1.mp4"
+              data-name="Светлана"
+              data-role="Врач-стоматолог, кандидат медицинских наук (Москва / Владивосток)">
+        <video src="assets/testimonial-1.mp4#t=1.5" preload="metadata" muted playsinline></video>
+        <span class="tst-shade"></span>
+        <span class="tst-play">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.3-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14z"/></svg>
+        </span>
+        <span class="tst-pkg-chip">Пакет 1 · Фундамент</span>
+        <span class="tst-dur">0:24</span>
+        <span class="tst-meta">
+          <span class="tst-meta-name">Светлана</span>
+          <span class="tst-meta-role">Врач-стоматолог, к.м.н. (Москва / Владивосток)</span>
+        </span>
+      </button>
+
+      <button class="tst-video" type="button"
+              data-src="assets/testimonial-2.mp4"
+              data-name="Дмитрий"
+              data-role="Основатель Спарком, маркетплейса банного отдыха в складчину (спарком.рф)">
+        <video src="assets/testimonial-2.mp4#t=1.5" preload="metadata" muted playsinline></video>
+        <span class="tst-shade"></span>
+        <span class="tst-play">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.3-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14z"/></svg>
+        </span>
+        <span class="tst-pkg-chip is-biz">Пакет для бизнеса</span>
+        <span class="tst-dur">1:35</span>
+        <span class="tst-meta">
+          <span class="tst-meta-name">Дмитрий</span>
+          <span class="tst-meta-role">Основатель Спарком (спарком.рф), маркетплейс банного отдыха</span>
+        </span>
+      </button>
+
+      <button class="tst-video" type="button"
+              data-src="assets/testimonial-3.mp4"
+              data-name="Дарья"
+              data-role="Правая рука директора крупной компании">
+        <video src="assets/testimonial-3.mp4#t=38" preload="metadata" muted playsinline></video>
+        <span class="tst-shade"></span>
+        <span class="tst-play">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.3-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14z"/></svg>
+        </span>
+        <span class="tst-pkg-chip is-biz">Пакет для бизнеса</span>
+        <span class="tst-dur">8:41</span>
+        <span class="tst-meta">
+          <span class="tst-meta-name">Дарья</span>
+          <span class="tst-meta-role">Правая рука директора крупной компании</span>
+        </span>
+      </button>
+
+    </div>
+
+    <!-- ТЕКСТОВЫЕ ОТЗЫВЫ. Новый отзыв — копия блока .tst-card: звёзды (width в .tst-stars-fg = оценка в %), дата, текст, инициал и тема -->
+    <div class="tst-text-grid">
+
+      <div class="tst-card">
+        <div class="tst-card-head">
+          <div class="tst-stars" role="img" aria-label="Оценка 5 из 5">
+            <span class="tst-stars-bg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+            <span class="tst-stars-fg" style="width:100%"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+          </div>
+          <span class="tst-date">19 августа 2026</span>
+        </div>
+        <p>Алексей в теме AI, подсветил моменты которые я не знал, за 60 минут столько фишек выдал, что я после звонка отключил несколько подписок на 40 долларов в месяц, рассказал как бесплатно пользоваться n8n. По клоду тоже много нового узнал, настроили систему, всё работает. Рекомендую Алексея и любителям и бизнесу для помощи в автоматизации рутинных задач.</p>
+        <div class="tst-author">
+          <div class="tst-avatar c-blue">А</div>
+          <div>
+            <span class="tst-author-name">Александр</span>
+            <span class="tst-author-role">Обучение Claude Code</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tst-card">
+        <div class="tst-card-head">
+          <div class="tst-stars" role="img" aria-label="Оценка 5 из 5">
+            <span class="tst-stars-bg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+            <span class="tst-stars-fg" style="width:100%"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+          </div>
+          <span class="tst-date">2 августа 2026</span>
+        </div>
+        <p>Нам всем очень повезло, что на этом сервисе с июля появился данный специалист. Очень быстро включился в мою задачу, подготовил документ с пошаговой инструкцией и на оффлайн встрече объяснил материал. Я вам миллион раз рекомендую Алексея!!!</p>
+        <div class="tst-author">
+          <div class="tst-avatar c-teal">Ю</div>
+          <div>
+            <span class="tst-author-name">Юля</span>
+            <span class="tst-author-role">Обучение созданию нейросетей</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tst-card">
+        <div class="tst-card-head">
+          <div class="tst-stars" role="img" aria-label="Оценка 5 из 5">
+            <span class="tst-stars-bg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+            <span class="tst-stars-fg" style="width:100%"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+          </div>
+          <span class="tst-date">28 июля 2026</span>
+        </div>
+        <p>Рекомендую Алексея, если нужно решить задачу быстро, качественно и в комфортном взаимодействии! Отдельно спасибо за системный подход, за использование дополнительных инструментов при достижении цели)</p>
+        <div class="tst-author">
+          <div class="tst-avatar">Н</div>
+          <div>
+            <span class="tst-author-name">Наталья</span>
+            <span class="tst-author-role">Обучение Claude Code</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tst-card">
+        <div class="tst-card-head">
+          <div class="tst-stars" role="img" aria-label="Оценка 5 из 5">
+            <span class="tst-stars-bg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+            <span class="tst-stars-fg" style="width:100%"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+          </div>
+          <span class="tst-date">11 августа 2026</span>
+        </div>
+        <p>Огромное спасибо Алексею за профессионализм, отзывчивость. У нас была первая консультация по моей "боли". Разобрали все вдоль и поперек, разложил по полочкам дальнейшие шаги и все варианты развития. Путь определен, двигаемся дальше, будем работать Алексеем для осуществления задуманных целей. Специалиста очень рекомендую.</p>
+        <div class="tst-author">
+          <div class="tst-avatar c-amber">В</div>
+          <div>
+            <span class="tst-author-name">Виктория</span>
+            <span class="tst-author-role">Обучение Claude Code</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tst-card">
+        <div class="tst-card-head">
+          <div class="tst-stars" role="img" aria-label="Оценка 5 из 5">
+            <span class="tst-stars-bg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+            <span class="tst-stars-fg" style="width:100%"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+          </div>
+          <span class="tst-date">29 июля 2026</span>
+        </div>
+        <p>Грамотный специалист, профессиональный подход к задачам, приятное общение, рациональные решения</p>
+        <div class="tst-author">
+          <div class="tst-avatar c-biz">Е</div>
+          <div>
+            <span class="tst-author-name">Евгения</span>
+            <span class="tst-author-role">Обучение созданию нейросетей</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- МОДАЛКА ВИДЕО -->
+<div class="tst-modal" id="tstModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Видеоотзыв">
+  <div class="tst-modal-inner">
+    <button class="tst-modal-close" type="button" id="tstClose" aria-label="Закрыть">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <video id="tstPlayer" controls playsinline preload="none"></video>
+    <div class="tst-modal-cap">
+      <strong id="tstCapName"></strong>
+      <span id="tstCapRole"></span>
+    </div>
+  </div>
+</div>
+
 <!-- TIP SECTION -->
 <section class="section tip-section">
   <div class="section-inner">
@@ -1671,6 +1989,67 @@
   <a class="footer-link" href="privacy.html">Политика конфиденциальности</a>
   <a class="footer-link" href="https://t.me/Aleksei_Zotov" target="_blank">@Aleksei_Zotov</a>
 </footer>
+
+
+<script>
+(function () {
+  var modal   = document.getElementById('tstModal');
+  var player  = document.getElementById('tstPlayer');
+  var capName = document.getElementById('tstCapName');
+  var capRole = document.getElementById('tstCapRole');
+  var inner   = modal.querySelector('.tst-modal-inner');
+  var lastFocus = null;
+
+  // горизонтальное видео (запись встречи) показываем шире вертикального
+  player.addEventListener('loadedmetadata', function () {
+    inner.classList.toggle('is-wide', player.videoWidth > player.videoHeight);
+  });
+
+  function openModal(btn) {
+    lastFocus = btn;
+    player.src = btn.getAttribute('data-src');
+    capName.textContent = btn.getAttribute('data-name') || '';
+    capRole.textContent = btn.getAttribute('data-role') || '';
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    inner.classList.remove('is-wide');
+    var p = player.play();
+    if (p && p.catch) p.catch(function () {});
+  }
+
+  function closeModal() {
+    player.pause();
+    player.removeAttribute('src');
+    player.load();
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.tst-video'), function (btn) {
+    btn.addEventListener('click', function () { openModal(btn); });
+  });
+
+  // подстраховка превью: если браузер не отработал #t=, перематываем кадр вручную
+  Array.prototype.forEach.call(document.querySelectorAll('.tst-video video'), function (v) {
+    v.addEventListener('loadedmetadata', function () {
+      try {
+        var mark = (v.getAttribute('src') || '').match(/#t=([0-9.]+)/);
+        var want = mark ? parseFloat(mark[1]) : 1.5;
+        if (v.currentTime < 0.1 && v.duration > want + 0.5) v.currentTime = want;
+      } catch (e) {}
+    });
+  });
+
+  document.getElementById('tstClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Escape' || e.keyCode === 27) && modal.classList.contains('is-open')) closeModal();
+  });
+})();
+</script>
 
 </body>
 </html>
