@@ -287,7 +287,10 @@
     }
     .entry-banner-btn:hover { background: var(--dark); color: #fff; border-color: var(--dark); transform: translateY(-1px); }
 
-    .pkg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: start; position: relative; }
+    .packages .section-inner { max-width: 1260px; }
+    .packages .entry-banner { margin: 0 0 1.75rem; }
+    .pkg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; align-items: stretch; position: relative; }
+    .pkg-dots, .pkg-swipe-hint { display: none; }
 
     .pkg-card {
       background: var(--white);
@@ -325,7 +328,7 @@
       padding: .6rem 1rem; letter-spacing: -.005em;
     }
 
-    .pkg-body { padding: 1.75rem 1.75rem 0; flex: 1; position: relative; }
+    .pkg-body { padding: 1.5rem 1.4rem 0; flex: 1; position: relative; display: flex; flex-direction: column; }
 
     /* объёмная фоновая цифра-текстура — не для чтения, для глубины */
     .pkg-ghost {
@@ -355,7 +358,7 @@
     .pkg-card:nth-child(2) .pkg-num { background: linear-gradient(135deg, var(--purple), #9b95ff); --accent: var(--purple); }
     .pkg-card:nth-child(3) .pkg-num { background: linear-gradient(135deg, var(--blue), #60a5fa); --accent: var(--blue); }
 
-    .pkg-name { font-size: 1.25rem; font-weight: 800; color: var(--dark); letter-spacing: -0.02em; margin-bottom: .3rem; }
+    .pkg-name { font-size: 1.14rem; font-weight: 800; color: var(--dark); letter-spacing: -0.02em; margin-bottom: .3rem; }
     .pkg-target { font-size: .82rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.5; }
 
     .pkg-meta {
@@ -382,7 +385,7 @@
     .pkg-inherit svg { width: 14px; height: 14px; flex-shrink: 0; }
 
     .pkg-features { list-style: none; display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1.5rem; }
-    .pkg-features li { display: flex; align-items: flex-start; gap: .6rem; font-size: .875rem; color: var(--text); line-height: 1.5; }
+    .pkg-features li { display: grid; grid-template-columns: 16px 1fr; column-gap: .6rem; row-gap: .12rem; align-items: start; font-size: .875rem; color: var(--text); line-height: 1.5; }
     .pkg-features li::before {
       content: ''; flex-shrink: 0; margin-top: .28rem;
       width: 16px; height: 16px; border-radius: 50%;
@@ -412,7 +415,7 @@
     .pkg-details-list li::before { content: '•'; position: absolute; left: 0; color: var(--muted); }
 
     .pkg-result {
-      border-radius: 12px; padding: .95rem 1.1rem; margin-bottom: 1.5rem;
+      border-radius: 12px; padding: .95rem 1.1rem; margin-bottom: 1.5rem; margin-top: auto;
     }
     .pkg-card:nth-child(1) .pkg-result { background: var(--teal-lt); border: 1px solid var(--teal-mid); }
     .pkg-card:nth-child(2) .pkg-result { background: var(--purple-lt); border: 1px solid var(--purple-mid); }
@@ -424,13 +427,13 @@
     .pkg-card:nth-child(3) .pkg-result-label { color: var(--blue-text); }
     .pkg-result p { font-size: .82rem; color: var(--text); line-height: 1.5; }
 
-    .pkg-footer { padding: 0 1.75rem 1.75rem; }
+    .pkg-footer { padding: 0 1.4rem 1.5rem; }
 
     .pkg-price {
       display: flex; align-items: baseline; gap: .5rem;
       margin-bottom: .3rem;
     }
-    .pkg-price-main { font-size: 1.85rem; font-weight: 800; color: var(--dark); letter-spacing: -0.04em; line-height: 1; }
+    .pkg-price-main { font-size: 1.66rem; font-weight: 800; color: var(--dark); letter-spacing: -0.04em; line-height: 1; }
     .pkg-price-alt { font-size: .82rem; color: var(--muted); }
     .pkg-price-note { font-size: .75rem; color: var(--muted); margin-bottom: 1.25rem; }
 
@@ -445,6 +448,20 @@
     .pkg-card:nth-child(2) .pkg-btn:hover { background: #5b52e0; transform: translateY(-1px); box-shadow: 0 4px 14px var(--purple-glo); }
     .pkg-card:nth-child(3) .pkg-btn { background: var(--blue-lt); color: var(--blue); border: 1.5px solid var(--blue-mid); }
     .pkg-card:nth-child(3) .pkg-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); transform: translateY(-1px); box-shadow: 0 4px 14px var(--blue-glo); }
+
+    /* четвёртая карточка — корпоративный формат, акцент cyan */
+    .pkg-card:nth-child(4) .pkg-stripe { background: linear-gradient(90deg, var(--biz), #67e8f9); }
+    .pkg-card:nth-child(4) .pkg-ghost { color: var(--biz); }
+    .pkg-card:nth-child(4) .pkg-num { background: linear-gradient(135deg, var(--biz), #67e8f9); --accent: var(--biz); }
+    .pkg-card:nth-child(1) .pkg-recommend { background: var(--teal-lt); color: var(--teal-text); border-bottom-color: var(--teal-mid); }
+    .pkg-card:nth-child(3) .pkg-recommend { background: var(--blue-lt); color: var(--blue-text); border-bottom-color: var(--blue-mid); }
+    .pkg-card:nth-child(4) .pkg-recommend { background: var(--biz-lt); color: #0e7490; border-bottom-color: var(--biz-mid); }
+    .pkg-card:nth-child(4) .pkg-pill { background: var(--biz-lt); color: #0e7490; }
+    .pkg-card:nth-child(4) .pkg-features li::before { background-color: var(--biz); }
+    .pkg-card:nth-child(4) .pkg-result { background: var(--biz-lt); border: 1px solid var(--biz-mid); }
+    .pkg-card:nth-child(4) .pkg-result-label { color: #0e7490; }
+    .pkg-card:nth-child(4) .pkg-btn { background: var(--biz-lt); color: #0e7490; border: 1.5px solid var(--biz-mid); }
+    .pkg-card:nth-child(4) .pkg-btn:hover { background: var(--biz); color: #fff; border-color: var(--biz); transform: translateY(-1px); box-shadow: 0 4px 14px var(--biz-glo); }
 
     .pkg-trust {
       display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
@@ -696,7 +713,8 @@
     .value-vs-note { font-size: .73rem; color: var(--muted); line-height: 1.45; }
 
     /* feat-note inside pkg-features li */
-    .feat-note { display: block; font-size: .78rem; font-weight: 700; color: var(--teal-text); margin-top: .18rem; }
+    .feat-note { grid-column: 2; font-size: .78rem; font-weight: 700; color: var(--teal-text); }
+    .pkg-card:nth-child(4) .feat-note { color: #0e7490; }
 
     .value-insight {
       display: flex; align-items: flex-start; gap: 1rem;
@@ -910,10 +928,38 @@
       .tst-modal { padding: 4rem 1rem 1.5rem; }
     }
 
+    @media (min-width: 1201px) {
+      .pkg-recommend { min-height: 2.9rem; display: flex; align-items: center; justify-content: center; text-align: center; }
+      .pkg-name { min-height: 3.1rem; display: flex; align-items: flex-end; }
+      .pkg-target { min-height: 4.7rem; }
+      .pkg-meta { min-height: 5rem; align-content: flex-start; }
+      .pkg-inherit { min-height: 3.4rem; }
+    }
+
+    @media (max-width: 1200px) and (min-width: 861px) {
+      .packages .section-inner { max-width: 900px; }
+      .pkg-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 860px) {
       .nav { padding: 0 1.25rem; }
-      .pkg-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .pkg-grid {
+        grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 86%;
+        overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+        gap: .85rem; margin: 0 -1.25rem; padding: .25rem 1.25rem 1rem; max-width: none;
+        scrollbar-width: none; -ms-overflow-style: none;
+      }
+      .pkg-grid::-webkit-scrollbar { display: none; }
+      .pkg-card { scroll-snap-align: center; }
+      .pkg-dots { display: flex; justify-content: center; gap: .45rem; }
+      .pkg-dot {
+        width: 7px; height: 7px; padding: 0; border: none; border-radius: 50%;
+        background: var(--border); cursor: pointer; transition: all .22s;
+      }
+      .pkg-dot.is-active { background: var(--purple); width: 20px; border-radius: 4px; }
+      .pkg-swipe-hint { display: block; text-align: center; font-size: .78rem; font-weight: 600; color: var(--muted); margin-bottom: .55rem; }
+      .pkg-dots { margin-bottom: .9rem; }
       .value-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto 1.5rem; }
       .how-steps { grid-template-columns: 1fr 28px 1fr; grid-template-rows: auto auto; row-gap: .75rem; }
       .how-arrow:nth-child(4) { grid-column: 1 / -1; transform: rotate(90deg); justify-self: center; }
@@ -1082,14 +1128,36 @@
     <div class="section-head">
       <div class="section-label">Линейка «AI-Наставничество»</div>
       <h2 class="section-title">Выберите свой формат</h2>
-      <p class="section-sub">Три пакета с разной глубиной. Большинство начинают со второго — он закрывает 80% запросов экспертов.</p>
+      <p class="section-sub">Четыре формата: три ступени для эксперта и отдельный пакет для компаний. Большинство экспертов начинают со второго — он закрывает 80% запросов.</p>
     </div>
+
+    <div class="entry-banner">
+      <div class="entry-banner-left">
+        <div class="entry-banner-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <div class="entry-banner-text">
+          <strong>Не уверены, какой пакет ваш? Начните с диагностики</strong>
+          <span>45–60 минут — берём вашу конкретную задачу и решаем её вживую. Выберете пакет в течение недели — 3 000 ₽ зачтутся в его стоимость</span>
+        </div>
+      </div>
+      <div class="entry-banner-right">
+        <span class="entry-banner-price">3 000 ₽</span>
+        <a class="entry-banner-btn" href="https://t.me/Aleksei_Zotov" target="_blank">Записаться →</a>
+      </div>
+    </div>
+
+    <p class="pkg-swipe-hint">Четыре формата — листайте карточки вбок</p>
+    <div class="pkg-dots"></div>
 
     <div class="pkg-grid">
 
       <!-- ПАКЕТ 1 -->
       <div class="pkg-card">
         <div class="pkg-stripe"></div>
+        <div class="pkg-recommend">Старт с нуля</div>
         <div class="pkg-body">
           <span class="pkg-ghost">01</span>
           <div class="pkg-num">01</div>
@@ -1100,6 +1168,10 @@
             <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 4 недели</div>
           </div>
           <hr class="pkg-divider">
+          <div class="pkg-inherit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+            Базовая ступень — знать заранее ничего не нужно
+          </div>
           <ul class="pkg-features">
             <li>Перестаёте бояться ИИ и путаться в десятке инструментов</li>
             <li>Всё зарегистрировано и оплачено — работает с первого дня<span class="feat-note">коуч-сессия 7 000 ₽ включена в пакет</span></li>
@@ -1135,7 +1207,7 @@
       <!-- ПАКЕТ 2 — рекомендуемый -->
       <div class="pkg-card featured">
         <div class="pkg-stripe"></div>
-        <div class="pkg-recommend">Рекомендуем для большинства экспертов</div>
+        <div class="pkg-recommend">Выбирают чаще всего</div>
         <div class="pkg-body">
           <span class="pkg-ghost">02</span>
           <div class="pkg-num">02</div>
@@ -1184,6 +1256,7 @@
       <!-- ПАКЕТ 3 -->
       <div class="pkg-card">
         <div class="pkg-stripe"></div>
+        <div class="pkg-recommend">Максимальная глубина</div>
         <div class="pkg-body">
           <span class="pkg-ghost">03</span>
           <div class="pkg-num">03</div>
@@ -1229,6 +1302,71 @@
         </div>
       </div>
 
+      <!-- ПАКЕТ 4 — для компаний -->
+      <div class="pkg-card">
+        <div class="pkg-stripe"></div>
+        <div class="pkg-recommend">Для компаний и команд</div>
+        <div class="pkg-body">
+          <span class="pkg-ghost">04</span>
+          <div class="pkg-num">04</div>
+          <div class="pkg-name">Корпоративный AI-ассистент</div>
+          <div class="pkg-target">Для собственника или IT: не личный навык эксперта, а автоматизация внутри компании</div>
+          <div class="pkg-meta">
+            <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 3 встречи по 2 часа</div>
+            <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> разовая настройка</div>
+          </div>
+          <hr class="pkg-divider">
+          <div class="pkg-inherit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+            Отдельный трек — другие пакеты не нужны
+          </div>
+          <ul class="pkg-features">
+            <li>Ассистент работает в вашем VS Code с вашими файлами<span class="feat-note">Claude Code или Codex на локальной машине, а не чат в браузере</span></li>
+            <li>Помнит контекст между сессиями и не переспрашивает заново</li>
+            <li>60+ скиллов: документы, таблицы, аналитика, код, коммуникации</li>
+            <li>Забирает согласованный список повторяющихся задач</li>
+          </ul>
+          <details class="pkg-details">
+            <summary>Что именно настроим</summary>
+            <ul class="pkg-details-list">
+              <li>Установка и настройка Claude Code / Codex в VS Code на вашей инфраструктуре</li>
+              <li>Система памяти — агент помнит контекст между сессиями, не переспрашивает заново</li>
+              <li>Настройка экономии токенов — быстрая работа без лишних затрат</li>
+              <li>60+ скиллов под разные виды задач — документы, таблицы, аналитика, код, коммуникации</li>
+              <li>MCP-серверы — подключение к вашим сервисам и данным напрямую</li>
+              <li>Автоматизируем согласованный список повторяющихся задач</li>
+            </ul>
+          </details>
+          <div class="pkg-result">
+            <div class="pkg-result-label">Вы получите</div>
+            <p>Цифровой ассистент стоит в рабочей среде компании, помнит контекст и берёт на себя операционную рутину. Настройка разовая — дальше он работает сам.</p>
+          </div>
+        </div>
+        <div class="pkg-footer">
+          <div class="pkg-price">
+            <span class="pkg-price-main">30 000 ₽</span>
+          </div>
+          <div class="pkg-price-note">3 встречи по 2 часа · разовая настройка, дальше ассистент работает сам</div>
+          <a class="pkg-btn" href="https://t.me/Aleksei_Zotov" target="_blank">Получить диагностику →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="complex-callout">
+      <div class="complex-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <div class="complex-body">
+        <strong>Апгрейд к «Цифровому эксперту»: нужно больше, чем инструменты?</strong>
+        <p>Для тех, кому кроме техники важна работа с барьерами — страхом делегировать, «я недостаточно технический человек», тревогой отпустить контроль. Пакет «Цифровой эксперт» + коучинг-сопровождение на всём протяжении программы, а не разовая сессия на старте.</p>
+      </div>
+      <div class="complex-right">
+        <span class="complex-price">от 90 000 ₽</span>
+        <a class="complex-btn" href="https://t.me/Aleksei_Zotov" target="_blank">Обсудить формат →</a>
+      </div>
     </div>
 
     <div class="pkg-trust">
@@ -1251,6 +1389,7 @@
     <div class="section-head">
       <div class="section-label">Сравнение пакетов</div>
       <h2 class="section-title">Что входит в каждый</h2>
+      <p class="section-sub">Три ступени для эксперта. Корпоративный пакет в таблицу не входит — там другая задача и другая роль покупателя.</p>
     </div>
     <div class="compare-wrap">
       <table class="compare-table">
@@ -1385,23 +1524,6 @@
     </div>
     <p class="compare-hint">← Листайте таблицу вправо, чтобы увидеть все пакеты →</p>
 
-    <div class="entry-banner">
-      <div class="entry-banner-left">
-        <div class="entry-banner-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
-          </svg>
-        </div>
-        <div class="entry-banner-text">
-          <strong>Не уверены, какой пакет ваш? Начните с диагностики</strong>
-          <span>45–60 минут — берём вашу конкретную задачу и решаем её вживую. Выберете пакет в течение недели — 3 000 ₽ зачтутся в его стоимость</span>
-        </div>
-      </div>
-      <div class="entry-banner-right">
-        <span class="entry-banner-price">3 000 ₽</span>
-        <a class="entry-banner-btn" href="https://t.me/Aleksei_Zotov" target="_blank">Записаться →</a>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1564,59 +1686,7 @@
       </div>
     </div>
 
-    <div class="complex-callout">
-      <div class="complex-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
-      </div>
-      <div class="complex-body">
-        <strong>Апгрейд к «Цифровому эксперту»: нужно больше, чем инструменты?</strong>
-        <p>Для тех, кому кроме техники важна работа с барьерами — страхом делегировать, «я недостаточно технический человек», тревогой отпустить контроль. Пакет «Цифровой эксперт» + коучинг-сопровождение на всём протяжении программы, а не разовая сессия на старте.</p>
-      </div>
-      <div class="complex-right">
-        <span class="complex-price">от 90 000 ₽</span>
-        <a class="complex-btn" href="https://t.me/Aleksei_Zotov" target="_blank">Обсудить формат →</a>
-      </div>
-    </div>
 
-  </div>
-</section>
-
-<!-- FOR COMPANIES -->
-<section class="section biz-section">
-  <div class="section-inner">
-    <div class="section-head">
-      <div class="section-label">Для команд и компаний</div>
-      <h2 class="section-title">Корпоративный AI-ассистент</h2>
-      <p class="section-sub">Другая задача и другая роль покупателя — не личный навык эксперта, а автоматизация в инфраструктуре компании. Для собственника, операционного директора или IT.</p>
-    </div>
-    <div class="biz-callout">
-      <div class="biz-top">
-        <div class="biz-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13 4l-2 16"/></svg>
-        </div>
-        <div class="biz-head">
-          <strong>Цифровой ассистент в инфраструктуре компании</strong>
-          <p>3 встречи по 2 часа — устанавливаем и настраиваем личного AI-агента (Claude Code или Codex) прямо в вашей рабочей среде VS Code, на локальной машине. Не чат в браузере, а ассистент, который работает с вашими файлами, помнит контекст между сессиями и берёт на себя операционную рутину.</p>
-        </div>
-      </div>
-      <ul class="biz-features">
-        <li>Установка и настройка Claude Code / Codex в VS Code на вашей инфраструктуре</li>
-        <li>Система памяти — агент помнит контекст между сессиями, не переспрашивает заново</li>
-        <li>Настройка экономии токенов — быстрая работа без лишних затрат</li>
-        <li>60+ скиллов под разные виды задач — документы, таблицы, аналитика, код, коммуникации</li>
-        <li>MCP-серверы — подключение к вашим сервисам и данным напрямую</li>
-        <li>Автоматизируем согласованный список повторяющихся задач</li>
-      </ul>
-      <div class="biz-footer">
-        <div>
-          <span class="biz-price">30 000 ₽</span>
-          <span class="biz-price-note">3 встречи по 2 часа · разовая настройка, дальше ассистент работает сам</span>
-        </div>
-        <a class="biz-btn" href="https://t.me/Aleksei_Zotov" target="_blank">Получить корпоративную диагностику →</a>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1990,6 +2060,41 @@
   <a class="footer-link" href="https://t.me/Aleksei_Zotov" target="_blank">@Aleksei_Zotov</a>
 </footer>
 
+
+<script>
+// карусель пакетов на узких экранах: точки-индикаторы и переход по клику
+(function () {
+  var grid = document.querySelector('.pkg-grid');
+  var dotsBox = document.querySelector('.pkg-dots');
+  if (!grid || !dotsBox) return;
+  var cards = Array.prototype.slice.call(grid.querySelectorAll('.pkg-card'));
+
+  cards.forEach(function (card, i) {
+    var dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'pkg-dot' + (i === 0 ? ' is-active' : '');
+    dot.setAttribute('aria-label', 'Пакет ' + (i + 1));
+    dot.addEventListener('click', function () {
+      card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+    dotsBox.appendChild(dot);
+  });
+
+  var dots = Array.prototype.slice.call(dotsBox.children);
+  var timer;
+  grid.addEventListener('scroll', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      var mid = grid.scrollLeft + grid.clientWidth / 2, best = 0, bestDist = Infinity;
+      cards.forEach(function (card, i) {
+        var dist = Math.abs(card.offsetLeft + card.offsetWidth / 2 - mid);
+        if (dist < bestDist) { bestDist = dist; best = i; }
+      });
+      dots.forEach(function (dot, i) { dot.classList.toggle('is-active', i === best); });
+    }, 60);
+  }, { passive: true });
+})();
+</script>
 
 <script>
 (function () {
