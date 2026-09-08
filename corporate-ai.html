@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Корпоративный AI-ассистент — EZA Group</title>
+  <link rel="icon" type="image/png" href="assets/logo-eza.png">
+  <meta name="description" content="Внедрение AI-ассистента внутри компании: Claude Code или Codex на рабочих машинах сотрудников, память компании, интеграции с вашими сервисами. Калькулятор стоимости под размер команды.">
+  <style>
+    @font-face { font-family: 'Golos Text'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('assets/fonts/golos-text-cyrillic.woff2') format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+    @font-face { font-family: 'Golos Text'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('assets/fonts/golos-text-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122; }
+    @font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('assets/fonts/unbounded-cyrillic.woff2') format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+    @font-face { font-family: 'Unbounded'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('assets/fonts/unbounded-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --font-display: 'Unbounded', 'Segoe UI', sans-serif;
+      --font-body: 'Golos Text', 'Segoe UI', sans-serif;
+      --bg: #f7f8fc; --white: #fff; --dark: #1a1a2e; --text: #2c2c40; --muted: #6b6b8a; --border: #e5e5f0;
+      --r: 16px; --r-lg: 24px;
+      --purple: #6c63ff; --purple-lt: #f0efff; --purple-mid: #dddaff; --purple-glo: rgba(108,99,255,.28); --purple-text: #564bd6;
+      --teal:   #0a9468; --teal-lt:   #e8f7f2; --teal-mid:   #b8e8d6; --teal-glo:   rgba(10,148,104,.28); --teal-text: #067a54;
+      --blue:   #2563eb; --blue-lt:   #eff6ff; --blue-mid:   #bdd5fc; --blue-glo:   rgba(37,99,235,.28); --blue-text: #1a4fce;
+      --amber:  #d97706; --amber-lt:  #fef3c7; --amber-mid:  #fbd38d; --amber-glo:  rgba(217,119,6,.28);
+      --biz:    #06b6d4; --biz-lt:    #ecfeff; --biz-mid:    #a5f3fc; --biz-glo:    rgba(6,182,212,.35);
+      --biz-text: #0e7490; --biz-deep: #0a5a70; --biz-ink: #062a33;
+      --grey-lt: #f1f1f5;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, .section-title, .cta-section h2, .faq-q, .hero-stat strong, .calc-num, .calc-total-main, .calc-panel-title, .role-card h4, .why-card h4, .case-title, .step-card h4, .lose-op { font-family: var(--font-display); }
+
+    /* ── NAV ── */
+    .nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.93); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-back { display: flex; align-items: center; gap: .4rem; font-size: .875rem; font-weight: 600; color: var(--muted); text-decoration: none; transition: color .18s; }
+    .nav-back:hover { color: var(--dark); }
+    .nav-back svg { transition: transform .18s; }
+    .nav-back:hover svg { transform: translateX(-3px); }
+    .nav-cta { background: var(--biz); color: var(--biz-ink); font-size: .875rem; font-weight: 700; padding: .5rem 1.25rem; border-radius: 8px; text-decoration: none; transition: all .18s; }
+    .nav-cta:hover { background: #22d3ee; transform: translateY(-1px); box-shadow: 0 4px 14px var(--biz-glo); }
+
+    /* ── HERO ── */
+    .hero {
+      background-color: var(--white);
+      background-image: radial-gradient(var(--border) 1px, transparent 1px);
+      background-size: 28px 28px;
+      padding: 5rem 2rem 4.25rem; text-align: center;
+      border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 62% 62% at 50% 45%, rgba(255,255,255,.97) 30%, rgba(255,255,255,.72) 58%, rgba(255,255,255,.18) 78%, transparent 92%);
+      pointer-events: none; z-index: 1;
+    }
+    .hero > * { position: relative; z-index: 2; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: .45rem;
+      background: var(--biz-lt); color: var(--biz-text);
+      font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      padding: .32rem .9rem; border-radius: 20px;
+      border: 1px solid rgba(6,182,212,.28);
+      margin-bottom: 1.6rem;
+    }
+    .hero-tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--biz); animation: pulse 2.2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .5; transform: scale(.75); } }
+    .hero h1 { font-size: clamp(2.1rem, 4.8vw, 3.25rem); font-weight: 800; color: var(--dark); line-height: 1.12; letter-spacing: -0.04em; max-width: 860px; margin: 0 auto 1.25rem; }
+    .hero h1 em { font-style: normal; color: var(--biz-text); }
+    .hero-desc { font-size: 1.1rem; color: var(--muted); max-width: 620px; margin: 0 auto 2.25rem; line-height: 1.65; }
+
+    .hero-for { display: flex; justify-content: center; gap: .65rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .hero-for-label { width: 100%; text-align: center; font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .15rem; }
+    .hero-for-chip {
+      display: flex; align-items: center; gap: .55rem;
+      background: rgba(255,255,255,.92); backdrop-filter: blur(12px);
+      border: 1.5px solid var(--border); border-radius: 14px;
+      padding: .6rem 1.1rem .6rem .85rem;
+      font-size: .875rem; font-weight: 600; color: var(--dark);
+      box-shadow: 0 2px 14px rgba(26,26,46,.07), inset 0 1px 0 rgba(255,255,255,.95);
+      transition: all .22s cubic-bezier(.34,1.1,.64,1);
+    }
+    .hero-for-chip:hover { transform: translateY(-2px); border-color: var(--biz-mid); box-shadow: 0 6px 20px var(--biz-glo); }
+    .chip-icon { width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--biz-lt); color: var(--biz-text); flex-shrink: 0; }
+    .chip-icon svg { width: 15px; height: 15px; }
+
+    .hero-actions { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; margin-bottom: 3rem; }
+    .btn-primary { background: var(--biz); color: var(--biz-ink); font-size: .95rem; font-weight: 700; padding: .8rem 1.85rem; border-radius: 10px; text-decoration: none; transition: all .2s; border: none; cursor: pointer; font-family: inherit; }
+    .btn-primary:hover { background: #22d3ee; transform: translateY(-1px); box-shadow: 0 6px 20px var(--biz-glo); }
+    .btn-ghost { background: transparent; color: var(--dark); font-size: .95rem; font-weight: 600; padding: .8rem 1.85rem; border-radius: 10px; text-decoration: none; border: 1.5px solid var(--border); transition: all .2s; }
+    .btn-ghost:hover { border-color: var(--dark); transform: translateY(-1px); }
+
+    .hero-stats { display: flex; justify-content: center; gap: 0; flex-wrap: wrap; }
+    .hero-stat { text-align: center; padding: 0 2.25rem; position: relative; }
+    .hero-stat + .hero-stat::before { content: ''; position: absolute; left: 0; top: 15%; bottom: 15%; width: 1px; background: var(--border); }
+    .hero-stat strong { display: block; font-size: 1.75rem; font-weight: 800; color: var(--dark); letter-spacing: -.03em; line-height: 1.1; margin-bottom: .2rem; }
+    .hero-stat span { font-size: .78rem; color: var(--muted); line-height: 1.4; }
+
+    /* ── SECTION BASE ── */
+    .section { padding: 5rem 2rem; }
+    .section-inner { max-width: 1040px; margin: 0 auto; }
+    .section-label { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--biz-text); margin-bottom: .55rem; }
+    .section-title { font-size: 2rem; font-weight: 800; color: var(--dark); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: .75rem; }
+    .section-sub { font-size: 1.05rem; color: var(--muted); line-height: 1.6; max-width: 620px; }
+    .section-head { margin-bottom: 3rem; }
+
+    /* ── КУДА УХОДИТ ВРЕМЯ (тёмная секция) ── */
+    .lose { background: linear-gradient(165deg, #1a1a2e 0%, #10323d 100%); }
+    .lose .section-label { color: #67e8f9; }
+    .lose .section-title { color: #fff; }
+    .lose .section-sub { color: rgba(255,255,255,.58); }
+    .lose-table { border: 1px solid rgba(255,255,255,.1); border-radius: var(--r-lg); overflow: hidden; background: rgba(255,255,255,.03); }
+    .lose-row { display: grid; grid-template-columns: 1.25fr 1fr 1.2fr; gap: 1rem; padding: 1.05rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.07); align-items: center; }
+    .lose-row:last-child { border-bottom: none; }
+    .lose-row.is-head { background: rgba(255,255,255,.05); }
+    .lose-row.is-head span { font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+    .lose-op { font-size: .92rem; font-weight: 700; color: #fff; letter-spacing: -.01em; }
+    .lose-now { font-size: .84rem; color: rgba(255,255,255,.52); }
+    .lose-after { display: flex; align-items: center; gap: .55rem; font-size: .84rem; color: #a5f3fc; font-weight: 600; }
+    .lose-after svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--biz); }
+    .lose-note { margin-top: 1.5rem; display: flex; align-items: flex-start; gap: .9rem; background: rgba(6,182,212,.09); border: 1px solid rgba(6,182,212,.28); border-radius: var(--r); padding: 1.1rem 1.35rem; }
+    .lose-note svg { width: 20px; height: 20px; color: var(--biz); flex-shrink: 0; margin-top: .1rem; }
+    .lose-note p { font-size: .89rem; color: rgba(255,255,255,.78); line-height: 1.6; }
+    .lose-note strong { color: #fff; }
+
+    /* ── ЧЕМ ОТЛИЧАЕТСЯ ОТ ЧАТА ── */
+    .why { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.15rem; }
+    .why-card { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--r-lg); padding: 1.6rem 1.7rem; transition: all .25s cubic-bezier(.34,1.1,.64,1); }
+    .why-card:hover { transform: translateY(-3px); border-color: var(--biz-mid); box-shadow: 0 10px 30px rgba(6,182,212,.14); }
+    .why-icon { width: 42px; height: 42px; border-radius: 12px; background: var(--white); border: 1.5px solid var(--biz-mid); display: flex; align-items: center; justify-content: center; color: var(--biz-text); margin-bottom: 1rem; }
+    .why-icon svg { width: 20px; height: 20px; }
+    .why-card h4 { font-size: 1rem; font-weight: 800; color: var(--dark); letter-spacing: -.01em; margin-bottom: .45rem; }
+    .why-card p { font-size: .86rem; color: var(--text); line-height: 1.65; }
+    .why-card p em { font-style: normal; color: var(--muted); }
+    .why-foot { margin-top: 1.5rem; text-align: center; font-size: .85rem; color: var(--muted); }
+    .why-foot strong { color: var(--biz-text); font-weight: 700; }
+
+    /* ── РОЛИ ── */
+    .roles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+    .role-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r-lg); padding: 1.5rem 1.5rem 1.35rem; transition: all .25s cubic-bezier(.34,1.1,.64,1); }
+    .role-card:hover { transform: translateY(-3px); border-color: var(--biz-mid); box-shadow: 0 10px 28px rgba(6,182,212,.13); }
+    .role-head { display: flex; align-items: center; gap: .7rem; margin-bottom: .95rem; }
+    .role-ico { width: 34px; height: 34px; border-radius: 10px; background: var(--biz-lt); color: var(--biz-text); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .role-ico svg { width: 17px; height: 17px; }
+    .role-card h4 { font-size: .95rem; font-weight: 800; color: var(--dark); letter-spacing: -.01em; }
+    .role-list { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .role-list li { display: grid; grid-template-columns: 14px 1fr; gap: .55rem; font-size: .84rem; color: var(--text); line-height: 1.5; }
+    .role-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--biz); margin-top: .45rem; }
+
+    /* ── КЕЙСЫ ── */
+    .cases { background: var(--dark); }
+    .cases .section-label { color: #67e8f9; }
+    .cases .section-title { color: #fff; }
+    .cases .section-sub { color: rgba(255,255,255,.55); }
+    .cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.15rem; }
+    .case-card { background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.1); border-radius: var(--r-lg); padding: 1.6rem 1.7rem; display: flex; flex-direction: column; gap: .9rem; transition: all .25s; }
+    .case-card:hover { border-color: rgba(6,182,212,.45); background: rgba(6,182,212,.07); transform: translateY(-3px); }
+    .case-tag { display: inline-flex; align-self: flex-start; font-size: .68rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: #67e8f9; background: rgba(6,182,212,.14); border: 1px solid rgba(6,182,212,.3); padding: .28rem .7rem; border-radius: 20px; }
+    .case-title { font-size: 1rem; font-weight: 700; color: #fff; line-height: 1.35; letter-spacing: -.01em; }
+    .case-was { font-size: .84rem; color: rgba(255,255,255,.55); line-height: 1.6; }
+    .case-now { font-size: .84rem; color: rgba(255,255,255,.86); line-height: 1.6; border-top: 1px solid rgba(255,255,255,.09); padding-top: .9rem; }
+    .case-now strong { color: #a5f3fc; font-weight: 700; }
+    .cases-note { margin-top: 1.5rem; font-size: .82rem; color: rgba(255,255,255,.4); text-align: center; }
+
+    /* ── КАЛЬКУЛЯТОР ── */
+    .calc { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .calc .section-inner { max-width: 1100px; }
+    .calc-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: 1.75rem; align-items: start; }
+    .calc-panel { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--r-lg); padding: 1.9rem 1.9rem 1.75rem; }
+    .calc-panel-title { font-size: .8rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.4rem; }
+
+    .calc-num-row { display: flex; align-items: baseline; gap: .7rem; margin-bottom: .35rem; }
+    .calc-num { font-size: 2.6rem; font-weight: 800; color: var(--dark); letter-spacing: -.04em; line-height: 1; }
+    .calc-num-label { font-size: .95rem; color: var(--muted); font-weight: 600; }
+    .calc-rate { font-size: .8rem; color: var(--biz-text); font-weight: 700; margin-bottom: 1.1rem; }
+
+    .calc-range { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 6px; background: var(--border); outline: none; cursor: pointer; }
+    .calc-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 26px; height: 26px; border-radius: 50%; background: var(--biz); border: 4px solid var(--white); box-shadow: 0 3px 12px var(--biz-glo); cursor: grab; transition: transform .15s; }
+    .calc-range::-webkit-slider-thumb:active { transform: scale(1.12); cursor: grabbing; }
+    .calc-range::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--biz); border: 4px solid var(--white); box-shadow: 0 3px 12px var(--biz-glo); cursor: grab; }
+    .calc-range:focus-visible { outline: 3px solid var(--biz-mid); outline-offset: 4px; }
+    .calc-ticks { display: flex; justify-content: space-between; margin-top: .55rem; font-size: .72rem; color: var(--muted); }
+
+    .calc-block { margin-top: 1.9rem; padding-top: 1.6rem; border-top: 1px solid var(--border); }
+    .calc-block-label { font-size: .8rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: .95rem; }
+
+    .calc-opt { display: flex; align-items: flex-start; gap: .85rem; padding: .85rem 1rem; background: var(--white); border: 1.5px solid var(--border); border-radius: 12px; margin-bottom: .6rem; cursor: pointer; transition: all .18s; }
+    .calc-opt:hover { border-color: var(--biz-mid); }
+    .calc-opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .calc-box { width: 20px; height: 20px; border-radius: 6px; border: 1.8px solid var(--border); background: var(--white); flex-shrink: 0; margin-top: .1rem; display: flex; align-items: center; justify-content: center; transition: all .18s; }
+    .calc-box svg { width: 12px; height: 12px; color: #fff; opacity: 0; transform: scale(.6); transition: all .18s; }
+    .calc-opt input:checked ~ .calc-box { background: var(--biz); border-color: var(--biz); }
+    .calc-opt input:checked ~ .calc-box svg { opacity: 1; transform: scale(1); }
+    .calc-opt input:focus-visible ~ .calc-box { outline: 3px solid var(--biz-mid); outline-offset: 2px; }
+    .calc-opt:has(input:checked) { border-color: var(--biz-mid); background: var(--biz-lt); }
+    .calc-opt-text { flex: 1; }
+    .calc-opt-name { display: block; font-size: .88rem; font-weight: 700; color: var(--dark); letter-spacing: -.01em; }
+    .calc-opt-desc { display: block; font-size: .78rem; color: var(--muted); line-height: 1.5; margin-top: .15rem; }
+    .calc-opt-price { font-size: .82rem; font-weight: 700; color: var(--biz-text); white-space: nowrap; margin-top: .1rem; }
+
+    .calc-seg { display: flex; gap: .5rem; }
+    .calc-seg label { flex: 1; position: relative; }
+    .calc-seg input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .calc-seg span { display: block; text-align: center; font-size: .84rem; font-weight: 600; color: var(--text); background: var(--white); border: 1.5px solid var(--border); border-radius: 10px; padding: .7rem .5rem; cursor: pointer; transition: all .18s; }
+    .calc-seg input:checked + span { background: var(--biz-lt); border-color: var(--biz); color: var(--biz-text); font-weight: 700; }
+    .calc-seg input:focus-visible + span { outline: 3px solid var(--biz-mid); outline-offset: 2px; }
+
+    .calc-result { position: sticky; top: 88px; background: linear-gradient(165deg, #1a1a2e 0%, #123742 100%); border-radius: var(--r-lg); padding: 1.9rem 1.8rem 1.75rem; color: #fff; }
+    .calc-result-label { font-size: .72rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: rgba(103,232,249,.85); margin-bottom: .9rem; }
+    .calc-total-main { font-size: clamp(1.55rem, 3.2vw, 2rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.15; }
+    .calc-total-sub { font-size: .82rem; color: rgba(255,255,255,.5); margin-top: .45rem; }
+    .calc-meta { display: flex; gap: 1.4rem; flex-wrap: wrap; margin: 1.4rem 0; padding: 1.1rem 0; border-top: 1px solid rgba(255,255,255,.1); border-bottom: 1px solid rgba(255,255,255,.1); }
+    .calc-meta-item strong { display: block; font-size: 1.05rem; font-weight: 700; color: #fff; }
+    .calc-meta-item span { display: block; font-size: .74rem; color: rgba(255,255,255,.45); margin-top: .1rem; }
+    .calc-includes { list-style: none; display: flex; flex-direction: column; gap: .55rem; margin-bottom: 1.35rem; }
+    .calc-includes li { display: grid; grid-template-columns: 15px 1fr; gap: .6rem; font-size: .83rem; color: rgba(255,255,255,.82); line-height: 1.5; }
+    .calc-includes li svg { width: 15px; height: 15px; color: var(--biz); margin-top: .18rem; }
+    .calc-compare { background: rgba(6,182,212,.1); border: 1px solid rgba(6,182,212,.28); border-radius: 12px; padding: .85rem 1rem; font-size: .8rem; color: rgba(255,255,255,.72); line-height: 1.55; margin-bottom: 1.35rem; }
+    .calc-compare strong { color: #a5f3fc; }
+    .calc-btn { display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%; background: var(--biz); color: var(--biz-ink); font-family: inherit; font-size: .9rem; font-weight: 700; padding: .95rem; border: none; border-radius: 10px; cursor: pointer; transition: all .2s; }
+    .calc-btn:hover { background: #22d3ee; transform: translateY(-1px); box-shadow: 0 6px 22px var(--biz-glo); }
+    .calc-btn svg { width: 17px; height: 17px; }
+    .calc-btn-note { font-size: .74rem; color: rgba(255,255,255,.42); text-align: center; margin-top: .8rem; line-height: 1.5; }
+    /* формат работы, степпер групп и подсказка о выгоде */
+    .calc-how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.75rem; }
+    .calc-how-card { background: var(--biz-lt); border: 1.5px solid var(--biz-mid); border-radius: var(--r); padding: 1.15rem 1.25rem; }
+    .calc-how-card strong { display: block; font-family: var(--font-display); font-size: .92rem; font-weight: 700; color: var(--dark); letter-spacing: -.01em; margin-bottom: .35rem; }
+    .calc-how-card p { font-size: .82rem; color: var(--text); line-height: 1.55; }
+    .calc-how-card span { display: block; font-size: .78rem; font-weight: 700; color: var(--biz-text); margin-top: .5rem; }
+
+    .calc-groups { display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: var(--white); border: 1.5px solid var(--border); border-radius: 12px; padding: .8rem 1rem; }
+    .calc-groups-label { font-size: .88rem; font-weight: 700; color: var(--dark); }
+    .calc-groups-hint { display: block; font-size: .76rem; font-weight: 400; color: var(--muted); margin-top: .15rem; }
+    .calc-step { display: flex; align-items: center; gap: .65rem; flex-shrink: 0; }
+    .calc-step button { width: 32px; height: 32px; border-radius: 9px; border: 1.5px solid var(--border); background: var(--white); color: var(--dark); font-size: 1.1rem; font-family: inherit; line-height: 1; cursor: pointer; transition: all .18s; }
+    .calc-step button:hover:not(:disabled) { border-color: var(--biz); color: var(--biz-text); background: var(--biz-lt); }
+    .calc-step button:disabled { opacity: .35; cursor: not-allowed; }
+    .calc-step button:focus-visible { outline: 3px solid var(--biz-mid); outline-offset: 2px; }
+    .calc-step-val { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: var(--dark); min-width: 1.4rem; text-align: center; }
+
+    .calc-split { margin-top: .85rem; font-size: .8rem; color: var(--muted); line-height: 1.55; }
+    .calc-split strong { color: var(--biz-text); font-weight: 700; }
+
+    .calc-tip { display: flex; align-items: flex-start; gap: .65rem; margin-top: 1rem; background: var(--amber-lt); border: 1.5px solid var(--amber-mid); border-radius: 12px; padding: .8rem 1rem; font-size: .8rem; color: #7a4a05; line-height: 1.55; }
+    .calc-tip svg { width: 16px; height: 16px; color: var(--amber); flex-shrink: 0; margin-top: .15rem; }
+    .calc-tip button { background: none; border: none; padding: 0; font: inherit; font-weight: 700; color: #a35a04; text-decoration: underline; cursor: pointer; }
+    .calc-tip[hidden] { display: none; }
+
+    .calc-lines { list-style: none; display: flex; flex-direction: column; gap: .45rem; margin-bottom: 1.35rem; padding-bottom: 1.15rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .calc-lines li { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; font-size: .83rem; color: rgba(255,255,255,.78); }
+    .calc-lines li b { font-weight: 700; color: #fff; white-space: nowrap; }
+
+    .calc-disclaimer { margin-top: 1.5rem; font-size: .8rem; color: var(--muted); line-height: 1.6; text-align: center; }
+    .calc-disclaimer strong { color: var(--biz-text); font-weight: 700; }
+
+    .toast { position: fixed; left: 50%; bottom: 2rem; transform: translate(-50%, 160%); opacity: 0; visibility: hidden; pointer-events: none; background: var(--dark); color: #fff; font-size: .85rem; font-weight: 600; padding: .85rem 1.35rem; border-radius: 12px; box-shadow: 0 12px 40px rgba(26,26,46,.35); z-index: 300; transition: transform .3s cubic-bezier(.34,1.1,.64,1), opacity .25s ease, visibility .3s; max-width: min(420px, 90vw); text-align: center; }
+    .toast.is-on { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
+
+    /* ── ЭТАПЫ ── */
+    .steps-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: .9rem; }
+    .step-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r); padding: 1.35rem 1.2rem; position: relative; transition: all .25s; }
+    .step-card:hover { border-color: var(--biz-mid); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(6,182,212,.12); }
+    .step-num { width: 28px; height: 28px; border-radius: 9px; background: linear-gradient(135deg, var(--biz), #67e8f9); color: #fff; font-family: var(--font-display); font-size: .78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: .8rem; }
+    .step-card h4 { font-size: .9rem; font-weight: 800; color: var(--dark); margin-bottom: .35rem; letter-spacing: -.01em; }
+    .step-card p { font-size: .79rem; color: var(--muted); line-height: 1.55; }
+    .step-when { display: block; font-size: .7rem; font-weight: 700; color: var(--biz-text); margin-top: .55rem; }
+
+    /* ── ЧТО НУЖНО + БЕЗОПАСНОСТЬ ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .panel { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r-lg); padding: 1.8rem 1.85rem; }
+    .panel-head { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.25rem; }
+    .panel-ico { width: 38px; height: 38px; border-radius: 11px; background: var(--biz-lt); color: var(--biz-text); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .panel-ico svg { width: 19px; height: 19px; }
+    .panel h3 { font-size: 1.05rem; font-weight: 800; color: var(--dark); letter-spacing: -.02em; }
+    .panel-list { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
+    .panel-list li { display: grid; grid-template-columns: 17px 1fr; gap: .65rem; font-size: .86rem; color: var(--text); line-height: 1.55; }
+    .panel-list li svg { width: 17px; height: 17px; color: var(--biz); margin-top: .18rem; }
+    .panel-list li strong { color: var(--dark); font-weight: 700; }
+    .panel-note { margin-top: 1.25rem; padding-top: 1.1rem; border-top: 1px solid var(--border); font-size: .8rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── ОТЗЫВЫ ── */
+    .testimonials { background: var(--bg); }
+    .tst-video-grid { display: grid; grid-template-columns: repeat(auto-fit, 258px); justify-content: center; gap: 1.5rem; }
+    .tst-video { position: relative; display: block; width: 100%; aspect-ratio: 9 / 16; padding: 0; border: none; border-radius: 20px; overflow: hidden; background: var(--dark); cursor: pointer; font: inherit; text-align: left; box-shadow: 0 10px 30px rgba(26,26,46,.13); transition: all .28s cubic-bezier(.34,1.1,.64,1); }
+    .tst-video:hover { transform: translateY(-5px); box-shadow: 0 18px 44px var(--biz-glo); }
+    .tst-video:focus-visible { outline: 3px solid var(--biz); outline-offset: 3px; }
+    .tst-video video { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+    .tst-video:hover video { transform: scale(1.045); }
+    .tst-shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,20,26,.86) 0%, rgba(10,20,26,.22) 45%, rgba(10,20,26,.06) 70%); }
+    .tst-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 52px; height: 52px; border-radius: 50%; background: rgba(6,182,212,.9); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 22px rgba(6,182,212,.5); transition: all .25s cubic-bezier(.34,1.1,.64,1); }
+    .tst-play svg { width: 20px; height: 20px; color: #fff; margin-left: 3px; }
+    .tst-video:hover .tst-play { transform: translate(-50%, -50%) scale(1.1); background: var(--biz); }
+    .tst-pkg-chip { position: absolute; top: 1rem; left: 1.05rem; font-size: .66rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #fff; background: rgba(6,182,212,.85); backdrop-filter: blur(6px); padding: .26rem .6rem; border-radius: 20px; }
+    .tst-dur { position: absolute; top: 1rem; right: 1.05rem; font-size: .7rem; font-weight: 700; color: #fff; background: rgba(0,0,0,.45); backdrop-filter: blur(6px); padding: .2rem .5rem; border-radius: 6px; }
+    .tst-meta { position: absolute; left: 1.05rem; right: 1.05rem; bottom: 1.05rem; }
+    .tst-meta-name { display: block; font-family: var(--font-display); font-size: .95rem; font-weight: 700; color: #fff; letter-spacing: -.01em; }
+    .tst-meta-role { display: block; font-size: .76rem; color: rgba(255,255,255,.66); margin-top: .15rem; line-height: 1.4; }
+    .tst-modal { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(10,12,24,.86); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 2rem 1rem; }
+    .tst-modal.is-open { display: flex; animation: tstFade .2s ease; }
+    @keyframes tstFade { from { opacity: 0 } to { opacity: 1 } }
+    .tst-modal-inner { position: relative; width: min(400px, 100%); animation: tstRise .28s cubic-bezier(.34,1.1,.64,1); }
+    @keyframes tstRise { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: none } }
+    .tst-modal video { width: 100%; border-radius: 18px; display: block; background: #000; max-height: 78vh; }
+    .tst-modal-inner.is-wide { width: min(880px, 100%); }
+    .tst-modal-cap { margin-top: .9rem; text-align: center; }
+    .tst-modal-cap strong { display: block; font-family: var(--font-display); font-size: .95rem; font-weight: 700; color: #fff; }
+    .tst-modal-cap span { display: block; font-size: .8rem; color: rgba(255,255,255,.6); margin-top: .15rem; }
+    .tst-modal-close { position: absolute; top: -3rem; right: 0; width: 36px; height: 36px; border-radius: 50%; border: none; background: rgba(255,255,255,.12); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+    .tst-modal-close svg { width: 18px; height: 18px; color: #fff; }
+    .tst-modal-close:hover { background: rgba(255,255,255,.2); transform: rotate(90deg); }
+
+    /* ── FAQ ── */
+    .faq-section { background: var(--white); border-top: 1px solid var(--border); }
+    .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+    .faq-card { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--r-lg); overflow: hidden; transition: all .25s cubic-bezier(.34,1.1,.64,1); }
+    .faq-card:hover { border-color: var(--biz-mid); box-shadow: 0 8px 26px rgba(6,182,212,.12); transform: translateY(-2px); }
+    .faq-card-top { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem .2rem; }
+    .faq-card-icon { width: 34px; height: 34px; border-radius: 10px; background: var(--white); border: 1.5px solid var(--biz-mid); display: flex; align-items: center; justify-content: center; }
+    .faq-card-icon svg { width: 17px; height: 17px; color: var(--biz-text); }
+    .faq-num { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--border); letter-spacing: -.03em; }
+    .faq-card-body { padding: 1.1rem 1.4rem 1.4rem; }
+    .faq-q { font-size: .97rem; font-weight: 800; color: var(--dark); margin-bottom: .6rem; letter-spacing: -.01em; line-height: 1.3; }
+    .faq-a { font-size: .85rem; color: var(--text); line-height: 1.68; }
+    .faq-a strong { color: var(--biz-text); font-weight: 700; }
+
+    /* ── CTA ── */
+    .cta-section { background: linear-gradient(160deg, #1a1a2e 0%, #10323d 100%); padding: 5.5rem 2rem; text-align: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(6,182,212,.28), transparent 65%); pointer-events: none; }
+    .cta-section > * { position: relative; z-index: 1; }
+    .cta-label { font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: rgba(103,232,249,.85); margin-bottom: 1rem; }
+    .cta-section h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); font-weight: 800; color: #fff; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 1.1rem; }
+    .cta-section h2 em { font-style: normal; color: #67e8f9; }
+    .cta-section p { font-size: 1rem; color: rgba(255,255,255,.62); max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.65; }
+    .cta-btns { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; }
+    .cta-btn-main { display: inline-flex; align-items: center; gap: .55rem; background: var(--biz); color: var(--biz-ink); font-size: .95rem; font-weight: 700; padding: .9rem 2rem; border-radius: 10px; text-decoration: none; transition: all .2s; }
+    .cta-btn-main:hover { background: #22d3ee; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(6,182,212,.5); }
+    .cta-btn-ghost { display: inline-flex; align-items: center; background: rgba(255,255,255,.08); color: #fff; font-size: .95rem; font-weight: 600; padding: .9rem 2rem; border-radius: 10px; text-decoration: none; border: 1.5px solid rgba(255,255,255,.2); transition: all .2s; }
+    .cta-btn-ghost:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.35); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--dark); padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-logo { height: 28px; width: auto; opacity: .65; }
+    .footer-text { font-size: .78rem; color: rgba(255,255,255,.38); }
+    .footer-link { font-size: .78rem; color: rgba(255,255,255,.45); text-decoration: none; transition: color .18s; }
+    .footer-link:hover { color: rgba(255,255,255,.8); }
+
+    /* ── ПОЯВЛЕНИЕ ── */
+    .rise { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s cubic-bezier(.22,1,.36,1); }
+    .rise.is-in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .rise { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+      .hero-tag-dot { animation: none; }
+    }
+
+    /* ── АДАПТИВ ── */
+    @media (max-width: 980px) {
+      .calc-layout { grid-template-columns: 1fr; }
+      .calc-result { position: static; }
+      .roles-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 820px) {
+      .calc-how { grid-template-columns: 1fr; gap: .75rem; }
+      .nav { padding: 0 1.25rem; }
+      .nav-back { display: none; }
+      .section { padding: 3.75rem 1.25rem; }
+      .hero { padding: 3.5rem 1.25rem 3rem; }
+      .why-grid, .cases-grid, .two-col, .faq-grid { grid-template-columns: 1fr; }
+      .lose-row { grid-template-columns: 1fr; gap: .35rem; padding: 1rem 1.15rem; }
+      .lose-row.is-head { display: none; }
+      .lose-now::before { content: 'Сейчас: '; color: rgba(255,255,255,.35); }
+      .hero-stat { padding: 0 1.25rem; }
+      .hero-stat strong { font-size: 1.5rem; }
+      .calc-panel, .calc-result { padding: 1.4rem 1.3rem; }
+    }
+    @media (max-width: 560px) {
+      .calc-opt { flex-wrap: wrap; }
+      .calc-opt-price { white-space: normal; width: 100%; padding-left: calc(20px + .85rem); }
+      .calc-groups { flex-wrap: wrap; }
+      .roles-grid, .steps-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1rem 0; }
+      .tst-video-grid { grid-template-columns: minmax(0, 280px); }
+      .tst-modal { padding: 4rem 1rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="index.html">
+    <img src="assets/logo-eza.png" alt="EZA Group">
+  </a>
+  <a class="nav-back" href="ai-mentoring.html#packages">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Все пакеты AI-наставничества
+  </a>
+  <a class="nav-cta" href="https://t.me/Aleksei_Zotov" target="_blank">Написать в Telegram</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">
+    <div class="hero-tag-dot"></div>
+    Пакет 04 · для компаний и команд
+  </div>
+  <h1>AI-ассистент внутри компании, <em>а не вкладка в браузере</em></h1>
+  <p class="hero-desc">Ставим ассистента на рабочие машины сотрудников. Он открывает ваши файлы, помнит контекст компании и забирает повторяющуюся операционку: спецификации, КП, договоры, отчёты, сводки.</p>
+
+  <div class="hero-for">
+    <div class="hero-for-label">Кому это нужно</div>
+    <div class="hero-for-chip">
+      <div class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg></div>
+      Производство и инженерия
+    </div>
+    <div class="hero-for-chip">
+      <div class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+      Продажи и КП
+    </div>
+    <div class="hero-for-chip">
+      <div class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg></div>
+      Документы и учёт
+    </div>
+    <div class="hero-for-chip">
+      <div class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+      Руководитель
+    </div>
+  </div>
+
+  <div class="hero-actions">
+    <a class="btn-primary" href="#calc">Рассчитать стоимость</a>
+    <a class="btn-ghost" href="https://t.me/Aleksei_Zotov" target="_blank">Диагностика 40 минут</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>3 × 2 ч</strong><span>встречи на группу<br>до 8 человек</span></div>
+    <div class="hero-stat"><strong>60+</strong><span>готовых скиллов<br>под рабочие задачи</span></div>
+    <div class="hero-stat"><strong>30 дней</strong><span>поддержка после<br>внедрения</span></div>
+  </div>
+</section>
+
+<!-- КУДА УХОДИТ ВРЕМЯ -->
+<section class="section lose">
+  <div class="section-inner">
+    <div class="section-head rise">
+      <div class="section-label">Где сейчас уходит время</div>
+      <h2 class="section-title">Рутина, которую делают руками</h2>
+      <p class="section-sub">Это операции, которые в каждой компании повторяются десятки раз в месяц. Ассистент забирает их не полностью, а до состояния "человек проверил и отправил".</p>
+    </div>
+
+    <div class="lose-table rise">
+      <div class="lose-row is-head">
+        <span>Операция</span><span>Сейчас</span><span>С ассистентом</span>
+      </div>
+      <div class="lose-row">
+        <div class="lose-op">Спецификация по объекту</div>
+        <div class="lose-now">2–3 часа руками в Excel</div>
+        <div class="lose-after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg> 15 минут из прайса и шаблона</div>
+      </div>
+      <div class="lose-row">
+        <div class="lose-op">Коммерческое предложение</div>
+        <div class="lose-now">полдня на сборку и вычитку</div>
+        <div class="lose-after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg> 20 минут по вашему образцу</div>
+      </div>
+      <div class="lose-row">
+        <div class="lose-op">Сводка к планёрке</div>
+        <div class="lose-now">вечер в таблицах перед понедельником</div>
+        <div class="lose-after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg> собирается по выгрузке за минуты</div>
+      </div>
+      <div class="lose-row">
+        <div class="lose-op">Договор, акт, счёт</div>
+        <div class="lose-now">копия прошлого документа плюс правки</div>
+        <div class="lose-after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg> генерация из реквизитов, без опечаток</div>
+      </div>
+      <div class="lose-row">
+        <div class="lose-op">Разбор ТЗ заказчика на 40 страниц</div>
+        <div class="lose-now">день чтения и выписок</div>
+        <div class="lose-after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg> выжимка со списком вопросов к клиенту</div>
+      </div>
+      <div class="lose-row">
+        <div class="lose-op">Поиск нужного файла</div>
+        <div class="lose-now">15–20 минут в переписке и папках</div>
+        <div class="lose-after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg> ассистент ищет по вашим дискам сам</div>
+      </div>
+    </div>
+
+    <div class="lose-note rise">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <p>Посчитайте на своей команде: если пять человек теряют по 6 часов в неделю на такую рутину, за год набегает <strong>около 1 500 часов</strong>. Это не про "заменить людей", а про то, чтобы они занимались объектами и клиентами, а не переписыванием таблиц.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ЧЕМ ОТЛИЧАЕТСЯ -->
+<section class="section why">
+  <div class="section-inner">
+    <div class="section-head rise">
+      <div class="section-label">В чём разница</div>
+      <h2 class="section-title">Почему это не "просто откройте ChatGPT"</h2>
+      <p class="section-sub">Браузерный чат не видит ваши файлы, забывает контекст и каждый раз начинает с нуля. Корпоративный формат устроен иначе.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card rise">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/></svg></div>
+        <h4>Работает с вашими файлами</h4>
+        <p>Ассистент живёт в редакторе на рабочей машине и открывает папки, таблицы, договоры и выгрузки напрямую. <em>Ничего не надо копировать в окно чата кусками.</em></p>
+      </div>
+      <div class="why-card rise">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 2.4 1.2 4 2 5 .6.8 1 1.5 1 3h8c0-1.5.4-2.2 1-3 .8-1 2-2.6 2-5a7 7 0 0 0-7-7z"/><path d="M9 21h6"/></svg></div>
+        <h4>Помнит вашу компанию</h4>
+        <p>Прайс, регламенты, шаблоны документов, кто за что отвечает, как у вас принято считать. <em>Не переспрашивает каждое утро одно и то же.</em></p>
+      </div>
+      <div class="why-card rise">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+        <h4>60+ готовых скиллов</h4>
+        <p>Документы, таблицы, презентации, аналитика, письма, проверка данных. <em>Это не универсальный чат, а набор процедур, которые уже настроены под тип задачи.</em></p>
+      </div>
+      <div class="why-card rise">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg></div>
+        <h4>Подключается к вашим сервисам</h4>
+        <p>Почта, диск, календарь, таблицы, базы данных и внутренние системы через MCP. <em>Ассистент берёт данные сам, а не ждёт, пока их принесут.</em></p>
+      </div>
+    </div>
+
+    <p class="why-foot rise"><strong>Формат разовый.</strong> Настроили, обучили сотрудников, передали. Дальше компания работает без нас.</p>
+  </div>
+</section>
+
+<!-- РОЛИ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-head rise">
+      <div class="section-label">По ролям</div>
+      <h2 class="section-title">Что ассистент забирает у каждого</h2>
+      <p class="section-sub">На диагностике собираем такой список под вашу компанию: обычно 8–15 повторяющихся задач, из которых 5–6 закрываются на первой же встрече.</p>
+    </div>
+
+    <div class="roles-grid">
+      <div class="role-card rise">
+        <div class="role-head">
+          <div class="role-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+          <h4>Продажи</h4>
+        </div>
+        <ul class="role-list">
+          <li>КП по шаблону компании и текущему прайсу</li>
+          <li>Разбор входящего ТЗ и список вопросов клиенту</li>
+          <li>Письма, follow-up, ответы на типовые возражения</li>
+          <li>Счета и закрывающие документы</li>
+        </ul>
+      </div>
+
+      <div class="role-card rise">
+        <div class="role-head">
+          <div class="role-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M6 20V9l6-5 6 5v11"/><path d="M10 20v-5h4v5"/></svg></div>
+          <h4>Инженеры и проектировщики</h4>
+        </div>
+        <ul class="role-list">
+          <li>Спецификации и расчёты по объекту</li>
+          <li>Сверка версий документов и ревизий</li>
+          <li>ТЗ, акты, протоколы пусконаладки</li>
+          <li>Перевод и разбор технической документации</li>
+        </ul>
+      </div>
+
+      <div class="role-card rise">
+        <div class="role-head">
+          <div class="role-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg></div>
+          <h4>Документы и учёт</h4>
+        </div>
+        <ul class="role-list">
+          <li>Договоры и допсоглашения из реквизитов</li>
+          <li>Обезличивание данных перед отправкой в ИИ</li>
+          <li>Реестры, сверки, разбор выгрузок из учётной системы</li>
+          <li>Проверка комплектности пакета документов</li>
+        </ul>
+      </div>
+
+      <div class="role-card rise">
+        <div class="role-head">
+          <div class="role-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+          <h4>Руководитель</h4>
+        </div>
+        <ul class="role-list">
+          <li>Сводка по проектам и задачам к планёрке</li>
+          <li>Разбор финансовых выгрузок и отклонений</li>
+          <li>Расшифровки встреч с решениями и ответственными</li>
+          <li>Быстрые справки по любому документу компании</li>
+        </ul>
+      </div>
+
+      <div class="role-card rise">
+        <div class="role-head">
+          <div class="role-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 11h18M8 7V4h8v3"/></svg></div>
+          <h4>Склад и логистика</h4>
+        </div>
+        <ul class="role-list">
+          <li>Сверка накладных с заказом</li>
+          <li>Заявки поставщикам по остаткам</li>
+          <li>Разбор прайсов и сопоставление позиций</li>
+          <li>Отчёт по движению за период</li>
+        </ul>
+      </div>
+
+      <div class="role-card rise">
+        <div class="role-head">
+          <div class="role-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+          <h4>Маркетинг</h4>
+        </div>
+        <ul class="role-list">
+          <li>Тексты и посты по вашим объектам и кейсам</li>
+          <li>Презентации и питчи под встречу</li>
+          <li>Страницы сайта и описания услуг</li>
+          <li>Контент-план и разбор конкурентов</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- КЕЙСЫ -->
+<section class="section cases">
+  <div class="section-inner">
+    <div class="section-head rise">
+      <div class="section-label">Из практики</div>
+      <h2 class="section-title">Как это выглядело у других компаний</h2>
+      <p class="section-sub">Компании названы обезличенно, но задачи и результаты реальные, из работы 2025–2026 годов.</p>
+    </div>
+
+    <div class="cases-grid">
+      <div class="case-card rise">
+        <span class="case-tag">Инсталляции звука и света</span>
+        <div class="case-title">Интегратор, 500+ сданных объектов, команда 4 человека</div>
+        <p class="case-was">Звукорежиссёр собирал спецификации в Excel и КП по прайсу вручную, техдиректор вёл 20 объектов и считал сметы по вечерам.</p>
+        <p class="case-now"><strong>После настройки:</strong> ассистент собирает спецификацию из прайса и шаблона, готовит КП и ТЗ, разбирает переписку по объекту. Настраивали четверых, каждому под его тип документов.</p>
+      </div>
+
+      <div class="case-card rise">
+        <span class="case-tag">Маркетплейс услуг</span>
+        <div class="case-title">Основатель платформы бронирования, команда 3 человека</div>
+        <p class="case-was">Весь контент, карточки партнёров, тексты и отчёты держались на основателе, времени на развитие продукта не оставалось.</p>
+        <p class="case-now"><strong>После настройки:</strong> карточки и тексты собираются по шаблону, отчёты по партнёрам считаются автоматически, основатель занимается продуктом, а не операционкой.</p>
+      </div>
+
+      <div class="case-card rise">
+        <span class="case-tag">Юридические документы</span>
+        <div class="case-title">Компания с потоком договоров и персональных данных</div>
+        <p class="case-was">Договоры нельзя отдавать в ИИ как есть: там реквизиты, ФИО, паспортные данные контрагентов.</p>
+        <p class="case-now"><strong>После настройки:</strong> документ обезличивается на локальной машине, обрабатывается ассистентом, реквизиты возвращаются на место в готовый файл. Персональные данные наружу не уходят.</p>
+      </div>
+
+      <div class="case-card rise">
+        <span class="case-tag">Финансы и учёт</span>
+        <div class="case-title">Бухгалтерская практика, 65 клиентов на обслуживании</div>
+        <p class="case-was">Управленческую отчётность для клиентов собирали руками из оборотно-сальдовой ведомости, каждый раз заново.</p>
+        <p class="case-now"><strong>После настройки:</strong> выгрузка превращается в P&L и разбор отклонений за минуты, отчёт клиенту уходит в тот же день.</p>
+      </div>
+    </div>
+
+    <p class="cases-note rise">На диагностике покажу эти настройки вживую на своём экране, включая то, как ассистент работает с файлами.</p>
+  </div>
+</section>
+
+<!-- КАЛЬКУЛЯТОР -->
+<section class="section calc" id="calc">
+  <div class="section-inner">
+    <div class="section-head rise">
+      <div class="section-label">Расчёт стоимости</div>
+      <h2 class="section-title">Сколько это стоит для вашей команды</h2>
+      <p class="section-sub">Учим группами по отделам, а настраиваем каждому лично. Поэтому в расчёте две части: работа с группой и рабочее место сотрудника. Блоки уровня компании берутся по необходимости.</p>
+    </div>
+
+    <div class="calc-how rise">
+      <div class="calc-how-card">
+        <strong>Группа собирается по отделу</strong>
+        <p>В одной группе люди с похожими задачами: продажи, инженеры, документы. Программа встреч строится под задачи именно этого отдела.</p>
+        <span>до 8 человек в группе</span>
+      </div>
+      <div class="calc-how-card">
+        <strong>Встречи идут на группу</strong>
+        <p>Три встречи по два часа. Разбираем реальные документы и процессы отдела, а не общую теорию про нейросети.</p>
+        <span>75 000 ₽ за группу</span>
+      </div>
+      <div class="calc-how-card">
+        <strong>Настройка у каждого своя</strong>
+        <p>Установка на его машину, доступы, память под его задачи и набор скиллов. Это делается персонально, иначе ассистент не заработает.</p>
+        <span>15 000 ₽ за сотрудника</span>
+      </div>
+    </div>
+
+    <div class="calc-layout">
+      <!-- ЛЕВАЯ ПАНЕЛЬ: ВВОД -->
+      <div class="calc-panel rise">
+        <div class="calc-panel-title">Формат работы</div>
+        <div class="calc-seg">
+          <label><input type="radio" name="mode" value="group" checked><span>Группами по отделам</span></label>
+          <label><input type="radio" name="mode" value="solo"><span>Индивидуально, один на один</span></label>
+        </div>
+
+        <div class="calc-block">
+          <div class="calc-block-label">Сколько сотрудников подключаем</div>
+
+          <div class="calc-num-row">
+            <span class="calc-num" id="calcNum">6</span>
+            <span class="calc-num-label" id="calcNumLabel">сотрудников</span>
+          </div>
+          <div class="calc-rate" id="calcRate">75 000 ₽ за группу плюс 15 000 ₽ за сотрудника</div>
+
+          <input class="calc-range" id="calcRange" type="range" min="1" max="40" value="6" step="1" aria-label="Количество сотрудников">
+          <div class="calc-ticks"><span>1</span><span>20</span><span>40</span></div>
+
+          <div class="calc-tip" id="calcTip" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span id="calcTipText"></span>
+          </div>
+        </div>
+
+        <div class="calc-block" id="calcGroupBlock">
+          <div class="calc-block-label">Сколько групп</div>
+          <div class="calc-groups">
+            <span class="calc-groups-label">Групп в программе
+              <span class="calc-groups-hint" id="calcGroupsHint">по одной на отдел, максимум 8 человек в каждой</span>
+            </span>
+            <span class="calc-step">
+              <button type="button" id="calcGroupMinus" aria-label="Меньше групп">−</button>
+              <span class="calc-step-val" id="calcGroupsVal">1</span>
+              <button type="button" id="calcGroupPlus" aria-label="Больше групп">+</button>
+            </span>
+          </div>
+          <p class="calc-split" id="calcSplit"></p>
+        </div>
+
+        <div class="calc-block">
+          <div class="calc-block-label">Формат встреч</div>
+          <div class="calc-seg">
+            <label><input type="radio" name="fmt" value="3 встречи по 2 часа" checked><span>3 встречи по 2 часа</span></label>
+            <label><input type="radio" name="fmt" value="6 встреч по часу"><span>6 встреч по часу</span></label>
+          </div>
+        </div>
+
+        <div class="calc-block">
+          <div class="calc-block-label">Что добавить сверх базовой программы</div>
+
+          <label class="calc-opt" id="calcExtraMeetOpt">
+            <input type="checkbox" id="calcExtraMeet">
+            <span class="calc-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
+            <span class="calc-opt-text">
+              <span class="calc-opt-name">Дополнительная встреча каждой группе</span>
+              <span class="calc-opt-desc">Четвёртая двухчасовая встреча каждой группе: добираем задачи, которые всплыли уже в работе</span>
+            </span>
+            <span class="calc-opt-price">+20 000 ₽</span>
+          </label>
+
+          <label class="calc-opt">
+            <input type="checkbox" class="calc-mod" data-price="25000" data-name="База знаний компании" data-weeks="1">
+            <span class="calc-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
+            <span class="calc-opt-text">
+              <span class="calc-opt-name">База знаний компании</span>
+              <span class="calc-opt-desc">Регламенты, прайсы, шаблоны и правила загружаем в память ассистента, чтобы он отвечал как ваш сотрудник</span>
+            </span>
+            <span class="calc-opt-price">+25 000 ₽</span>
+          </label>
+
+          <label class="calc-opt">
+            <input type="checkbox" class="calc-mod" data-price="20000" data-name="Интеграции с вашими сервисами" data-weeks="1">
+            <span class="calc-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
+            <span class="calc-opt-text">
+              <span class="calc-opt-name">Интеграции с вашими сервисами</span>
+              <span class="calc-opt-desc">Почта, диск, календарь, таблицы, база данных: ассистент берёт данные сам</span>
+            </span>
+            <span class="calc-opt-price">+20 000 ₽</span>
+          </label>
+
+          <label class="calc-opt">
+            <input type="checkbox" class="calc-mod" data-price="45000" data-name="Автоматизация сквозного процесса" data-weeks="2">
+            <span class="calc-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
+            <span class="calc-opt-text">
+              <span class="calc-opt-name">Автоматизация сквозного процесса</span>
+              <span class="calc-opt-desc">Один процесс целиком без участия человека: заявка, обработка, документ, уведомление</span>
+            </span>
+            <span class="calc-opt-price">от 45 000 ₽</span>
+          </label>
+
+          <label class="calc-opt">
+            <input type="checkbox" class="calc-mod" data-price="20000" data-name="Обучение внутреннего администратора" data-weeks="1">
+            <span class="calc-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
+            <span class="calc-opt-text">
+              <span class="calc-opt-name">Обучение внутреннего администратора</span>
+              <span class="calc-opt-desc">Готовим одного человека в компании, чтобы дальше подключать новых сотрудников самим</span>
+            </span>
+            <span class="calc-opt-price">+20 000 ₽</span>
+          </label>
+
+          <label class="calc-opt">
+            <input type="checkbox" class="calc-mod" data-price="45000" data-name="Сопровождение 3 месяца" data-weeks="0">
+            <span class="calc-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
+            <span class="calc-opt-text">
+              <span class="calc-opt-name">Сопровождение 3 месяца</span>
+              <span class="calc-opt-desc">15 000 ₽ в месяц: разборы, доработки скиллов, новые задачи по мере появления</span>
+            </span>
+            <span class="calc-opt-price">+45 000 ₽</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ПРАВАЯ ПАНЕЛЬ: РЕЗУЛЬТАТ -->
+      <div class="calc-result rise">
+        <div class="calc-result-label">Предварительный расчёт</div>
+        <div class="calc-total-main" id="calcTotal">165 000 – 190 000 ₽</div>
+        <div class="calc-total-sub" id="calcPer">27 500 ₽ на сотрудника, оплата по этапам</div>
+
+        <div class="calc-meta">
+          <div class="calc-meta-item"><strong id="calcPeople">6</strong><span>сотрудников</span></div>
+          <div class="calc-meta-item"><strong id="calcWeeks">3–4 недели</strong><span>срок внедрения</span></div>
+          <div class="calc-meta-item"><strong id="calcHours">15 ч</strong><span>работы с командой</span></div>
+        </div>
+
+        <ul class="calc-lines" id="calcLines"></ul>
+        <ul class="calc-includes" id="calcIncludes"></ul>
+
+        <div class="calc-compare">
+          Для сравнения: <strong>штатный AI-специалист стоит от 180 000 ₽ в месяц</strong> с налогами, и его ещё нужно найти. Здесь настройка разовая, навык остаётся в компании.
+        </div>
+
+        <button class="calc-btn" id="calcSend" type="button">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.869 4.326-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.83.941z"/></svg>
+          Отправить расчёт в Telegram
+        </button>
+        <p class="calc-btn-note">Расчёт скопируется в буфер обмена, вам останется вставить его в чат одним нажатием.</p>
+      </div>
+    </div>
+
+    <p class="calc-disclaimer rise"><strong>Это предварительная вилка, а не счёт.</strong> Точная сумма и состав работ фиксируются после бесплатной диагностики на 40 минут: смотрим ваши процессы, документы и решаем, кого объединять в группы и что автоматизировать в первую очередь. Работаем по договору, оплата разбивается по этапам.</p>
+  </div>
+</section>
+
+<!-- ЭТАПЫ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-head rise">
+      <div class="section-label">Как проходит внедрение</div>
+      <h2 class="section-title">От диагностики до передачи</h2>
+      <p class="section-sub">Обучение идёт группами по отделам, настройка среды выполняется каждому лично. Абстрактных лекций про нейросети в программе нет.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card rise">
+        <div class="step-num">1</div>
+        <h4>Диагностика</h4>
+        <p>Смотрим процессы, документы и рутину каждого участника. Собираем список задач под автоматизацию.</p>
+        <span class="step-when">40 минут, бесплатно</span>
+      </div>
+      <div class="step-card rise">
+        <div class="step-num">2</div>
+        <h4>Подготовка</h4>
+        <p>Доступы, подписки, установка редактора и ассистента на рабочие машины. Помогаю с оформлением и оплатой.</p>
+        <span class="step-when">2–3 дня</span>
+      </div>
+      <div class="step-card rise">
+        <div class="step-num">3</div>
+        <h4>Встречи с группами</h4>
+        <p>Три встречи по два часа с каждой группой. Разбираем задачи отдела на его же документах, а не на учебных примерах.</p>
+        <span class="step-when">3 встречи на группу</span>
+      </div>
+      <div class="step-card rise">
+        <div class="step-num">4</div>
+        <h4>Настройка у каждого</h4>
+        <p>Персонально ставим и настраиваем среду каждому: доступы, память, скиллы под его задачи. Проверяем на его реальных файлах.</p>
+        <span class="step-when">по каждому сотруднику</span>
+      </div>
+      <div class="step-card rise">
+        <div class="step-num">5</div>
+        <h4>Передача</h4>
+        <p>Инструкции остаются в компании, отвечаю на вопросы по ходу работы. Дальше вы ведёте сами.</p>
+        <span class="step-when">30 дней поддержки</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ЧТО НУЖНО + БЕЗОПАСНОСТЬ -->
+<section class="section why">
+  <div class="section-inner">
+    <div class="section-head rise">
+      <div class="section-label">Условия работы</div>
+      <h2 class="section-title">Что нужно от вас и что с данными</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="panel rise">
+        <div class="panel-head">
+          <div class="panel-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <h3>Что нужно от компании</h3>
+        </div>
+        <ul class="panel-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span><strong>Рабочие ноутбуки с правами администратора.</strong> Windows или macOS, оба варианта подходят.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span><strong>Подписка на модель.</strong> Оформляется на компанию, помогаю с оформлением и оплатой.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span><strong>2 часа времени сотрудника в неделю.</strong> Если два часа подряд тяжело, делим на встречи по часу.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span><strong>Один ответственный со стороны компании.</strong> Человек, который согласует список задач и доступы.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span><strong>Примеры ваших документов.</strong> Спецификация, КП, договор, выгрузка: на них и настраиваем.</span></li>
+        </ul>
+        <p class="panel-note">Работу выполняют ваши сотрудники на своих машинах, под моим ведением на встречах. Постоянный удалённый доступ к вашей инфраструктуре для этого не требуется.</p>
+      </div>
+
+      <div class="panel rise">
+        <div class="panel-head">
+          <div class="panel-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Данные и безопасность</h3>
+        </div>
+        <ul class="panel-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span>Ассистент работает <strong>на машинах компании</strong>, файлы лежат у вас, а не в чужом облаке.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span>Чувствительные документы можно <strong>обезличивать перед обработкой</strong>: ФИО и реквизиты заменяются локально и возвращаются в готовый файл.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span>Вы сами решаете, <strong>какие папки видит ассистент</strong>, а какие остаются закрытыми.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span>Договор с разделом об <strong>обработке персональных данных по 152-ФЗ</strong>, NDA по запросу.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span>Все настройки и инструкции <strong>остаются в компании</strong>: они не привязаны ко мне.</span></li>
+        </ul>
+        <p class="panel-note">Если у вас закрытый контур или отраслевые ограничения, разберём это на диагностике до начала работ.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ОТЗЫВЫ -->
+<section class="section testimonials">
+  <div class="section-inner">
+    <div class="section-head rise">
+      <div class="section-label">Отзывы</div>
+      <h2 class="section-title">Те, кто уже внедрил</h2>
+      <p class="section-sub">Оба говорят про корпоративный формат: что именно ассистент забрал и как это выглядит в ежедневной работе.</p>
+    </div>
+
+    <div class="tst-video-grid">
+      <button class="tst-video rise" type="button" data-src="assets/testimonial-2.mp4" data-name="Дмитрий" data-role="Основатель маркетплейса услуг">
+        <video src="assets/testimonial-2.mp4#t=1.5" preload="metadata" muted playsinline></video>
+        <span class="tst-shade"></span>
+        <span class="tst-pkg-chip">Пакет для бизнеса</span>
+        <span class="tst-dur">1:35</span>
+        <span class="tst-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="tst-meta">
+          <span class="tst-meta-name">Дмитрий</span>
+          <span class="tst-meta-role">Основатель маркетплейса услуг</span>
+        </span>
+      </button>
+
+      <button class="tst-video rise" type="button" data-src="assets/testimonial-3.mp4" data-name="Дарья" data-role="Правая рука директора крупной компании">
+        <video src="assets/testimonial-3.mp4#t=38" preload="metadata" muted playsinline></video>
+        <span class="tst-shade"></span>
+        <span class="tst-pkg-chip">Пакет для бизнеса</span>
+        <span class="tst-dur">8:41</span>
+        <span class="tst-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="tst-meta">
+          <span class="tst-meta-name">Дарья</span>
+          <span class="tst-meta-role">Правая рука директора крупной компании</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- МОДАЛКА ВИДЕО -->
+<div class="tst-modal" id="tstModal" role="dialog" aria-modal="true" aria-label="Видеоотзыв">
+  <div class="tst-modal-inner" id="tstModalInner">
+    <button class="tst-modal-close" id="tstClose" type="button" aria-label="Закрыть">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <video id="tstModalVideo" controls playsinline></video>
+    <div class="tst-modal-cap">
+      <strong id="tstModalName"></strong>
+      <span id="tstModalRole"></span>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="section faq-section">
+  <div class="section-inner">
+    <div class="section-head rise">
+      <div class="section-label">Вопросы</div>
+      <h2 class="section-title">Что обычно спрашивают собственники</h2>
+    </div>
+
+    <div class="faq-grid">
+      <div class="faq-card rise">
+        <div class="faq-card-top">
+          <div class="faq-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+          <span class="faq-num">01</span>
+        </div>
+        <div class="faq-card-body">
+          <div class="faq-q">Нужно ли уметь программировать?</div>
+          <p class="faq-a">Нет. Сотрудник пишет задачу словами, как поставил бы её помощнику. <strong>Редактор нужен не для кода, а для доступа к файлам.</strong> На встречах разбираем именно те задачи, которые человек делает каждый день.</p>
+        </div>
+      </div>
+
+      <div class="faq-card rise">
+        <div class="faq-card-top">
+          <div class="faq-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+          <span class="faq-num">02</span>
+        </div>
+        <div class="faq-card-body">
+          <div class="faq-q">Что будет, если сотрудник уволится?</div>
+          <p class="faq-a">Настройки, память и инструкции принадлежат компании, а не человеку. <strong>Новому сотруднику передаётся готовая рабочая среда</strong>, обучение занимает одну встречу вместо трёх.</p>
+        </div>
+      </div>
+
+      <div class="faq-card rise">
+        <div class="faq-card-top">
+          <div class="faq-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+          <span class="faq-num">03</span>
+        </div>
+        <div class="faq-card-body">
+          <div class="faq-q">Сколько стоят подписки и кто их платит?</div>
+          <p class="faq-a">Подписка на модель оплачивается компанией отдельно, порядок <strong>20–25 $ в месяц на сотрудника</strong> для рабочего тарифа. Помогаю оформить и оплатить, в стоимость внедрения подписки не входят.</p>
+        </div>
+      </div>
+
+      <div class="faq-card rise">
+        <div class="faq-card-top">
+          <div class="faq-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg></div>
+          <span class="faq-num">04</span>
+        </div>
+        <div class="faq-card-body">
+          <div class="faq-q">Заработает ли с нашей 1С или CRM?</div>
+          <p class="faq-a">Чаще всего да: либо напрямую через интеграцию, либо через выгрузки, которые система и так умеет делать. <strong>На диагностике смотрим конкретно вашу связку</strong> и говорим честно, что получится, а что нет.</p>
+        </div>
+      </div>
+
+      <div class="faq-card rise">
+        <div class="faq-card-top">
+          <div class="faq-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+          <span class="faq-num">05</span>
+        </div>
+        <div class="faq-card-body">
+          <div class="faq-q">Это чтобы сократить людей?</div>
+          <p class="faq-a">Нет, и на практике так никто не делает. <strong>Освобождается время на объекты, клиентов и продажи</strong>, а не появляется повод кого-то убрать. Сокращать людей после автоматизации рутины обычно дороже, чем кажется.</p>
+        </div>
+      </div>
+
+      <div class="faq-card rise">
+        <div class="faq-card-top">
+          <div class="faq-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+          <span class="faq-num">06</span>
+        </div>
+        <div class="faq-card-body">
+          <div class="faq-q">С чего начать, если команда большая?</div>
+          <p class="faq-a">С двух сотрудников, у которых больше всего повторяющихся документов. <strong>Через месяц видно результат в часах</strong>, и уже на этих данных решаете, подключать ли остальных.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-label">Следующий шаг</div>
+  <h2>Диагностика <em>40 минут</em>, без обязательств</h2>
+  <p>Показываю ассистента вживую на своём экране, разбираем ваши процессы и считаем, что автоматизировать первым. После встречи присылаю расчёт и план внедрения.</p>
+  <div class="cta-btns">
+    <a class="cta-btn-main" href="https://t.me/Aleksei_Zotov" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.869 4.326-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.83.941z"/></svg>
+      Написать в Telegram
+    </a>
+    <a class="cta-btn-ghost" href="ai-mentoring.html#packages">Все пакеты AI-наставничества →</a>
+  </div>
+  <p style="margin-top:1.75rem; font-size:.82rem; color:rgba(255,255,255,.4); position:relative; z-index:1;">Работаем по договору · оплата по этапам · NDA по запросу</p>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <img class="footer-logo" src="assets/logo-eza.png" alt="EZA Group">
+  <span class="footer-text">© 2026 EZA Group · ИП Зотова Екатерина Олеговна · ИНН 772880993414 · ОГРНИП 326774600333751</span>
+  <a class="footer-link" href="ai-mentoring.html">AI-Наставничество</a>
+  <a class="footer-link" href="oferta.html">Публичная оферта</a>
+  <a class="footer-link" href="privacy.html">Политика конфиденциальности</a>
+  <a class="footer-link" href="https://t.me/Aleksei_Zotov" target="_blank">@Aleksei_Zotov</a>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── КАЛЬКУЛЯТОР ───────────────────────────────────────────────
+   Модель: работа с группой (за группу) + рабочее место (за сотрудника).
+   Индивидуальный формат считается по своей ставке за человека.
+   Правки цен — только в блоке PRICES и в data-price у чекбоксов. */
+(function () {
+  var PRICES = {
+    group: 75000,        // 3 встречи по 2 часа с одной группой
+    seat: 15000,         // персональная настройка одного сотрудника
+    solo: 60000,         // индивидуальный формат: всё включено, за человека
+    extraMeeting: 20000, // дополнительная встреча одной группе
+    maxInGroup: 8
+  };
+  var UPPER_MARGIN = 1.15;
+
+  var range    = document.getElementById('calcRange');
+  var numEl    = document.getElementById('calcNum');
+  var labelEl  = document.getElementById('calcNumLabel');
+  var rateEl   = document.getElementById('calcRate');
+  var totalEl  = document.getElementById('calcTotal');
+  var perEl    = document.getElementById('calcPer');
+  var peopleEl = document.getElementById('calcPeople');
+  var weeksEl  = document.getElementById('calcWeeks');
+  var hoursEl  = document.getElementById('calcHours');
+  var linesEl  = document.getElementById('calcLines');
+  var incEl    = document.getElementById('calcIncludes');
+  var sendBtn  = document.getElementById('calcSend');
+  var toast    = document.getElementById('toast');
+  var groupBlock = document.getElementById('calcGroupBlock');
+  var groupsVal  = document.getElementById('calcGroupsVal');
+  var groupsHint = document.getElementById('calcGroupsHint');
+  var splitEl    = document.getElementById('calcSplit');
+  var minusBtn   = document.getElementById('calcGroupMinus');
+  var plusBtn    = document.getElementById('calcGroupPlus');
+  var tipEl      = document.getElementById('calcTip');
+  var tipText    = document.getElementById('calcTipText');
+  var extraMeet  = document.getElementById('calcExtraMeet');
+  var extraOpt   = document.getElementById('calcExtraMeetOpt');
+  if (!range) return;
+
+  var groups = 1;
+
+  function fmt(n) { return n.toLocaleString('ru-RU').replace(/[\u00A0\u202F]/g, ' ') + ' ₽'; }
+  function roundUp(n, step) { return Math.ceil(n / step) * step; }
+  function mode() {
+    var picked = document.querySelector('input[name="mode"]:checked');
+    return picked ? picked.value : 'group';
+  }
+  function format() {
+    var picked = document.querySelector('input[name="fmt"]:checked');
+    return picked ? picked.value : '3 встречи по 2 часа';
+  }
+
+  function word(n, one, few, many) {
+    var d10 = n % 10, d100 = n % 100;
+    if (d100 >= 11 && d100 <= 14) return many;
+    if (d10 === 1) return one;
+    if (d10 >= 2 && d10 <= 4) return few;
+    return many;
+  }
+  function peopleWord(n) { return word(n, 'сотрудник', 'сотрудника', 'сотрудников'); }
+  function groupWord(n) { return word(n, 'группа', 'группы', 'групп'); }
+  function weekWord(n) { return word(n, 'неделя', 'недели', 'недель'); }
+
+  function minGroups(n) { return Math.max(1, Math.ceil(n / PRICES.maxInGroup)); }
+
+  // распределяем людей по группам как можно ровнее
+  function split(n, g) {
+    var base = Math.floor(n / g), rest = n % g, out = [];
+    for (var i = 0; i < g; i++) out.push(base + (i < rest ? 1 : 0));
+    return out;
+  }
+
+  function mods() {
+    return Array.prototype.slice.call(document.querySelectorAll('.calc-mod'))
+      .filter(function (c) { return c.checked; })
+      .map(function (c) {
+        return { name: c.dataset.name, price: parseInt(c.dataset.price, 10), weeks: parseInt(c.dataset.weeks, 10) };
+      });
+  }
+
+  function state() {
+    var n = parseInt(range.value, 10);
+    var isGroup = mode() === 'group';
+    var g = Math.min(Math.max(groups, minGroups(n)), n);
+    var chosen = mods();
+    var modsSum = chosen.reduce(function (s, m) { return s + m.price; }, 0);
+
+    var lines = [];
+    var base = 0;
+    if (isGroup) {
+      base += g * PRICES.group;
+      lines.push({ label: 'Работа с ' + (g > 1 ? g + ' группами' : 'группой') + ', ' + format().toLowerCase(), sum: g * PRICES.group });
+      if (extraMeet.checked) {
+        base += g * PRICES.extraMeeting;
+        lines.push({ label: 'Дополнительная встреча каждой группе', sum: g * PRICES.extraMeeting });
+      }
+      base += n * PRICES.seat;
+      lines.push({ label: 'Рабочее место: ' + n + ' ' + peopleWord(n), sum: n * PRICES.seat });
+    } else {
+      base += n * PRICES.solo;
+      lines.push({ label: 'Индивидуально: ' + n + ' ' + peopleWord(n) + ', ' + format().toLowerCase(), sum: n * PRICES.solo });
+    }
+    chosen.forEach(function (m) { lines.push({ label: m.name, sum: m.price }); });
+
+    var low = base + modsSum;
+    return { n: n, g: g, isGroup: isGroup, chosen: chosen, low: low, high: roundUp(low * UPPER_MARGIN, 5000), lines: lines };
+  }
+
+  function weeksFor(st) {
+    var modWeeks = st.chosen.reduce(function (s, m) { return s + m.weeks; }, 0);
+    var base = st.isGroup
+      ? 2 + st.g
+      : (st.n <= 2 ? 2 : st.n <= 4 ? 3 : 4);
+    return base + Math.ceil(modWeeks / 2);
+  }
+
+  function hoursFor(st) {
+    return st.isGroup
+      ? Math.round(st.g * (extraMeet.checked ? 8 : 6) + st.n * 1.5)
+      : st.n * 6;
+  }
+
+  function renderTip(st) {
+    var soloCost = st.n * PRICES.solo;
+    var groupCost = st.g * PRICES.group + st.n * PRICES.seat;
+    if (st.isGroup && soloCost < groupCost) {
+      tipText.innerHTML = 'Для команды такого размера индивидуальный формат выходит дешевле: ' +
+        fmt(soloCost) + ' против ' + fmt(groupCost) + '. ' +
+        '<button type="button" data-switch="solo">Посчитать индивидуально</button>';
+      tipEl.hidden = false;
+    } else if (!st.isGroup && groupCost < soloCost) {
+      tipText.innerHTML = 'На такой команде выгоднее учить группами: ' + fmt(groupCost) + ' против ' + fmt(soloCost) + '. ' +
+        '<button type="button" data-switch="group">Посчитать группами</button>';
+      tipEl.hidden = false;
+    } else {
+      tipEl.hidden = true;
+    }
+  }
+
+  function render() {
+    var st = state();
+    groups = st.g;
+
+    numEl.textContent = st.n;
+    labelEl.textContent = peopleWord(st.n);
+
+    groupBlock.hidden = !st.isGroup;
+    extraOpt.hidden = !st.isGroup;
+    if (!st.isGroup && extraMeet.checked) extraMeet.checked = false;
+
+    rateEl.textContent = st.isGroup
+      ? fmt(PRICES.group) + ' за группу плюс ' + fmt(PRICES.seat) + ' за сотрудника'
+      : fmt(PRICES.solo) + ' за сотрудника, всё включено';
+
+    groupsVal.textContent = st.g;
+    var sizes = split(st.n, st.g);
+    var same = sizes.every(function (v) { return v === sizes[0]; });
+    splitEl.innerHTML = st.g === 1
+      ? 'Одна группа: <strong>' + st.n + ' ' + peopleWord(st.n) + '</strong>, три встречи по два часа.'
+      : (same
+          ? '<strong>' + st.g + ' ' + groupWord(st.g) + ' по ' + sizes[0] + ' ' + peopleWord(sizes[0]) + '</strong>, у каждой свои три встречи.'
+          : '<strong>' + st.g + ' ' + groupWord(st.g) + ':</strong> ' + sizes.join(' и ') + ' ' + peopleWord(sizes[sizes.length - 1]) + ', у каждой свои три встречи.');
+    groupsHint.textContent = st.n > PRICES.maxInGroup
+      ? 'минимум ' + minGroups(st.n) + ', в группе не больше ' + PRICES.maxInGroup + ' человек'
+      : 'по одной на отдел, максимум ' + PRICES.maxInGroup + ' человек в каждой';
+    minusBtn.disabled = st.g <= minGroups(st.n);
+    plusBtn.disabled = st.g >= st.n;
+
+    totalEl.textContent = fmt(st.low).replace(' ₽', '') + ' – ' + fmt(st.high);
+    perEl.textContent = fmt(Math.round(st.low / st.n)) + ' на сотрудника, оплата по этапам';
+
+    peopleEl.textContent = st.n;
+    peopleEl.nextElementSibling.textContent = peopleWord(st.n);
+    var w = weeksFor(st);
+    weeksEl.textContent = w + '–' + (w + 1) + ' ' + weekWord(w + 1);
+    hoursEl.textContent = hoursFor(st) + ' ч';
+
+    linesEl.innerHTML = st.lines.map(function (l) {
+      return '<li><span>' + l.label + '</span><b>' + fmt(l.sum) + '</b></li>';
+    }).join('');
+
+    var items = st.isGroup
+      ? ['Программа встреч под задачи каждого отдела',
+         'Установка и настройка ассистента на рабочих машинах',
+         'Память, скиллы и экономия токенов у каждого сотрудника',
+         'Автоматизация согласованного списка задач',
+         '30 дней поддержки после внедрения']
+      : ['Персональная программа под задачи сотрудника',
+         'Установка и настройка ассистента на его машине',
+         'Память, скиллы и экономия токенов',
+         'Автоматизация согласованного списка задач',
+         '30 дней поддержки после внедрения'];
+
+    incEl.innerHTML = items.map(function (t) {
+      return '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg><span>' + t + '</span></li>';
+    }).join('');
+
+    renderTip(st);
+  }
+
+  function summary() {
+    var st = state();
+    var lines = ['Расчёт корпоративного AI-ассистента (ezagroup.ru)'];
+    lines.push('Формат: ' + (st.isGroup ? 'группами по отделам' : 'индивидуально, один на один'));
+    lines.push('Сотрудников: ' + st.n);
+    if (st.isGroup) lines.push('Групп: ' + st.g + ' (' + split(st.n, st.g).join(' + ') + ')');
+    lines.push('Встречи: ' + format() + (st.isGroup ? ' с каждой группой' : ' с каждым'));
+    st.lines.forEach(function (l) { lines.push('  ' + l.label + ': ' + fmt(l.sum)); });
+    lines.push('Предварительно: ' + totalEl.textContent);
+    lines.push('Срок: ' + weeksEl.textContent);
+    lines.push('');
+    lines.push('Хочу обсудить внедрение.');
+    return lines.join('\n');
+  }
+
+  var toastTimer;
+  function showToast(text) {
+    toast.textContent = text;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 4200);
+  }
+
+  function copy(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy') ? resolve() : reject(); }
+      catch (e) { reject(e); }
+      document.body.removeChild(ta);
+    });
+  }
+
+  range.addEventListener('input', function () {
+    var n = parseInt(range.value, 10);
+    if (groups < minGroups(n)) groups = minGroups(n);
+    if (groups > n) groups = n;
+    render();
+  });
+
+  minusBtn.addEventListener('click', function () { groups = Math.max(minGroups(parseInt(range.value, 10)), groups - 1); render(); });
+  plusBtn.addEventListener('click', function () { groups = Math.min(parseInt(range.value, 10), groups + 1); render(); });
+
+  document.querySelectorAll('.calc-mod, input[name="fmt"], input[name="mode"], #calcExtraMeet').forEach(function (el) {
+    el.addEventListener('change', render);
+  });
+
+  tipEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-switch]');
+    if (!btn) return;
+    var target = document.querySelector('input[name="mode"][value="' + btn.dataset.switch + '"]');
+    if (target) { target.checked = true; render(); }
+  });
+
+  sendBtn.addEventListener('click', function () {
+    var text = summary();
+    copy(text).then(function () {
+      showToast('Расчёт скопирован. Вставьте его в чат в Telegram.');
+    }).catch(function () {
+      showToast('Не удалось скопировать автоматически, перепишите расчёт в сообщение.');
+    }).then(function () {
+      window.open('https://t.me/Aleksei_Zotov', '_blank', 'noopener');
+    });
+  });
+
+  render();
+})();
+
+/* ── ВИДЕООТЗЫВЫ ─────────────────────────────────────────────── */
+(function () {
+  var modal = document.getElementById('tstModal');
+  if (!modal) return;
+  var inner = document.getElementById('tstModalInner');
+  var video = document.getElementById('tstModalVideo');
+  var nameEl = document.getElementById('tstModalName');
+  var roleEl = document.getElementById('tstModalRole');
+
+  function open(btn) {
+    var src = btn.dataset.src;
+    video.src = src;
+    nameEl.textContent = btn.dataset.name;
+    roleEl.textContent = btn.dataset.role;
+    inner.classList.remove('is-wide');
+    video.addEventListener('loadedmetadata', function onMeta() {
+      if (video.videoWidth > video.videoHeight) inner.classList.add('is-wide');
+      video.removeEventListener('loadedmetadata', onMeta);
+    });
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    video.play().catch(function () {});
+  }
+
+  function close() {
+    modal.classList.remove('is-open');
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.tst-video').forEach(function (btn) {
+    btn.addEventListener('click', function () { open(btn); });
+  });
+  document.getElementById('tstClose').addEventListener('click', close);
+  modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('is-open')) close(); });
+
+  // превью-кадр, если браузер не подхватил #t=
+  document.querySelectorAll('.tst-video video').forEach(function (v) {
+    v.addEventListener('loadedmetadata', function () {
+      if (v.currentTime === 0) { try { v.currentTime = 1.5; } catch (e) {} }
+    });
+  });
+})();
+
+/* ── ПОЯВЛЕНИЕ БЛОКОВ ────────────────────────────────────────── */
+(function () {
+  var items = document.querySelectorAll('.rise');
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(function (el) { el.classList.add('is-in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+
+  items.forEach(function (el, i) {
+    el.style.transitionDelay = (Math.min(i % 6, 5) * 55) + 'ms';
+    io.observe(el);
+  });
+})();
+</script>
+
+</body>
+</html>
