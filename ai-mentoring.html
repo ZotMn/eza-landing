@@ -175,6 +175,8 @@
     .section-label { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--purple-text); margin-bottom: .55rem; }
     .section-title { font-size: 2rem; font-weight: 800; color: var(--dark); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: .75rem; }
     .section-sub { font-size: 1.05rem; color: var(--muted); line-height: 1.6; max-width: 560px; }
+    .sub-link { color: #0e7490; font-weight: 600; text-decoration: none; border-bottom: 1.5px solid var(--biz-mid); transition: all .18s; }
+    .sub-link:hover { color: var(--biz); border-bottom-color: var(--biz); }
     .section-head { margin-bottom: 3rem; }
 
     /* ── NOT-COURSE SECTION ── */
@@ -462,6 +464,16 @@
     .pkg-card:nth-child(4) .pkg-result-label { color: #0e7490; }
     .pkg-card:nth-child(4) .pkg-btn { background: var(--biz-lt); color: #0e7490; border: 1.5px solid var(--biz-mid); }
     .pkg-card:nth-child(4) .pkg-btn:hover { background: var(--biz); color: #fff; border-color: var(--biz); transform: translateY(-1px); box-shadow: 0 4px 14px var(--biz-glo); }
+
+    /* цена «от» и вторичная ссылка под кнопкой — только корпоративная карточка */
+    .pkg-price-from { display: inline-flex; align-items: baseline; gap: .38rem; font-size: 1.42rem; }
+    .pkg-price-pre { font-size: .62em; font-weight: 700; color: var(--muted); letter-spacing: 0; }
+    .pkg-btn-sub {
+      display: block; text-align: center; text-decoration: none;
+      margin-top: .55rem; font-size: .78rem; font-weight: 600; line-height: 1.5;
+      color: var(--muted); transition: color .18s;
+    }
+    .pkg-btn-sub:hover { color: #0e7490; }
 
     .pkg-trust {
       display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
@@ -928,6 +940,12 @@
       .tst-modal { padding: 4rem 1rem 1.5rem; }
     }
 
+    /* у карточек 1–3 нет вторичной ссылки под кнопкой — резервируем её высоту,
+       иначе кнопки в ряду встают на разном уровне */
+    @media (min-width: 861px) {
+      .pkg-card:not(:nth-child(4)) .pkg-footer { padding-bottom: calc(1.5rem + 1.72rem); }
+    }
+
     @media (min-width: 1201px) {
       .pkg-recommend { min-height: 2.9rem; display: flex; align-items: center; justify-content: center; text-align: center; }
       .pkg-name { min-height: 3.1rem; display: flex; align-items: flex-end; }
@@ -1310,10 +1328,10 @@
           <span class="pkg-ghost">04</span>
           <div class="pkg-num">04</div>
           <div class="pkg-name">Корпоративный AI-ассистент</div>
-          <div class="pkg-target">Для собственника или IT: не личный навык эксперта, а автоматизация внутри компании</div>
+          <div class="pkg-target">Для собственника или IT: учим отдел группой, настраиваем каждому его рабочее место</div>
           <div class="pkg-meta">
             <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 3 встречи по 2 часа</div>
-            <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> разовая настройка</div>
+            <div class="pkg-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> группами по отделам</div>
           </div>
           <hr class="pkg-divider">
           <div class="pkg-inherit">
@@ -1344,10 +1362,11 @@
         </div>
         <div class="pkg-footer">
           <div class="pkg-price">
-            <span class="pkg-price-main">30 000 ₽</span>
+            <span class="pkg-price-main pkg-price-from"><span class="pkg-price-pre">от</span>24 000 ₽</span>
           </div>
-          <div class="pkg-price-note">3 встречи по 2 часа · разовая настройка, дальше ассистент работает сам</div>
-          <a class="pkg-btn" href="https://t.me/Aleksei_Zotov" target="_blank">Получить диагностику →</a>
+          <div class="pkg-price-note">за сотрудника в группе до 8 человек · индивидуально 60 000 ₽</div>
+          <a class="pkg-btn" href="corporate-ai.html">Подробнее и расчёт →</a>
+          <a class="pkg-btn-sub" href="https://t.me/Aleksei_Zotov" target="_blank">Или сразу написать в Telegram</a>
         </div>
       </div>
 
@@ -1389,7 +1408,7 @@
     <div class="section-head">
       <div class="section-label">Сравнение пакетов</div>
       <h2 class="section-title">Что входит в каждый</h2>
-      <p class="section-sub">Три ступени для эксперта. Корпоративный пакет в таблицу не входит — там другая задача и другая роль покупателя.</p>
+      <p class="section-sub">Три ступени для эксперта. Корпоративный пакет в таблицу не входит: там другая задача и другая роль покупателя, ему отведена <a class="sub-link" href="corporate-ai.html">отдельная страница с калькулятором</a>.</p>
     </div>
     <div class="compare-wrap">
       <table class="compare-table">
@@ -1996,7 +2015,7 @@
         </div>
         <div class="faq-card-body">
           <div class="faq-q">Как проходит оплата?</div>
-          <p class="faq-a">Работаем <strong>по договору</strong> — фиксируем состав пакета и сроки на бумаге. Есть <strong>рассрочка</strong>, если удобнее платить частями. Работаем с клиентами из России и из-за рубежа, способ оплаты обсудим на знакомстве.</p>
+          <p class="faq-a">Работаем <strong>по договору</strong> (публичная оферта фиксирует состав пакета, сроки и стоимость). Оплата картой через платёжный сервис или по счёту на расчётный счёт, кассовый чек приходит на вашу почту. Есть <strong>рассрочка</strong>: график платежей фиксируем в счёте. Услуги оказывает ИП Зотова Е.О. (ОГРНИП 326774600333751), специалист-исполнитель Алексей Зотов.</p>
         </div>
       </div>
 
@@ -2054,7 +2073,7 @@
 <!-- FOOTER -->
 <footer class="footer">
   <img class="footer-logo" src="assets/logo-eza.png" alt="EZA Group">
-  <span class="footer-text">© 2025 EZA Group · Алексей Зотов</span>
+  <span class="footer-text">© 2026 EZA Group · ИП Зотова Екатерина Олеговна · ИНН 772880993414 · ОГРНИП 326774600333751</span>
   <a class="footer-link" href="oferta.html">Публичная оферта</a>
   <a class="footer-link" href="privacy.html">Политика конфиденциальности</a>
   <a class="footer-link" href="https://t.me/Aleksei_Zotov" target="_blank">@Aleksei_Zotov</a>
