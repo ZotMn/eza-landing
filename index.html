@@ -1,1156 +1,500 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EZA Group — AI-трансформация бизнеса</title>
-  <link rel="icon" type="image/png" href="assets/logo-eza.png">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #f7f8fc; --white: #fff; --dark: #1a1a2e; --text: #2c2c40; --muted: #6b6b8a; --border: #e5e5f0;
-      --r: 16px; --r-lg: 24px;
-      --purple: #6c63ff; --purple-lt: #f0efff; --purple-mid: #dddaff; --purple-glo: rgba(108,99,255,.3);
-      --teal:   #0a9468; --teal-lt:   #e8f7f2; --teal-mid:   #b8e8d6; --teal-glo:   rgba(10,148,104,.3);
-      --blue:   #2563eb; --blue-lt:   #eff6ff; --blue-mid:   #bdd5fc; --blue-glo:   rgba(37,99,235,.3);
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EZA Group — внедрение ИИ в работу людей и компаний</title>
+<link rel="icon" type="image/png" href="assets/logo-eza.png">
+<meta name="description" content="EZA Group: наставничество по нейросетям, AI-ассистент внутри компании, аудит процессов и B2B консалтинг. Три маршрута под роль: специалист, руководитель, собственник.">
 
-    /* ── NAV ── */
-    .nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,.93); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; }
-    .nav-logo { display: flex; align-items: center; text-decoration: none; }
-    .nav-logo img { height: 38px; width: auto; display: block; }
-    .nav-links { display: flex; align-items: center; gap: 1.75rem; }
-    .nav-link { font-size: .875rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color .18s; }
-    .nav-link:hover { color: var(--dark); }
-    .nav-btn { background: var(--dark); color: #fff; font-size: .875rem; font-weight: 600; padding: .5rem 1.25rem; border-radius: 8px; text-decoration: none; transition: opacity .18s; }
-    .nav-btn:hover { opacity: .82; }
+<link rel="canonical" href="https://ezagroup.ru/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EZA Group">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="EZA Group — внедрение ИИ в работу людей и компаний">
+<meta property="og:description" content="EZA Group: наставничество по нейросетям, AI-ассистент внутри компании, аудит процессов и B2B консалтинг. Три маршрута под роль: специалист, руководитель, собственник.">
+<meta property="og:url" content="https://ezagroup.ru/">
+<meta property="og:image" content="https://ezagroup.ru/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EZA Group — внедрение ИИ в работу людей и компаний">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EZA Group — внедрение ИИ в работу людей и компаний">
+<meta name="twitter:description" content="EZA Group: наставничество по нейросетям, AI-ассистент внутри компании, аудит процессов и B2B консалтинг. Три маршрута под роль: специалист, руководитель, собственник.">
+<meta name="twitter:image" content="https://ezagroup.ru/assets/og-cover.jpg">
+<meta name="theme-color" content="#f5f3f1">
+<link rel="stylesheet" href="assets/eza.css">
+<style>
+    /* ── ССЫЛКА К СОДЕРЖИМОМУ ───────────────────────────────────────
+       Для тех, кто ходит с клавиатуры: не проходить шапку каждый раз. */
+    .skip {
+      position: absolute; left: -9999px; top: 0; z-index: 400;
+      background: var(--ink); color: var(--paper); font-size: 0.875rem; font-weight: 600;
+      padding: 12px 20px; text-decoration: none;
+    }
+    .skip:focus { left: 0; }
 
-    /* ── HERO ── */
-    .hero { background-color: var(--white); background-image: radial-gradient(var(--border) 1px, transparent 1px); background-size: 28px 28px; padding: 6rem 2rem 5rem; text-align: center; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-    /* vignette: edges show noise, centre is clean */
-    /* виньет: центр белый (чистый заголовок), края прозрачные (виден шум) */
-    .hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 48% 48% at 50% 50%, rgba(255,255,255,.95) 20%, rgba(255,255,255,.7) 42%, rgba(255,255,255,.2) 65%, transparent 82%); pointer-events: none; z-index: 2; }
-    /* content sits above vignette */
-    .hero > *:not(.hero-noise) { position: relative; z-index: 3; }
 
-    /* AI-noise elements — behind vignette so they show at edges, fade toward centre */
-    .hero-noise { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
-    .hn { position: absolute; color: #1a1a2e; pointer-events: none; white-space: nowrap; font-weight: 700; line-height: 1; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    .hn.mono { font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace; font-weight: 500; }
-    .badge {
-      display: inline-flex; align-items: center; gap: .55rem;
-      background: linear-gradient(135deg, rgba(108,99,255,.09) 0%, rgba(140,130,255,.16) 100%);
-      padding: .45rem 1.1rem .45rem .7rem;
-      border-radius: 28px;
-      border: 1px solid rgba(108,99,255,.24);
-      box-shadow: 0 2px 16px rgba(108,99,255,.15), inset 0 1px 0 rgba(255,255,255,.75);
-      margin-bottom: 1.75rem;
-    }
-    .badge-ico {
-      width: 24px; height: 24px; border-radius: 8px; flex-shrink: 0;
-      background: linear-gradient(135deg, #7c74ff, #6c63ff);
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 6px rgba(108,99,255,.35);
-    }
-    .badge-text {
-      font-size: .73rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
-      background: linear-gradient(135deg, #5a52e8 0%, #8c85ff 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero h1 { font-size: clamp(2.25rem, 5vw, 3.3rem); font-weight: 800; color: var(--dark); line-height: 1.13; letter-spacing: -0.04em; max-width: 740px; margin: 0 auto 1.25rem; }
-    .hero h1 .hl { color: var(--purple); }
-    .hero-desc { font-size: 1.1rem; color: var(--muted); max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.65; }
-    .hero-actions { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; margin-bottom: 3.75rem; }
-    .btn-primary { background: var(--purple); color: #fff; font-size: .95rem; font-weight: 600; padding: .75rem 1.75rem; border-radius: 10px; text-decoration: none; transition: all .2s; }
-    .btn-primary:hover { background: #5b52e0; transform: translateY(-1px); box-shadow: 0 4px 18px var(--purple-glo); }
-    .btn-ghost { background: transparent; color: var(--dark); font-size: .95rem; font-weight: 600; padding: .75rem 1.75rem; border-radius: 10px; text-decoration: none; border: 1.5px solid var(--border); transition: all .2s; }
-    .btn-ghost:hover { border-color: var(--dark); transform: translateY(-1px); }
-    .hero-divider { border: none; border-top: 1px solid var(--border); max-width: 580px; margin: 0 auto 2.25rem; }
-    .hero-stats { display: flex; justify-content: center; gap: 0; flex-wrap: wrap; }
-    .hero-stat {
-      text-align: center;
-      padding: 0 2.5rem;
-      position: relative;
-    }
-    .hero-stat + .hero-stat::before {
-      content: '';
-      position: absolute; left: 0; top: 15%; bottom: 15%;
-      width: 1px; background: var(--border);
-    }
-    .hero-stat strong {
-      display: block;
-      font-size: 1.9rem; font-weight: 800; letter-spacing: -0.04em;
-      background: linear-gradient(135deg, var(--purple), #9c95ff);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: .25rem;
-    }
-    .hero-stat span { font-size: .78rem; color: var(--muted); line-height: 1.4; }
+/* ═══════════════════════════════════════════════════════════════════
+   ГЛАВНАЯ: ПЕРВАЯ ПОЛОСА
+   Главная страница газеты и главная страница сайта устроены одинаково:
+   шапка издания, главный материал, рубрики и оглавление выпуска.
+   Всё видно сразу, без заставок и кликов, раскрывающих контент.
+   ═══════════════════════════════════════════════════════════════════ */
 
-    /* ══════════════════════════════════════
-       PANORAMA SECTION
-       ══════════════════════════════════════ */
-    .panorama {
-      position: relative;
-      background-image: url('assets/bg-panorama.png');
-      background-size: 100% auto;   /* stretch full width, height scales */
-      background-position: center top;
-      background-color: #eeeef8;
-      background-repeat: no-repeat;
-    }
+/* ── ЛОГОТИП ИЗДАНИЯ ────────────────────────────────────────────── */
 
-    /* ── Floating choice panel (top centre) ── */
-    .choice-panel {
-      position: relative;
-      z-index: 10;
-      background: transparent; /* прозрачный — дороги видны за картами */
-      border: none;
-      box-shadow: none;
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 2rem 0;
-      text-align: center;
-    }
+.flag { border-bottom: 2px solid var(--ink); padding-block: clamp(28px, 4vw, 52px) var(--space-md); }
+.flag-in { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-lg); flex-wrap: wrap; }
+.flag-name { font-family: var(--font-display); font-size: clamp(1.9rem, 4vw, 3.75rem); line-height: 1; letter-spacing: -0.02em; color: var(--ink); }
+.flag-sub { font-family: var(--font-note); font-style: italic; font-size: 0.875rem; color: var(--muted); padding-bottom: 4px; }
 
-    .cp-header { margin-bottom: 1.5rem; }
-    .cp-label {
-      display: inline-flex; align-items: center; gap: .45rem;
-      font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--purple); background: rgba(255,255,255,.92);
-      padding: .32rem .9rem; border-radius: 20px; margin-bottom: .75rem;
-      box-shadow: 0 2px 12px rgba(26,26,46,.1);
-      backdrop-filter: blur(8px);
-    }
-    .cp-title {
-      font-size: 1.65rem; font-weight: 800; color: var(--dark);
-      letter-spacing: -0.03em; margin: 0;
-      text-shadow: 0 2px 16px rgba(255,255,255,.95), 0 0 30px rgba(255,255,255,.8);
-    }
-    .cp-hint {
-      font-size: .82rem; color: var(--muted); margin-top: .4rem;
-      text-shadow: 0 1px 8px rgba(255,255,255,.9);
-    }
+/* ── ГЛАВНЫЙ МАТЕРИАЛ ───────────────────────────────────────────── */
 
-    .cp-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: .875rem; }
+.front { padding-block: clamp(32px, 4.5vw, 64px); border-bottom: 2px solid var(--ink); }
+.front-in {
+  display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+  gap: clamp(28px, 4vw, 64px); align-items: start;
+}
+.front h1 {
+  font-size: clamp(2.4rem, 6.2vw, 6.25rem); line-height: .95;
+  letter-spacing: -0.024em; max-width: 15ch; margin-bottom: var(--space-lg);
+}
+.front h1 em { font-family: var(--font-note); font-style: italic; color: var(--red-deep); }
+.front-lead { margin-bottom: var(--space-lg); }
 
-    .cp-card {
-      border: 1.5px solid rgba(255,255,255,.88);
-      border-radius: 22px;
-      padding: 0;
-      cursor: pointer;
-      transition: all .32s cubic-bezier(.34,1.1,.64,1);
-      text-align: left;
-      position: relative;
-      background: rgba(255,255,255,.94);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.98),
-        inset 0 -1px 0 rgba(26,26,46,.04),
-        0 8px 32px rgba(26,26,46,.13),
-        0 2px 8px rgba(26,26,46,.07),
-        0 1px 2px rgba(26,26,46,.05);
-      overflow: hidden;
-    }
+.front-nums { display: flex; gap: clamp(20px, 3vw, 44px); flex-wrap: wrap; padding-block: var(--space-md); border-block: 1px solid var(--rule); margin-bottom: var(--space-lg); }
+.front-num { display: flex; flex-direction: column; gap: 2px; max-width: 22ch; }
+.front-num b { font-family: var(--font-display); font-weight: 400; font-size: 1.875rem; line-height: 1; color: var(--ink); letter-spacing: -0.02em; }
+.front-num span { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
 
-    /* coloured top stripe */
-    .cp-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      border-radius: 22px 22px 0 0; transition: height .22s;
-    }
-    .cp-card[data-path="specialist"]::before { background: linear-gradient(90deg, var(--purple), #9b95ff); }
-    .cp-card[data-path="manager"]::before    { background: linear-gradient(90deg, var(--blue), #60a5fa); }
-    .cp-card[data-path="owner"]::before      { background: linear-gradient(90deg, var(--teal), #34d399); }
+.front-actions { display: flex; align-items: center; gap: var(--space-lg); flex-wrap: wrap; }
 
-    .cp-card:hover::before, .cp-card.is-active::before { height: 5px; }
+/* оглавление выпуска: все продукты с ценами, ничего не спрятано */
+.issue { border-top: 2px solid var(--ink); }
+.issue-t { font-size: 0.6875rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); padding-top: var(--space-sm); margin-bottom: var(--space-xs); }
+.issue-row {
+  display: flex; align-items: baseline; gap: var(--space-xs); flex-wrap: wrap;
+  padding-block: var(--space-sm); border-bottom: 1px solid var(--rule-soft);
+  text-decoration: none; color: inherit; transition: padding-inline .2s var(--ease), background .2s var(--ease);
+}
+.issue-row:hover { background: color-mix(in oklch, var(--paper-2) 75%, transparent); padding-inline: var(--space-xs); }
+.issue-n { font-size: 1.0625rem; color: var(--ink); }
+.issue-n i { display: block; font-family: var(--font-note); font-style: italic; font-size: 0.8125rem; color: var(--muted); }
+.issue-lead { flex: 1; border-bottom: 1px dotted var(--faint); transform: translateY(-3px); min-width: 14px; }
+.issue-p { font-family: var(--font-display); font-size: 1.0625rem; color: var(--ink); margin-inline-start: auto; }
+.issue-p small { font-size: .66em; color: var(--muted); }
+.issue-row:hover .issue-p { color: var(--red-deep); }
 
-    /* corner glow orb on hover */
-    .cp-card::after {
-      content: ''; position: absolute; bottom: -40px; right: -30px;
-      width: 130px; height: 130px; border-radius: 50%;
-      opacity: 0; transition: opacity .35s; pointer-events: none;
-    }
-    .cp-card[data-path="specialist"]::after { background: radial-gradient(circle, var(--purple-glo), transparent 70%); }
-    .cp-card[data-path="manager"]::after    { background: radial-gradient(circle, var(--blue-glo),   transparent 70%); }
-    .cp-card[data-path="owner"]::after      { background: radial-gradient(circle, var(--teal-glo),   transparent 70%); }
-    .cp-card:hover::after, .cp-card.is-active::after { opacity: 1; }
+@media (max-width: 900px) { .front-in { grid-template-columns: minmax(0, 1fr); } }
 
-    .cp-card-inner { padding: 1.6rem 1.5rem 1.4rem; }
+/* ── РУБРИКИ ПО РОЛЯМ ───────────────────────────────────────────── */
 
-    .cp-card:hover {
-      transform: translateY(-6px) scale(1.015);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.98),
-        0 20px 56px rgba(26,26,46,.16),
-        0 6px 16px rgba(26,26,46,.09),
-        0 1px 4px rgba(26,26,46,.06);
-    }
-    .cp-card[data-path="specialist"]:hover, .cp-card[data-path="specialist"].is-active {
-      border-color: rgba(108,99,255,.35);
-      background: linear-gradient(155deg, #fff 40%, var(--purple-lt) 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.98), 0 20px 56px var(--purple-glo), 0 4px 12px rgba(26,26,46,.08);
-    }
-    .cp-card[data-path="manager"]:hover, .cp-card[data-path="manager"].is-active {
-      border-color: rgba(37,99,235,.3);
-      background: linear-gradient(155deg, #fff 40%, var(--blue-lt) 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.98), 0 20px 56px var(--blue-glo), 0 4px 12px rgba(26,26,46,.08);
-    }
-    .cp-card[data-path="owner"]:hover, .cp-card[data-path="owner"].is-active {
-      border-color: rgba(10,148,104,.3);
-      background: linear-gradient(155deg, #fff 40%, var(--teal-lt) 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.98), 0 20px 56px var(--teal-glo), 0 4px 12px rgba(26,26,46,.08);
-    }
+.roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 0; }
+.role { padding: var(--space-md) var(--space-lg) var(--space-xl) 0; border-top: 2px solid var(--ink); }
+.role + .role { padding-inline-start: var(--space-lg); }
+.role-tag { font-size: 0.6875rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--red-deep); display: block; margin-bottom: var(--space-xs); }
+.role h3 { font-size: clamp(1.1875rem, 1.8vw, 1.625rem); line-height: 1.15; margin-bottom: var(--space-xs); }
+.role-sub { font-family: var(--font-note); font-style: italic; font-size: 0.875rem; line-height: 1.5; color: var(--muted); margin-bottom: var(--space-md); }
+.role ul { list-style: none; display: flex; flex-direction: column; margin-bottom: var(--space-md); }
+.role li { font-size: 0.9375rem; line-height: 1.5; color: var(--ink-soft); padding-block: 7px; padding-inline-start: 16px; position: relative; border-top: 1px solid var(--rule-soft); }
+.role li:first-child { border-top: 0; }
+.role li::before { content: ''; position: absolute; left: 0; top: 15px; width: 8px; height: 1px; background: var(--red); }
+.role-price { display: flex; align-items: baseline; gap: var(--space-xs); flex-wrap: wrap; margin-bottom: var(--space-sm); }
+.role-price b { font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; color: var(--ink); letter-spacing: -0.02em; white-space: nowrap; }
+.role-price span { font-size: 0.78rem; color: var(--muted); }
 
-    /* ✓ badge */
-    .cp-card .check {
-      position: absolute; top: 12px; right: 12px;
-      width: 22px; height: 22px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .7rem; font-weight: 800; color: #fff;
-      opacity: 0; transform: scale(.5); transition: all .2s;
-    }
-    .cp-card[data-path="specialist"] .check { background: var(--purple); }
-    .cp-card[data-path="manager"]    .check { background: var(--blue); }
-    .cp-card[data-path="owner"]      .check { background: var(--teal); }
-    .cp-card.is-active .check { opacity: 1; transform: scale(1); }
+/* ── ПРОЕКТЫ ────────────────────────────────────────────────────── */
 
-    /* route number + icon row */
-    .cp-top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: .9rem; }
+.projects { border-top: 2px solid var(--ink); }
+.proj {
+  display: grid; grid-template-columns: 170px minmax(0, 1fr) auto;
+  gap: var(--space-md) clamp(16px, 2.5vw, 36px);
+  padding-block: var(--space-lg); border-bottom: 1px solid var(--rule);
+  transition: background .25s var(--ease);
+}
+.proj:hover { background: color-mix(in oklch, var(--paper-2) 60%, transparent); }
+.proj-m { display: flex; flex-direction: column; gap: 2px; }
+.proj-m b { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.75rem, 2.8vw, 2.5rem); line-height: 1; color: var(--red-deep); letter-spacing: -0.02em; }
+.proj-m span { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+.proj-b { min-width: 0; }
+.proj-tag { font-size: 0.6875rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: var(--space-2xs); }
+.proj h3 { font-size: 1.1875rem; line-height: 1.2; margin-bottom: var(--space-xs); }
+.proj p { font-size: 0.9375rem; line-height: 1.55; color: var(--ink-soft); max-width: 62ch; }
+.proj-stack { display: flex; gap: var(--space-xs); flex-wrap: wrap; align-content: flex-start; }
+.proj-stack span { font-size: 0.72rem; color: var(--muted); border: 1px solid var(--rule); padding: 2px 8px; white-space: nowrap; }
+@media (max-width: 860px) {
+  .proj { grid-template-columns: minmax(0, 1fr); }
+  .proj-stack { grid-column: 1; }
+}
 
-    .cp-num {
-      width: 32px; height: 32px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .72rem; font-weight: 800; color: #fff; letter-spacing: .03em;
-      flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.25);
-    }
-    .cp-card[data-path="specialist"] .cp-num { background: var(--purple); }
-    .cp-card[data-path="manager"]    .cp-num { background: var(--blue); }
-    .cp-card[data-path="owner"]      .cp-num { background: var(--teal); }
+/* ── РАЗВОРОТ О КОМПАНИИ ────────────────────────────────────────── */
 
-    .cp-icon-wrap {
-      width: 54px; height: 54px; border-radius: 16px;
-      display: flex; align-items: center; justify-content: center; font-size: 1.9rem;
-      border: 1.5px solid transparent; transition: all .25s;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08), inset 0 1px 0 rgba(255,255,255,.7);
-    }
-    .cp-card[data-path="specialist"] .cp-icon-wrap { background: linear-gradient(145deg, var(--purple-lt), var(--purple-mid)); color: var(--purple); border-color: var(--purple-mid); }
-    .cp-card[data-path="manager"]    .cp-icon-wrap { background: linear-gradient(145deg, var(--blue-lt),   var(--blue-mid));   color: var(--blue);   border-color: var(--blue-mid); }
-    .cp-card[data-path="owner"]      .cp-icon-wrap { background: linear-gradient(145deg, var(--teal-lt),   var(--teal-mid));   color: var(--teal);   border-color: var(--teal-mid); }
-    .cp-card[data-path="specialist"]:hover .cp-icon-wrap,
-    .cp-card[data-path="specialist"].is-active .cp-icon-wrap { box-shadow: 0 4px 16px var(--purple-glo), inset 0 1px 0 rgba(255,255,255,.7); }
-    .cp-card[data-path="manager"]:hover .cp-icon-wrap,
-    .cp-card[data-path="manager"].is-active .cp-icon-wrap { box-shadow: 0 4px 16px var(--blue-glo), inset 0 1px 0 rgba(255,255,255,.7); }
-    .cp-card[data-path="owner"]:hover .cp-icon-wrap,
-    .cp-card[data-path="owner"].is-active .cp-icon-wrap { box-shadow: 0 4px 16px var(--teal-glo), inset 0 1px 0 rgba(255,255,255,.7); }
-
-    .cp-role { font-size: .62rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; margin-bottom: .22rem; }
-    .cp-card[data-path="specialist"] .cp-role { color: var(--purple); }
-    .cp-card[data-path="manager"]    .cp-role { color: var(--blue); }
-    .cp-card[data-path="owner"]      .cp-role { color: var(--teal); }
-    .cp-name { font-size: .95rem; font-weight: 700; color: var(--dark); margin-bottom: .35rem; }
-    .cp-desc { font-size: .78rem; color: var(--muted); line-height: 1.48; margin-bottom: .9rem; }
-
-    .cp-action {
-      display: inline-flex; align-items: center; gap: .3rem;
-      font-size: .75rem; font-weight: 700;
-    }
-    .cp-card[data-path="specialist"] .cp-action { color: var(--purple); }
-    .cp-card[data-path="manager"]    .cp-action { color: var(--blue); }
-    .cp-card[data-path="owner"]      .cp-action { color: var(--teal); }
-
-    /* ── AI-Mentoring banner card (4th card, full-width on desktop) ── */
-    .cp-card-mentoring {
-      grid-column: 1 / -1;
-      border: 1.5px solid rgba(108,99,255,.32) !important;
-      background: linear-gradient(135deg, rgba(255,255,255,.97) 55%, var(--purple-lt) 100%) !important;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.98), 0 4px 20px rgba(108,99,255,.14) !important;
-    }
-    .cp-card-mentoring::before { background: linear-gradient(90deg, var(--purple), #9b95ff) !important; }
-    .cp-card-mentoring::after { display: none; }
-    .cp-card-mentoring:hover {
-      transform: translateY(-4px) !important;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.98), 0 14px 40px rgba(108,99,255,.22) !important;
-    }
-    .cp-mentoring-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 1.5rem; gap: 1.5rem; width: 100%;
-    }
-    .cp-mentoring-left { display: flex; align-items: center; gap: 1rem; }
-    .cp-mentoring-icon {
-      width: 46px; height: 46px; border-radius: 13px; flex-shrink: 0;
-      background: var(--purple-lt); border: 1.5px solid var(--purple-mid);
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 10px rgba(108,99,255,.2);
-    }
-    .cp-mentoring-icon svg { width: 22px; height: 22px; color: var(--purple); }
-    .cp-mentoring-tag { font-size: .6rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--purple); margin-bottom: .18rem; }
-    .cp-mentoring-title { font-size: .95rem; font-weight: 800; color: var(--dark); letter-spacing: -.01em; }
-    .cp-mentoring-sub { font-size: .75rem; color: var(--muted); margin-top: .1rem; }
-    .cp-mentoring-right { display: flex; align-items: center; gap: 1.25rem; flex-shrink: 0; }
-    .cp-mentoring-price { text-align: right; }
-    .cp-mentoring-price strong { display: block; font-size: 1rem; font-weight: 800; color: var(--dark); letter-spacing: -.02em; }
-    .cp-mentoring-price span { font-size: .7rem; color: var(--muted); }
-    .cp-mentoring-btn {
-      background: var(--purple); color: #fff;
-      font-size: .78rem; font-weight: 700; padding: .55rem 1.1rem;
-      border-radius: 8px; white-space: nowrap;
-      box-shadow: 0 3px 10px rgba(108,99,255,.35);
-    }
-    @media (max-width: 900px) {
-      .cp-card-mentoring { grid-column: auto; }
-      .cp-mentoring-right { flex-direction: column; align-items: flex-end; gap: .5rem; }
-      .cp-mentoring-price { text-align: right; }
-    }
-    @media (max-width: 520px) {
-      .cp-mentoring-inner { padding: .9rem 1.1rem; gap: .75rem; }
-      .cp-mentoring-icon { width: 38px; height: 38px; border-radius: 10px; }
-      .cp-mentoring-btn { font-size: .72rem; padding: .42rem .8rem; }
-    }
-
-    /* ── Three-zone background strip ── */
-    .zones {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      position: relative;
-      margin-top: -20px; /* slight overlap so roads start behind card bottoms */
-      background: transparent;
-    }
-
-    .zone {
-      position: relative;
-      cursor: pointer;
-      transition: background .3s;
-      /* height = image height at current viewport minus the choice panel */
-      height: calc(100vw * 0.48 - 145px);
-      min-height: 480px;
-      max-height: 780px;
-    }
-
-    /* dimming overlay on inactive zones */
-    .zone::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: transparent;
-      transition: background .4s, backdrop-filter .4s;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .zone.dimmed::after {
-      background: rgba(245,246,255,.70);
-      backdrop-filter: grayscale(.85) brightness(1.1);
-      -webkit-backdrop-filter: grayscale(.85) brightness(1.1);
-    }
-
-    /* hide individual zone backgrounds — panorama is used instead */
-    .zone-bg { display: none; }
-
-    /* teaser bar at bottom of each zone */
-    .zone-teaser {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 3rem 1.5rem 1.3rem;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      z-index: 2;
-      display: flex; align-items: center; justify-content: space-between; gap: .75rem;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
-      transition: padding .25s;
-    }
-    .zone-teaser:hover { padding-bottom: 1.6rem; }
-    .zone[data-path="specialist"] .zone-teaser { background: linear-gradient(to bottom, rgba(80,60,200,0) 0%, rgba(80,60,200,.58) 32%, rgba(80,60,200,.92) 100%); }
-    .zone[data-path="manager"]    .zone-teaser { background: linear-gradient(to bottom, rgba(20,70,180,0) 0%, rgba(20,70,180,.58) 32%, rgba(20,70,180,.92) 100%); }
-    .zone[data-path="owner"]      .zone-teaser { background: linear-gradient(to bottom, rgba(8,130,80,0) 0%, rgba(8,130,80,.58) 32%, rgba(8,130,80,.92) 100%); }
-
-    .zt-left strong { display: block; font-size: .97rem; font-weight: 800; color: #fff; margin-bottom: .2rem; letter-spacing: -.01em; }
-    .zt-left span   { font-size: .75rem; color: rgba(255,255,255,.82); font-weight: 500; }
-    .zt-btn {
-      font-size: .78rem; font-weight: 700; padding: .52rem 1.15rem;
-      border-radius: 20px; cursor: pointer;
-      white-space: nowrap; transition: all .22s;
-      background: rgba(255,255,255,.18); color: #fff;
-      border: 1px solid rgba(255,255,255,.48);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 2px 8px rgba(0,0,0,.15);
-      letter-spacing: .02em;
-    }
-    .zt-btn:hover {
-      background: rgba(255,255,255,.30);
-      border-color: rgba(255,255,255,.68);
-      transform: translateY(-1px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 4px 14px rgba(0,0,0,.2);
-    }
-
-    /* zone dividers */
-    .zone + .zone { border-left: 1px solid rgba(255,255,255,.15); }
-
-    /* ── Zone overlay: slides UP inside its own zone column ── */
-    .zones { position: relative; overflow: hidden; }
-
-    .zone-ov {
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 5;
-      border-radius: 18px 18px 0 0;
-      transform: translateY(101%);
-      transition: transform .48s cubic-bezier(.15,0,.1,1), opacity .28s;
-      opacity: 0; pointer-events: none;
-      padding: 1.4rem 1.4rem 1.6rem;
-      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
-    }
-    .zone.is-active .zone-ov { transform: translateY(0); opacity: 1; pointer-events: auto; }
-
-    .zone[data-path="specialist"] .zone-ov {
-      background: linear-gradient(160deg, rgba(240,239,255,.97), rgba(255,255,255,.94));
-      border-top: 3px solid var(--purple);
-      box-shadow: 0 -8px 50px rgba(108,99,255,.38);
-    }
-    .zone[data-path="manager"] .zone-ov {
-      background: linear-gradient(160deg, rgba(239,246,255,.97), rgba(255,255,255,.94));
-      border-top: 3px solid var(--blue);
-      box-shadow: 0 -8px 50px rgba(37,99,235,.38);
-    }
-    .zone[data-path="owner"] .zone-ov {
-      background: linear-gradient(160deg, rgba(232,247,242,.97), rgba(255,255,255,.94));
-      border-top: 3px solid var(--teal);
-      box-shadow: 0 -8px 50px rgba(10,148,104,.38);
-    }
-
-    .ov-close {
-      position: absolute; top: .8rem; right: .9rem;
-      width: 28px; height: 28px; border-radius: 50%;
-      background: rgba(26,26,46,.08); border: 1px solid rgba(26,26,46,.1);
-      cursor: pointer; font-size: .8rem; color: var(--muted); font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      transition: all .18s; line-height: 1;
-    }
-    .ov-close:hover { background: rgba(26,26,46,.16); color: var(--dark); }
-
-    /* vertical stack layout */
-    .ov-tag { font-size: .62rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; padding: .22rem .65rem; border-radius: 8px; display: inline-block; margin-bottom: .6rem; }
-    .zone[data-path="specialist"] .ov-tag { background: var(--purple-lt); color: var(--purple); }
-    .zone[data-path="manager"]    .ov-tag { background: var(--blue-lt);   color: var(--blue); }
-    .zone[data-path="owner"]      .ov-tag { background: var(--teal-lt);   color: var(--teal); }
-
-    .ov-title { font-size: 1.05rem; font-weight: 800; color: var(--dark); letter-spacing: -0.02em; line-height: 1.25; margin-bottom: .4rem; }
-    .ov-lead  { font-size: .78rem; color: var(--muted); line-height: 1.55; margin-bottom: .85rem; }
-
-    .ov-product { border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: .6rem; }
-    .zone[data-path="specialist"] .ov-product { background: var(--purple-lt); border: 1.5px solid var(--purple-mid); }
-    .zone[data-path="manager"]    .ov-product { background: var(--blue-lt);   border: 1.5px solid var(--blue-mid); }
-    .zone[data-path="owner"]      .ov-product { background: var(--teal-lt);   border: 1.5px solid var(--teal-mid); }
-
-    .ov-product-name { font-size: .88rem; font-weight: 700; color: var(--dark); margin-bottom: .5rem; display: flex; align-items: center; gap: .5rem; }
-    .ov-product-name svg { flex-shrink: 0; }
-    .ov-features { list-style: none; display: flex; flex-direction: column; gap: .3rem; margin-bottom: .75rem; }
-    .ov-features li { font-size: .78rem; color: var(--text); display: flex; align-items: flex-start; gap: .35rem; line-height: 1.4; }
-    .ov-features li::before { content: '✓'; font-weight: 800; flex-shrink: 0; }
-    .zone[data-path="specialist"] .ov-features li::before { color: var(--purple); }
-    .zone[data-path="manager"]    .ov-features li::before { color: var(--blue); }
-    .zone[data-path="owner"]      .ov-features li::before { color: var(--teal); }
-
-    .ov-footer { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding-top: .75rem; border-top: 1px solid rgba(26,26,46,.08); flex-wrap: wrap; }
-    .ov-price { font-size: 1.05rem; font-weight: 800; color: var(--dark); letter-spacing: -0.02em; }
-    .ov-price .note { display: block; font-size: .65rem; font-weight: 400; color: var(--muted); margin-top: .06rem; }
-
-    .btn-ov { display: inline-flex; align-items: center; gap: .25rem; font-size: .78rem; font-weight: 700; padding: .48rem .95rem; border-radius: 7px; text-decoration: none; transition: all .2s; white-space: nowrap; }
-    .zone[data-path="specialist"] .btn-ov { background: var(--purple); color: #fff; }
-    .zone[data-path="specialist"] .btn-ov:hover { background: #5b52e0; box-shadow: 0 3px 12px var(--purple-glo); }
-    .zone[data-path="manager"]    .btn-ov { background: var(--blue);   color: #fff; }
-    .zone[data-path="manager"]    .btn-ov:hover { background: #1a52d4; box-shadow: 0 3px 12px var(--blue-glo); }
-    .zone[data-path="owner"]      .btn-ov { background: var(--teal);   color: #fff; }
-    .zone[data-path="owner"]      .btn-ov:hover { background: #088055; box-shadow: 0 3px 12px var(--teal-glo); }
-
-    .ov-product-sm { border-radius: 9px; padding: .7rem .9rem; display: flex; align-items: center; justify-content: space-between; gap: .5rem; background: rgba(255,255,255,.65); border: 1px solid var(--border); }
-    .ovs-l strong { display: block; font-size: .78rem; font-weight: 700; color: var(--dark); }
-    .ovs-l span   { font-size: .7rem; color: var(--muted); }
-
-    /* ── ABOUT ── */
-    .about { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 5.5rem 2rem; }
-    .about-inner { max-width: 880px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.35fr; gap: 5rem; align-items: center; }
-    .about-visual {
-      border-radius: var(--r-lg);
-      aspect-ratio: 4/5;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 12px 50px rgba(26,26,46,.16);
-      flex-shrink: 0;
-    }
-    .about-visual img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
-      display: block;
-    }
-    /* EZA badge on photo */
-    .about-photo-badge {
-      position: absolute; bottom: .85rem; right: .85rem;
-      background: rgba(255,255,255,.95);
-      backdrop-filter: blur(8px);
-      padding: .4rem .75rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 12px rgba(26,26,46,.14);
-      display: flex; align-items: center;
-    }
-    .about-photo-badge img { height: 22px; width: auto; display: block; }
-    .about-title { font-size: 1.7rem; font-weight: 800; color: var(--dark); letter-spacing: -0.03em; margin-bottom: .9rem; line-height: 1.2; }
-    .s-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .55rem; }
-    .about-text .s-label { margin-bottom: .55rem; }
-    .about-text p { font-size: .95rem; color: var(--muted); line-height: 1.72; margin-bottom: .9rem; }
-    .founder { display: flex; align-items: center; gap: .8rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-    .founder-ava { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid var(--purple-mid); box-shadow: 0 2px 8px rgba(108,99,255,.18); }
-    .founder-ava img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
-    .founder-info strong { display: block; font-size: .875rem; font-weight: 700; color: var(--dark); }
-    .founder-info span { font-size: .78rem; color: var(--muted); }
-
-    /* ── CTA ── */
-    .cta-wrap { padding: 5.5rem 2rem; text-align: center; max-width: 680px; margin: 0 auto; }
-    .s-title { font-size: 1.9rem; font-weight: 800; color: var(--dark); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: .7rem; }
-    .s-sub { font-size: .975rem; color: var(--muted); line-height: 1.65; }
-    .cta-title { font-size: 2rem; font-weight: 800; color: var(--dark); letter-spacing: -0.03em; margin-bottom: .8rem; line-height: 1.2; }
-    .cta-sub { font-size: .975rem; color: var(--muted); margin-bottom: 2.25rem; }
-    .cta-actions { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; }
-    .btn-tg { background: #2AABEE; color: #fff; font-size: .95rem; font-weight: 700; padding: .75rem 1.75rem; border-radius: 10px; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; transition: all .2s; }
-    .btn-tg:hover { background: #18a0e6; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(42,171,238,.35); }
-    .btn-li { background: #0077B5; color: #fff; font-size: .95rem; font-weight: 700; padding: .75rem 1.75rem; border-radius: 10px; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; transition: all .2s; }
-    .btn-li:hover { background: #005f91; transform: translateY(-1px); }
-
-    footer { background: var(--dark); padding: 2.5rem 2rem; text-align: center; color: rgba(255,255,255,.45); }
-    .footer-logo { display: flex; justify-content: center; margin-bottom: .55rem; }
-    .footer-logo img { height: 36px; width: auto; filter: brightness(0) invert(1); opacity: .85; }
-    footer p { font-size: .78rem; }
-
-    /* ── INTRO ── */
-    .intro-overlay {
-      position: fixed; inset: 0; z-index: 9999;
-      background: linear-gradient(135deg, rgba(26,26,46,.92) 0%, rgba(60,50,120,.88) 50%, rgba(26,26,46,.92) 100%);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: center;
-      transition: opacity .9s ease;
-      pointer-events: none;
-    }
-    .intro-overlay > * { pointer-events: auto; }
-    .intro-overlay video {
-      height: 100%; width: auto; max-width: 56vh;
-      object-fit: contain; display: block;
-      border-radius: 12px;
-      box-shadow: 0 32px 100px rgba(26,26,46,.32), 0 8px 32px rgba(26,26,46,.18);
-    }
-    .intro-skip {
-      position: absolute; bottom: 2rem; right: 1.5rem;
-      background: rgba(255,255,255,.92); color: var(--dark);
-      border: 1px solid rgba(26,26,46,.14);
-      padding: .5rem 1.25rem; border-radius: 20px;
-      font-size: .85rem; font-weight: 600; cursor: pointer;
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 2px 12px rgba(26,26,46,.12);
-      transition: all .18s; font-family: inherit;
-    }
-    .intro-skip:hover { background: #fff; box-shadow: 0 4px 20px rgba(26,26,46,.18); }
-    .intro-sound {
-      position: absolute; bottom: 2rem; left: 1.5rem;
-      background: rgba(255,255,255,.92); color: var(--dark);
-      border: 1px solid rgba(26,26,46,.14);
-      padding: .5rem .9rem; border-radius: 20px;
-      font-size: 1.1rem; cursor: pointer;
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 2px 12px rgba(26,26,46,.12);
-      transition: all .18s; font-family: inherit; line-height: 1;
-    }
-    .intro-sound:hover { background: #fff; box-shadow: 0 4px 20px rgba(26,26,46,.18); }
-    .intro-overlay.fade-out { opacity: 0; pointer-events: none; }
-    @media (max-width: 600px) {
-      .intro-overlay video { width: 100%; height: 100%; object-fit: cover; border-radius: 0; box-shadow: none; }
-    }
-
-    /* ── PAGE REVEAL after intro ── */
-    @keyframes revealUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    body.intro-done .nav          { animation: revealUp .5s cubic-bezier(.16,1,.3,1) .05s both; }
-    body.intro-done .hero .badge  { animation: revealUp .5s cubic-bezier(.16,1,.3,1) .22s both; }
-    body.intro-done .hero h1      { animation: revealUp .6s cubic-bezier(.16,1,.3,1) .34s both; }
-    body.intro-done .hero-desc    { animation: revealUp .5s cubic-bezier(.16,1,.3,1) .46s both; }
-    body.intro-done .hero-actions { animation: revealUp .5s cubic-bezier(.16,1,.3,1) .56s both; }
-    body.intro-done .hero-divider { animation: revealUp .45s ease .65s both; }
-    body.intro-done .hero-stats   { animation: revealUp .5s cubic-bezier(.16,1,.3,1) .72s both; }
-
-    /* ── RESPONSIVE ── */
-    /* ── CASES INDEX ── */
-    .cases-idx { background: var(--white); padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
-    .cases-idx-inner { max-width: 1060px; margin: 0 auto; }
-    .cases-idx-head { text-align: center; margin-bottom: 3rem; }
-    .ci-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .55rem; }
-    .ci-title { font-size: 2rem; font-weight: 800; color: var(--dark); letter-spacing: -0.03em; line-height: 1.2; margin-bottom: .65rem; }
-    .ci-sub { font-size: .95rem; color: var(--muted); }
-    .ci-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-    .ci-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); padding: 1.5rem; display: flex; flex-direction: column; gap: .7rem; transition: box-shadow .2s, border-color .2s; }
-    .ci-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.07); border-color: #d0d0e8; }
-    .ci-card-tag { font-size: .6rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--purple); background: var(--purple-lt); border: 1px solid var(--purple-mid); padding: .2rem .6rem; border-radius: 6px; display: inline-block; align-self: flex-start; }
-    .ci-metric { font-size: 2.2rem; font-weight: 800; color: var(--dark); letter-spacing: -0.04em; line-height: 1; }
-    .ci-metric-label { font-size: .75rem; color: var(--muted); margin-top: .1rem; }
-    .ci-card-title { font-size: .92rem; font-weight: 700; color: var(--dark); line-height: 1.35; }
-    .ci-card-desc { font-size: .82rem; color: var(--muted); line-height: 1.55; }
-    .ci-stack { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: auto; padding-top: .6rem; }
-    .ci-stack-tag { font-size: .58rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--border); padding: .15rem .45rem; border-radius: 4px; }
-
-    @media (max-width: 900px) {
-      .cp-cards { grid-template-columns: 1fr; }
-      .zones { display: none; }
-      .panorama { padding-bottom: 1.5rem !important; }
-      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-visual, .nav-links { display: none; }
-      .ci-grid { grid-template-columns: repeat(2, 1fr); }
-      /* Cards become primary action on mobile */
-      .cp-card { transition: transform .18s, box-shadow .18s; }
-      .cp-card:active { transform: scale(.98); }
-    }
-    @media (max-width: 520px) {
-      .ci-grid { grid-template-columns: 1fr; }
-      /* Nav */
-      .nav { padding: 0 1.1rem; }
-      .nav-btn { font-size: .78rem; padding: .42rem .85rem; }
-      /* Hero */
-      .hero { padding: 3.5rem 1.25rem 2.75rem; }
-      .hero h1 { font-size: clamp(1.9rem, 8vw, 2.4rem); }
-      .hero-desc { font-size: 1rem; }
-      .hero-actions { flex-direction: column; align-items: stretch; gap: .6rem; }
-      .btn-primary, .btn-ghost { text-align: center; justify-content: center; }
-      .hero-stats { flex-direction: column; gap: 1.1rem; align-items: center; }
-      .hero-stat { padding: 0; }
-      .hero-stat + .hero-stat::before { display: none; }
-      /* Panorama */
-      .panorama { padding-left: .75rem !important; padding-right: .75rem !important; }
-      .choice-panel { padding: 0 .25rem; }
-      .cp-title { font-size: 1.35rem; }
-      /* CTA */
-      .cta-wrap { padding: 3.5rem 1.25rem; }
-      .cta-actions { flex-direction: column; align-items: stretch; }
-      .btn-tg, .btn-li { justify-content: center; }
-      /* Cases */
-      .cases-idx { padding: 3.5rem 1.25rem; }
-      /* About */
-      .about { padding: 3.5rem 1.25rem; }
-    }
-
-    /* ── SCROLL REVEAL ── */
-    .sr { opacity: 0; transform: translateY(20px); transition: opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1); }
-    .sr.visible { opacity: 1; transform: none; }
-  </style>
+.about { display: grid; grid-template-columns: minmax(240px, .8fr) minmax(0, 1.2fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
+.about-photo { position: relative; overflow: hidden; border-bottom: 1px solid var(--ink); }  /* фигура стоит на линейке, срез читается как приём */
+.about-photo img { width: 100%; height: auto; display: block; filter: grayscale(1) contrast(1.06); mix-blend-mode: multiply; }
+/* растр не нужен: фигура вырезана и печатается прямо на бумаге */
+.about-cap { font-family: var(--font-note); font-style: italic; font-size: 0.8125rem; color: var(--muted); margin-top: var(--space-xs); }
+.about-cap b { display: block; font-style: normal; font-family: var(--font-body); font-weight: 600; font-size: 0.8125rem; color: var(--ink); }
+.about-t p { max-width: 56ch; }
+.about-t p + p { margin-top: var(--space-md); }
+@media (max-width: 760px) { .about { grid-template-columns: minmax(0, 1fr); } }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"EZA Group","url":"https://ezagroup.ru/","image":"https://ezagroup.ru/assets/og-cover.jpg","logo":"https://ezagroup.ru/assets/logo-eza.png","description":"Наставничество по нейросетям, AI-ассистент внутри компании, аудит бизнес-процессов и системы под задачу.","areaServed":"RU","priceRange":"22000-320000 RUB","founder":{"@type":"Person","name":"Алексей Зотов","jobTitle":"Основатель, ICF-коуч, практик AI-автоматизации"},"sameAs":["https://t.me/Aleksei_Zotov"]}</script>
 </head>
 <body>
+<a class="skip" href="#main">Перейти к содержимому</a>
 
-<!-- INTRO -->
-<div id="intro" class="intro-overlay">
-  <video id="intro-video" autoplay muted playsinline>
-    <source src="assets/intro.mp4" type="video/mp4">
-  </video>
-  <button class="intro-sound" id="intro-sound-btn" onclick="toggleSound()" title="Включить звук">🔇</button>
-  <button class="intro-skip" onclick="skipIntro()">Пропустить →</button>
-</div>
-
-<!-- NAV -->
-<nav class="nav">
-  <a class="nav-logo" href="#">
-    <img src="assets/logo-eza.png" alt="EZA Group">
-  </a>
-  <div class="nav-links">
-    <a class="nav-link" href="#panorama">Маршруты</a>
-    <a class="nav-link" href="ai-mentoring.html">Наставничество</a>
-    <a class="nav-link" href="#about">О компании</a>
+<header class="masthead">
+  <div class="masthead-in">
+    <a href="index.html" aria-label="EZA Group"><img src="assets/logo-eza.png" alt="EZA Group"></a>
+    <span class="masthead-issue">AI-трансформация бизнеса · выпуск 2026</span>
+    <a class="masthead-back" href="#roles">Маршруты</a>
+    <a class="masthead-cta" href="https://t.me/Aleksei_Zotov" target="_blank" rel="noopener">Обсудить задачу</a>
   </div>
-  <a class="nav-btn" href="#cta">Обсудить задачу</a>
-</nav>
+</header>
 
-<!-- HERO -->
-<section class="hero">
+<main id="main" tabindex="-1">
 
-  <!-- AI-noise: слова, данные, символы заполняют пространство -->
-  <div class="hero-noise" aria-hidden="true">
-
-    <!-- ═══ ЛЕВЫЙ КРАЙ ═══ -->
-    <span class="hn" style="top:3%;left:1%;font-size:2.1rem;opacity:.32;transform:rotate(-7deg)">ChatGPT</span>
-    <span class="hn" style="top:10%;left:0%;font-size:2.8rem;opacity:.28;font-weight:900">GPT-4</span>
-    <span class="hn mono" style="top:21%;left:1%;font-size:.9rem;opacity:.28;transform:rotate(-2deg)">10110111 00101001</span>
-    <span class="hn" style="top:32%;left:0%;font-size:1.5rem;opacity:.3;transform:rotate(-5deg)">автоматизация</span>
-    <span class="hn" style="top:44%;left:1%;font-size:1.2rem;opacity:.32">данные</span>
-    <span class="hn" style="top:56%;left:1%;font-size:1.3rem;opacity:.3;transform:rotate(-9deg)">обучение</span>
-    <span class="hn mono" style="bottom:30%;left:1%;font-size:.85rem;opacity:.26">11001010 10110001</span>
-    <span class="hn" style="bottom:20%;left:2%;font-size:1.45rem;opacity:.3;transform:rotate(3deg)">алгоритм</span>
-    <span class="hn" style="bottom:9%;left:2%;font-size:1.1rem;opacity:.27;transform:rotate(4deg)">нейросеть</span>
-    <span class="hn" style="top:24%;left:13%;font-size:.9rem;opacity:.2;transform:rotate(90deg)">neural network</span>
-
-    <!-- ═══ ПРАВЫЙ КРАЙ ═══ -->
-    <span class="hn" style="top:4%;right:1%;font-size:1.4rem;opacity:.3;transform:rotate(10deg)">нейросеть</span>
-    <span class="hn" style="top:11%;right:2%;font-size:1.1rem;opacity:.28;transform:rotate(-4deg)">machine learning</span>
-    <span class="hn" style="top:22%;right:1%;font-size:2rem;opacity:.27;transform:rotate(4deg)">Claude</span>
-    <span class="hn" style="top:34%;right:0%;font-size:1.8rem;opacity:.26;transform:rotate(-3deg)">Gemini</span>
-    <span class="hn mono" style="top:46%;right:1%;font-size:.88rem;opacity:.28;transform:rotate(7deg)">∇ loss → 0.0012</span>
-    <span class="hn mono" style="top:57%;right:1%;font-size:.85rem;opacity:.27">accuracy: 98.7%</span>
-    <span class="hn" style="bottom:28%;right:1%;font-size:1.4rem;opacity:.3;transform:rotate(-9deg)">prompt</span>
-    <span class="hn mono" style="bottom:17%;right:1%;font-size:.88rem;opacity:.28;transform:rotate(5deg)">tokens: 4 096</span>
-    <span class="hn" style="bottom:8%;right:1%;font-size:1.1rem;opacity:.26;transform:rotate(6deg)">Midjourney</span>
-    <span class="hn" style="top:20%;right:13%;font-size:.9rem;opacity:.2;transform:rotate(-90deg)">deep learning</span>
-
-    <!-- ═══ ВЕРХНИЙ КРАЙ ═══ -->
-    <span class="hn" style="top:1%;left:21%;font-size:1.8rem;opacity:.22;transform:rotate(-3deg)">Gemini</span>
-    <span class="hn" style="top:2%;left:42%;font-size:3rem;opacity:.18;font-weight:900;color:#6c63ff;letter-spacing:-.05em">LLM</span>
-    <span class="hn" style="top:1%;right:19%;font-size:1.8rem;opacity:.22">API</span>
-    <span class="hn mono" style="top:5%;right:15%;font-size:.82rem;opacity:.24">temperature: 0.7</span>
-    <span class="hn mono" style="top:5%;left:19%;font-size:.82rem;opacity:.22">context_window = 128k</span>
-
-    <!-- ═══ НИЖНИЙ КРАЙ ═══ -->
-    <span class="hn" style="bottom:3%;right:13%;font-size:3.5rem;opacity:.15;font-weight:900;color:#0a9468;transform:rotate(-5deg)">DATA</span>
-    <span class="hn" style="bottom:4%;left:14%;font-size:1.5rem;opacity:.26;font-weight:700">RAG</span>
-    <span class="hn mono" style="bottom:3%;left:25%;font-size:.9rem;opacity:.24;transform:rotate(3deg)">fine-tuning · LoRA · RLHF</span>
-    <span class="hn mono" style="bottom:5%;right:21%;font-size:.82rem;opacity:.22">{ "role": "assistant" }</span>
-    <span class="hn" style="bottom:4%;right:2%;font-size:1.2rem;opacity:.28;transform:rotate(-3deg)">embeddings</span>
-    <span class="hn mono" style="bottom:7%;left:39%;font-size:.8rem;opacity:.2">∑ f(x) = ŷ  λ=0.001</span>
-  </div>
-
-  <div class="badge">
-    <span class="badge-ico">
-      <!-- sparkle / AI-icon -->
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7 0 C7 0 7.9 3.4 8.8 5.2 C10.6 6.1 14 7 14 7 C14 7 10.6 7.9 8.8 8.8 C7.9 10.6 7 14 7 14 C7 14 6.1 10.6 5.2 8.8 C3.4 7.9 0 7 0 7 C0 7 3.4 6.1 5.2 5.2 C6.1 3.4 7 0 7 0Z" fill="white"/>
-        <circle cx="11.5" cy="2.5" r="1.2" fill="rgba(255,255,255,.6)"/>
-      </svg>
-    </span>
-    <span class="badge-text">AI · Трансформация Бизнеса</span>
-  </div>
-  <h1>ИИ уже здесь — и он уже<br>на стороне <span class="hl">тех, кто начал.</span></h1>
-  <p class="hero-desc">Три маршрута: прокачать навыки, разобраться с процессами или автоматизировать бизнес.</p>
-  <div class="hero-actions">
-    <a class="btn-primary" href="#panorama">Выбрать свой путь →</a>
-    <a class="btn-ghost" href="#about">О компании</a>
-  </div>
-  <hr class="hero-divider">
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <strong>×2</strong>
-      <span>рост скорости работы<br>после мастермайнда</span>
-    </div>
-    <div class="hero-stat">
-      <strong>20–30%</strong>
-      <span>процессов под автоматизацию<br>находим при каждом аудите</span>
-    </div>
-    <div class="hero-stat">
-      <strong>2 нед.</strong>
-      <span>от диагностики<br>до первого результата</span>
-    </div>
+<!-- ═══ ЛОГОТИП ИЗДАНИЯ ═══════════════════════════════════════ -->
+<section class="flag">
+  <div class="wrap flag-in">
+    <span class="flag-name">EZA Group</span>
+    <span class="flag-sub">Внедряем ИИ в работу людей и компаний. Москва, 2026</span>
   </div>
 </section>
 
-<!-- ═══ PANORAMA ═══ -->
-<section class="panorama" id="panorama" style="padding: 0.2rem 2rem 0;">
+<!-- ═══ ПЕРВАЯ ПОЛОСА ═════════════════════════════════════════ -->
+<section class="front">
+  <div class="wrap front-in">
+    <div>
+      <h1>ИИ уже здесь. Он на стороне <em>тех, кто начал</em></h1>
 
-  <!-- Floating choice panel -->
-  <div class="choice-panel">
-    <div class="cp-header">
-      <p class="cp-label">🗺️ Выберите свой B2B-маршрут</p>
-      <h2 class="cp-title">Кто вы в этой истории?</h2>
-      <p class="cp-hint">Нажмите на свою роль — откроется ваш путь с ИИ</p>
+      <p class="lead front-lead">Три маршрута: прокачать навыки, разобраться с процессами или автоматизировать бизнес. Мы не читаем лекции о будущем, а делаем вашу работу вместе с вами.</p>
+
+      <div class="front-nums">
+        <span class="front-num"><b>8 работ</b><span>внедрений на восьми разных рынках</span></span>
+        <span class="front-num"><b>20–30%</b><span>процессов под автоматизацию находим при каждом аудите</span></span>
+        <span class="front-num"><b>2 недели</b><span>от диагностики до первого результата</span></span>
+      </div>
+
+      <div class="front-actions">
+        <a class="btn btn--go" href="#roles">
+          Выбрать свой маршрут
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn-text" href="#about">О компании</a>
+      </div>
     </div>
-    <div class="cp-cards">
 
-      <div class="cp-card" data-path="specialist" onclick="selectPath('specialist')">
-        <span class="check">✓</span>
-        <div class="cp-card-inner">
-          <div class="cp-top-row">
-            <div class="cp-num">01</div>
-            <div class="cp-icon-wrap">
-              <!-- человек + AI-искра -->
-              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="11" cy="7" r="3.8" stroke="currentColor" stroke-width="1.8"/>
-                <path d="M2 23C2 18.5 6.1 15 11 15C15.9 15 20 18.5 20 23" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M21 2L21.8 4.7L24.5 5.5L21.8 6.3L21 9L20.2 6.3L17.5 5.5L20.2 4.7L21 2Z" fill="currentColor"/>
-              </svg>
-            </div>
-          </div>
-          <div class="cp-role">Специалист</div>
-          <div class="cp-name">Я — специалист</div>
-          <div class="cp-desc">Хочу не отстать. Использовать ИИ в работе каждый день, стать ценнее</div>
-          <div class="cp-action">Мой маршрут →</div>
-        </div>
-      </div>
+    <nav class="issue" aria-label="Что есть в EZA Group">
+      <div class="issue-t">В этом выпуске</div>
 
-      <div class="cp-card" data-path="manager" onclick="selectPath('manager')">
-        <span class="check">✓</span>
-        <div class="cp-card-inner">
-          <div class="cp-top-row">
-            <div class="cp-num">02</div>
-            <div class="cp-icon-wrap">
-              <!-- орг-схема / команда -->
-              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="13" cy="4.5" r="3" stroke="currentColor" stroke-width="1.8"/>
-                <line x1="13" y1="7.5" x2="13" y2="11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                <line x1="6" y1="11.5" x2="20" y2="11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                <line x1="6" y1="11.5" x2="6" y2="14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                <line x1="13" y1="11.5" x2="13" y2="14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                <line x1="20" y1="11.5" x2="20" y2="14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                <circle cx="6"  cy="18" r="2.8" stroke="currentColor" stroke-width="1.8"/>
-                <circle cx="13" cy="18" r="2.8" stroke="currentColor" stroke-width="1.8"/>
-                <circle cx="20" cy="18" r="2.8" stroke="currentColor" stroke-width="1.8"/>
-              </svg>
-            </div>
-          </div>
-          <div class="cp-role">Руководитель</div>
-          <div class="cp-name">Я — руководитель</div>
-          <div class="cp-desc">У меня команда и процессы. Хочу понять где теряем деньги и где ИИ поможет</div>
-          <div class="cp-action">Мой маршрут →</div>
-        </div>
-      </div>
-
-      <div class="cp-card" data-path="owner" onclick="selectPath('owner')">
-        <span class="check">✓</span>
-        <div class="cp-card-inner">
-          <div class="cp-top-row">
-            <div class="cp-num">03</div>
-            <div class="cp-icon-wrap">
-              <!-- здание + рост -->
-              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="10" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
-                <rect x="5.5" y="13.5" width="3" height="2.5" rx=".4" fill="currentColor" opacity=".55"/>
-                <rect x="10.5" y="13.5" width="3" height="2.5" rx=".4" fill="currentColor" opacity=".55"/>
-                <rect x="5.5" y="18" width="3" height="2.5" rx=".4" fill="currentColor" opacity=".55"/>
-                <rect x="10.5" y="18" width="3" height="2.5" rx=".4" fill="currentColor" opacity=".55"/>
-                <polyline points="18,20 21,12 24,16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="21" cy="10.5" r="2.2" stroke="currentColor" stroke-width="1.8"/>
-                <line x1="21" y1="8.3" x2="21" y2="12.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </div>
-          <div class="cp-role">Собственник</div>
-          <div class="cp-name">Я — собственник</div>
-          <div class="cp-desc">Нужны системы, автоматизация и конкретный результат — не теория</div>
-          <div class="cp-action">Мой маршрут →</div>
-        </div>
-      </div>
-
-      <!-- AI-Наставничество — banner card, full-width on desktop -->
-      <div class="cp-card cp-card-mentoring" onclick="window.location.href='ai-mentoring.html'">
-        <div class="cp-mentoring-inner">
-          <div class="cp-mentoring-left">
-            <div class="cp-mentoring-icon">
-              <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-                <circle cx="9" cy="6.5" r="3.5"/>
-                <path d="M1.5 20C1.5 16.1 4.9 13 9 13"/>
-                <path d="M14 17.5L16 19.5L20 15.5"/>
-                <circle cx="17" cy="12.5" r="4.5" stroke-width="1.6"/>
-              </svg>
-            </div>
-            <div>
-              <div class="cp-mentoring-tag">Индивидуально</div>
-              <div class="cp-mentoring-title">AI-Наставничество — обучение нейросетям под ваши задачи</div>
-              <div class="cp-mentoring-sub">4–12 встреч · ChatGPT, Claude, автоматизация, контент, сайты</div>
-            </div>
-          </div>
-          <div class="cp-mentoring-right">
-            <div class="cp-mentoring-price">
-              <strong>от 22 000 ₽</strong>
-              <span>за программу</span>
-            </div>
-            <span class="cp-mentoring-btn">Подробнее →</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
+      <a class="issue-row" href="ai-mentoring.html">
+        <span class="issue-n">AI-Наставничество<i>индивидуально, 4–12 встреч</i></span>
+        <span class="issue-lead"></span>
+        <span class="issue-p"><small>от</small> 22 000 ₽</span>
+      </a>
+      <a class="issue-row" href="corporate-ai.html">
+        <span class="issue-n">Ассистент для компании<i>учим отдел группой</i></span>
+        <span class="issue-lead"></span>
+        <span class="issue-p"><small>от</small> 24 000 ₽</span>
+      </a>
+      <a class="issue-row" href="audit.html">
+        <span class="issue-n">Аудит процессов<i>карта потерь и план внедрения</i></span>
+        <span class="issue-lead"></span>
+        <span class="issue-p"><small>от</small> 50 000 ₽</span>
+      </a>
+      <a class="issue-row" href="consulting.html">
+        <span class="issue-n">B2B консалтинг<i>системы под вашу задачу</i></span>
+        <span class="issue-lead"></span>
+        <span class="issue-p"><small>от</small> 150 000 ₽</span>
+      </a>
+    </nav>
   </div>
+</section>
 
-  <!-- Three background zones -->
-  <div class="zones">
-
-    <!-- SPECIALIST zone -->
-    <div class="zone" data-path="specialist" onclick="selectPath('specialist')">
-      <div class="zone-bg"><img src="assets/road-bg-specialist.png" alt=""></div>
-      <div class="zone-teaser">
-        <div class="zt-left"><strong>Путь специалиста</strong><span>Мастермайнд по ИИ · 25–30К ₽</span></div>
-        <button class="zt-btn">Подробнее ↓</button>
+<!-- ═══ РУБРИКИ ПО РОЛЯМ ══════════════════════════════════════ -->
+<section class="band" id="roles">
+  <div class="spread">
+    <aside class="marg">
+      <b>Кто вы в этой истории</b>
+      Маршрут зависит не от размера компании, а от того, за что вы отвечаете. Выберите роль, в которой узнаёте себя.
+    </aside>
+    <div class="col">
+      <div class="band-head">
+        <span class="kicker">Три маршрута</span>
+        <h2>Задача у каждого своя, начало пути тоже</h2>
       </div>
-      <div class="zone-ov">
-        <button class="ov-close" onclick="closeOverlay(event)">✕</button>
-        <span class="ov-tag">Путь специалиста</span>
-        <h3 class="ov-title">Специалист с ИИ заменит специалиста без ИИ</h3>
-        <p class="ov-lead">Коллеги делают за 15 минут то, на что раньше уходил день. Научитесь правильно — без потери качества.</p>
-        <div class="ov-product">
-          <div class="ov-product-name">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L15 5V6L8 10L1 6V5L8 1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 7.5V11.5C4 11.5 5.5 13 8 13C10.5 13 12 11.5 12 11.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="5.5" x2="15" y2="9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Мастермайнд по ИИ — 6 недель
-          </div>
-          <ul class="ov-features">
-            <li>Реальные задачи из своей профессии</li>
+
+      <div class="roles">
+        <div class="role">
+          <span class="role-tag">Специалист</span>
+          <h3>Специалист с ИИ заменит специалиста без ИИ</h3>
+          <p class="role-sub">Коллеги делают за 15 минут то, на что раньше уходил день. Научитесь так же, без потери качества.</p>
+          <ul>
+            <li>Разбираем ваши реальные задачи, а не учебные</li>
             <li>Инструменты, экономящие часы каждый день</li>
-            <li>Живые встречи группы практиков</li>
-            <li>Личный AI-арсенал на выходе</li>
+            <li>Встречи один на один, без общих чатов и кураторов</li>
+            <li>Личный AI-арсенал и навык, который остаётся у вас</li>
           </ul>
-          <div class="ov-footer">
-            <div class="ov-price">25–30 000 ₽<span class="note">за участника · 6 недель</span></div>
-            <a class="btn-ov" href="https://alekseizotov.online" target="_blank">Подробнее →</a>
-          </div>
+          <span class="role-price"><b>от 22 000 ₽</b><span>4–12 встреч · три ступени</span></span>
+          <a class="btn-text" href="ai-mentoring.html">Смотреть ступени наставничества</a>
         </div>
-        <div class="ov-product-sm">
-          <div class="ovs-l"><strong>AI-Наставничество — индивидуально</strong><span>4–12 встреч под ваши задачи · от 22 000 ₽</span></div>
-          <a class="btn-ov" href="ai-mentoring.html" style="font-size:.72rem;padding:.4rem .8rem;">Подробнее →</a>
-        </div>
-      </div>
-    </div>
 
-    <!-- MANAGER zone -->
-    <div class="zone" data-path="manager" onclick="selectPath('manager')">
-      <div class="zone-bg"><img src="assets/road-bg-manager.png" alt=""></div>
-      <div class="zone-teaser">
-        <div class="zt-left"><strong>Путь руководителя</strong><span>Аудит процессов · от 50К ₽</span></div>
-        <button class="zt-btn">Подробнее ↓</button>
-      </div>
-      <div class="zone-ov">
-        <button class="ov-close" onclick="closeOverlay(event)">✕</button>
-        <span class="ov-tag">Путь руководителя</span>
-        <h3 class="ov-title">Вы не видите, где теряете деньги каждый день</h3>
-        <p class="ov-lead">Команда работает — но непрозрачно. EZA Group помогает найти точки максимального эффекта.</p>
-        <div class="ov-product">
-          <div class="ov-product-name">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><line x1="10" y1="10" x2="14.5" y2="14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="4.5" y1="6.5" x2="8.5" y2="6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="6.5" y1="4.5" x2="6.5" y2="8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            Аудит процессов
-          </div>
-          <ul class="ov-features">
-            <li>Каждый сотрудник описывает процессы за 20 мин</li>
+        <div class="role">
+          <span class="role-tag">Руководитель</span>
+          <h3>Вы не видите, где теряете деньги каждый день</h3>
+          <p class="role-sub">Команда работает, но непрозрачно. Находим точки максимального эффекта и считаем их в деньгах.</p>
+          <ul>
+            <li>Каждый сотрудник описывает процессы за 20 минут</li>
             <li>Полная карта на аналитическом дашборде</li>
             <li>ИИ-анализ приоритетов автоматизации</li>
-            <li>PDF-отчёт + план внедрения</li>
+            <li>PDF-отчёт и план внедрения</li>
           </ul>
-          <div class="ov-footer">
-            <div class="ov-price">от 50 000 ₽<span class="note">под команду · 2–3 недели</span></div>
-            <a class="btn-ov" href="audit.html">Подробнее об аудите →</a>
-          </div>
+          <span class="role-price"><b>от 50 000 ₽</b><span>под команду · 2–3 недели</span></span>
+          <a class="btn-text" href="audit.html">Подробнее об аудите</a>
         </div>
-        <div class="ov-product-sm">
-          <div class="ovs-l"><strong>+ Мастермайнд для команды</strong><span>Прокачайте сотрудников работать с ИИ</span></div>
-          <a class="btn-ov" href="https://alekseizotov.online" target="_blank" style="font-size:.72rem;padding:.4rem .8rem;">25–30К ₽/чел</a>
-        </div>
-      </div>
-    </div>
 
-    <!-- OWNER zone -->
-    <div class="zone" data-path="owner" onclick="selectPath('owner')">
-      <div class="zone-bg"><img src="assets/road-bg-owner.png" alt=""></div>
-      <div class="zone-teaser">
-        <div class="zt-left"><strong>Путь собственника</strong><span>B2B консалтинг · от 150К ₽</span></div>
-        <button class="zt-btn">Подробнее ↓</button>
-      </div>
-      <div class="zone-ov">
-        <button class="ov-close" onclick="closeOverlay(event)">✕</button>
-        <span class="ov-tag">Путь собственника</span>
-        <h3 class="ov-title">Данные есть — ясности нет. Решения вслепую</h3>
-        <p class="ov-lead">EZA Group разрабатывает системы под вашу задачу. Диагностика → план → внедрение.</p>
-        <div class="ov-product">
-          <div class="ov-product-name">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="7" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="3.5" y="9.5" width="2" height="2" rx=".3" fill="currentColor" opacity=".6"/><rect x="6.5" y="9.5" width="2" height="2" rx=".3" fill="currentColor" opacity=".6"/><path d="M10 11L13 5L16 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="3.5" r="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
-            B2B консалтинг — кастомные AI-решения
-          </div>
-          <ul class="ov-features">
+        <div class="role">
+          <span class="role-tag">Собственник</span>
+          <h3>Данные есть, ясности нет. Решения вслепую</h3>
+          <p class="role-sub">Разрабатываем системы под вашу задачу: диагностика, план, внедрение, сопровождение на запуске.</p>
+          <ul>
             <li>Аналитические дашборды под ваши данные</li>
             <li>Автоматизация бизнес-процессов</li>
             <li>AI-агенты и чат-боты под задачи</li>
-            <li>Сопровождение на этапе запуска</li>
+            <li>Ассистент внутри компании, на рабочих машинах</li>
           </ul>
-          <div class="ov-footer">
-            <div class="ov-price">от 150 000 ₽<span class="note">индивидуально</span></div>
-            <a class="btn-ov" href="consulting.html">Подробнее о консалтинге →</a>
+          <span class="role-price"><b>от 150 000 ₽</b><span>индивидуально</span></span>
+          <a class="btn-text" href="consulting.html">Подробнее о консалтинге</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ПРОЕКТЫ ═══════════════════════════════════════════════ -->
+<section class="band band--tint">
+  <div class="spread">
+    <aside class="marg">
+      <b>Подшивка</b>
+      Наставничество и проекты. Имена компаний не раскрываем без их согласия, цифры приведены так, как их считает сам клиент.
+    </aside>
+    <div class="col">
+      <div class="band-head">
+        <span class="kicker">Сделано</span>
+        <h2>Восемь работ на восьми разных рынках</h2>
+        <p class="lead">Часть — программы наставничества, часть — собранные под клиента системы. Всё из реальной работы, а не из презентации о возможностях ИИ.</p>
+      </div>
+
+      <div class="projects">
+        <article class="proj">
+          <span class="proj-m"><b>2 группы</b><span>обучены отделами</span></span>
+          <div class="proj-b">
+            <span class="proj-tag">Наставничество · агентство</span>
+            <h3>PR- и SMM-агентство, до 10 человек</h3>
+            <p>Корпоративный формат: две группы по четыре занятия под задачи своего отдела, плюс настройка рабочего места каждому.</p>
           </div>
-        </div>
-      </div>
-    </div>
+          <span class="proj-stack"><span>Корпоративный формат</span><span>VS Code</span><span>Скиллы</span></span>
+        </article>
 
-  </div><!-- /zones -->
+        <article class="proj">
+          <span class="proj-m"><b>32 встречи</b><span>длинная программа</span></span>
+          <div class="proj-b">
+            <span class="proj-tag">Наставничество · сеть</span>
+            <h3>Сеть салонов, санаторий и обучающий проект</h3>
+            <p>Индивидуальная программа на три направления бизнеса сразу: контент, аналитика и внутренние регламенты.</p>
+          </div>
+          <span class="proj-stack"><span>Индивидуально</span><span>Аналитика</span><span>Контент</span></span>
+        </article>
 
-</section><!-- /panorama -->
+        <article class="proj">
+          <span class="proj-m"><b>3 встречи</b><span>по два часа</span></span>
+          <div class="proj-b">
+            <span class="proj-tag">Наставничество · монтаж</span>
+            <h3>Монтажная компания</h3>
+            <p>Ассистент поставлен на рабочие машины: работает с файлами компании, помнит контекст и забирает документооборот.</p>
+          </div>
+          <span class="proj-stack"><span>Claude Code</span><span>Память</span><span>MCP</span></span>
+        </article>
 
-<!-- CASES -->
-<section class="cases-idx">
-  <div class="cases-idx-inner">
-    <div class="cases-idx-head">
-      <p class="ci-label">Реальные кейсы</p>
-      <h2 class="ci-title">6 проектов — 6 разных рынков</h2>
-      <p class="ci-sub">Результаты клиентов EZA Group из реальных внедрений</p>
-    </div>
-    <div class="ci-grid">
+        <article class="proj">
+          <span class="proj-m"><b>0 кликов</b><span>от голосового до встречи в календаре</span></span>
+          <div class="proj-b">
+            <span class="proj-tag">Проект · сервис</span>
+            <h3>Телеграм-бот с голосовым вводом</h3>
+            <p>Принимает голос, текст и фото, распознаёт речь и сам ведёт календарь встреч. Собран на встречах с клиентом.</p>
+          </div>
+          <span class="proj-stack"><span>n8n</span><span>Whisper</span><span>AI Agent</span></span>
+        </article>
 
-      <div class="ci-card">
-        <span class="ci-card-tag">Импорт авто</span>
-        <div><div class="ci-metric">×10</div><div class="ci-metric-label">скорость расчёта</div></div>
-        <div class="ci-card-title">Pardauto — дилер авто из Кореи и Китая</div>
-        <div class="ci-card-desc">Telegram-бот + парсер базы Encar.com. Расчёт под клиента за секунды вместо 20 минут.</div>
-        <div class="ci-stack"><span class="ci-stack-tag">n8n</span><span class="ci-stack-tag">Python</span><span class="ci-stack-tag">Telegram Bot</span></div>
-      </div>
+        <article class="proj">
+          <span class="proj-m"><b>2 в день</b><span>постов без участия автора</span></span>
+          <div class="proj-b">
+            <span class="proj-tag">Проект · личный бренд</span>
+            <h3>Эксперт с авторским каналом</h3>
+            <p>n8n и GPT-4: темы из списка интересов, стиль автора, контент выходит автоматически.</p>
+          </div>
+          <span class="proj-stack"><span>n8n</span><span>GPT-4</span><span>Telegram API</span></span>
+        </article>
 
-      <div class="ci-card">
-        <span class="ci-card-tag">Производство</span>
-        <div><div class="ci-metric">−40%</div><div class="ci-metric-label">простоев и брака</div></div>
-        <div class="ci-card-title">Завод, 60+ сотрудников</div>
-        <div class="ci-card-desc">Аудит процессов + регламенты передачи смен + ICF-работа с сопротивлением персонала.</div>
-        <div class="ci-stack"><span class="ci-stack-tag">Process Audit</span><span class="ci-stack-tag">ICF Coaching</span><span class="ci-stack-tag">Management</span></div>
-      </div>
+        <article class="proj">
+          <span class="proj-m"><b>+30%</b><span>времени врача на приём</span></span>
+          <div class="proj-b">
+            <span class="proj-tag">Проект · медицина</span>
+            <h3>Врач-гомеопат: частная практика</h3>
+            <p>"Цифровой ординатор": ИИ собирает анамнез до визита, плюс поиск по медицинским книгам.</p>
+          </div>
+          <span class="proj-stack"><span>RAG</span><span>AI Interview</span><span>Med-Bot</span></span>
+        </article>
 
-      <div class="ci-card">
-        <span class="ci-card-tag">Личный бренд</span>
-        <div><div class="ci-metric">2/день</div><div class="ci-metric-label">постов без участия автора</div></div>
-        <div class="ci-card-title">AI-блогер — эксперт с авторским каналом</div>
-        <div class="ci-card-desc">n8n + GPT-4: темы из списка интересов, стиль автора — контент выходит автоматически.</div>
-        <div class="ci-stack"><span class="ci-stack-tag">n8n</span><span class="ci-stack-tag">GPT-4</span><span class="ci-stack-tag">Telegram API</span></div>
-      </div>
+        <article class="proj">
+          <span class="proj-m"><b>−7 часов</b><span>рутины в неделю</span></span>
+          <div class="proj-b">
+            <span class="proj-tag">Проект · психология</span>
+            <h3>Психолог-игропрактик: практика и блог</h3>
+            <p>Автозапись, оплаты, посты из голосовых сообщений и Midjourney для метафорических карт.</p>
+          </div>
+          <span class="proj-stack"><span>Midjourney</span><span>Voice-to-Text</span><span>Content Auto</span></span>
+        </article>
 
-      <div class="ci-card">
-        <span class="ci-card-tag">Медицина</span>
-        <div><div class="ci-metric">+30%</div><div class="ci-metric-label">времени врача на приём</div></div>
-        <div class="ci-card-title">Врач-гомеопат — частная практика</div>
-        <div class="ci-card-desc">«Цифровой ординатор»: AI собирает анамнез до визита + RAG по медицинским книгам.</div>
-        <div class="ci-stack"><span class="ci-stack-tag">RAG</span><span class="ci-stack-tag">AI Interview</span><span class="ci-stack-tag">Med-Bot</span></div>
-      </div>
-
-      <div class="ci-card">
-        <span class="ci-card-tag">Психология</span>
-        <div><div class="ci-metric">−7 ч</div><div class="ci-metric-label">рутины в неделю</div></div>
-        <div class="ci-card-title">Психолог-игропрактик — практика и блог</div>
-        <div class="ci-card-desc">Автозапись + оплаты + посты из голосовых + Midjourney для метафорических карт.</div>
-        <div class="ci-stack"><span class="ci-stack-tag">Midjourney</span><span class="ci-stack-tag">Voice-to-Text</span><span class="ci-stack-tag">Content Auto</span></div>
-      </div>
-
-      <div class="ci-card">
-        <span class="ci-card-tag">Автозапчасти</span>
-        <div><div class="ci-metric">3 сек</div><div class="ci-metric-label">подбор аналогов</div></div>
-        <div class="ci-card-title">РемКуб — магазин запчастей</div>
-        <div class="ci-card-desc">AI-бот консультант с базой знаний — мгновенно сопоставляет авто и запчасть.</div>
-        <div class="ci-stack"><span class="ci-stack-tag">AI Knowledge Base</span><span class="ci-stack-tag">Catalog Search</span></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="about-inner">
-    <div class="about-visual">
-      <img src="assets/photo-founder.png" alt="Алексей Зотов — Основатель EZA Group">
-      <div class="about-photo-badge">
-        <img src="assets/logo-eza.png" alt="EZA Group">
-      </div>
-    </div>
-    <div class="about-text">
-      <p class="s-label">О компании</p>
-      <h2 class="about-title">EZA Group — реальные внедрения, не теория</h2>
-      <p>Мы не читаем лекции о том, как ИИ изменит мир. Мы помогаем компаниям и людям пройти этот путь прямо сейчас — с конкретным результатом на каждом этапе.</p>
-      <p>Три продукта под три роли: обучение для специалистов, аудит процессов для руководителей, кастомные AI-системы для собственников.</p>
-      <div class="founder">
-        <div class="founder-ava">
-          <img src="assets/photo-founder.png" alt="Алексей Зотов">
-        </div>
-        <div class="founder-info">
-          <strong>Алексей Зотов</strong>
-          <span>Основатель EZA Group · ICF-коуч · AI-автоматизация и аналитика</span>
-        </div>
+        <article class="proj">
+          <span class="proj-m"><b>3 секунды</b><span>подбор аналогов</span></span>
+          <div class="proj-b">
+            <span class="proj-tag">Проект · автозапчасти</span>
+            <h3>РемКуб: магазин запчастей</h3>
+            <p>AI-бот-консультант с базой знаний: мгновенно сопоставляет автомобиль и запчасть.</p>
+          </div>
+          <span class="proj-stack"><span>AI Knowledge Base</span><span>Catalog Search</span></span>
+        </article>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-wrap" id="cta">
-  <p class="s-label">Начать</p>
-  <h2 class="cta-title">Не знаете с чего начать?<br>Напишите — разберёмся вместе</h2>
-  <p class="cta-sub">Расскажите о своей ситуации. Мы предложим подходящий путь без лишних слов и шаблонных презентаций</p>
-  <div class="cta-actions">
-    <a class="btn-tg" href="https://t.me/Aleksei_Zotov" target="_blank">✈ Написать в Telegram</a>
-    <a class="btn-li" href="https://www.linkedin.com/in/alexey-zotov-ai" target="_blank">in Связаться в LinkedIn</a>
+<!-- ═══ О КОМПАНИИ ════════════════════════════════════════════ -->
+<section class="band" id="about">
+  <div class="spread">
+    <aside class="marg">
+      <b>Кто делает</b>
+      Один человек ведёт проект от диагностики до передачи. Подрядчиков и кураторов в цепочке нет.
+    </aside>
+    <div class="col">
+      <div class="band-head">
+        <span class="kicker">О компании</span>
+        <h2>Реальные внедрения, не теория</h2>
+      </div>
+
+      <div class="about">
+        <figure class="about-photo-wrap">
+          <div class="about-photo"><img src="assets/portrait-cut.webp" alt="Алексей Зотов" width="1100" height="1226" loading="lazy"></div>
+          <figcaption class="about-cap">
+            <b>Алексей Зотов</b>
+            Основатель EZA Group. ICF-коуч, практик AI-автоматизации и аналитики.
+          </figcaption>
+        </figure>
+
+        <div class="about-t">
+          <p>Мы не читаем лекции о том, как ИИ изменит мир. Мы помогаем компаниям и людям пройти этот путь прямо сейчас, с конкретным результатом на каждом этапе.</p>
+          <p>Три продукта под три роли: обучение для специалистов, аудит процессов для руководителей, кастомные AI-системы для собственников. Плюс отдельный трек для компаний, которым нужен ассистент на рабочих местах сотрудников.</p>
+          <p>Коучинговый бэкграунд здесь не украшение: половина сопротивления внедрению — это не техника, а страх людей, что их заменят. С этим тоже приходится работать.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">
-    <img src="assets/logo-eza.png" alt="EZA Group">
+<!-- ═══ ФИНАЛ ═════════════════════════════════════════════════ -->
+<section class="band band--ink finale">
+  <div class="wrap">
+    <span class="kicker">Начать работу</span>
+    <h2>Не знаете, с чего начать?<br><em>Напишите, разберёмся вместе</em></h2>
+    <p class="lead" style="color: oklch(80% 0.012 85)">Расскажите о своей ситуации. Предложим подходящий маршрут без лишних слов и шаблонных презентаций.</p>
+    <div class="finale-row">
+      <a class="btn btn--go" href="https://t.me/Aleksei_Zotov" target="_blank" rel="noopener">Написать в Telegram</a>
+      <a class="btn-text" href="#roles">Сначала посмотреть маршруты</a>
+    </div>
   </div>
-  <p>© 2026 EZA Group · AI-трансформация для бизнеса · <a href="privacy.html" style="color:rgba(255,255,255,.4);text-decoration:none">Политика конфиденциальности</a> · <a href="oferta.html" style="color:rgba(255,255,255,.4);text-decoration:none">Публичная оферта</a></p>
+</section>
+
+</main>
+
+<footer class="colophon">
+  <div class="wrap colophon-in">
+    <img loading="lazy" decoding="async" src="assets/logo-eza.png" alt="EZA Group">
+    <span class="colophon-legal">© 2026 EZA Group · ИП Зотова Екатерина Олеговна · ИНН 772880993414 · ОГРНИП 326774600333751</span>
+    <span class="sep"><a href="oferta.html">Публичная оферта</a></span>
+    <span><a href="privacy.html">Политика конфиденциальности</a></span>
+    <span><a href="https://t.me/Aleksei_Zotov" target="_blank" rel="noopener">@Aleksei_Zotov</a></span>
+  </div>
 </footer>
 
 <script>
-  var currentPath = null;
+(function () {
+  'use strict';
 
-  var PATH_URLS = { specialist: 'https://alekseizotov.online', manager: 'audit.html', owner: 'consulting.html' };
+  var col = document.querySelector('.colophon-in span');
+  if (col) { col.textContent = col.textContent.replace(/© \d{4}/, '© ' + new Date().getFullYear()); }
 
-  function selectPath(path) {
-    /* On mobile — navigate directly to product page */
-    if (window.innerWidth <= 900) {
-      if (PATH_URLS[path]) { window.location.href = PATH_URLS[path]; }
+  // печать заголовков: класс вешает скрипт, чтобы без JS текст был виден сразу
+  (function print() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
+    var hero = document.querySelector('.opener h1');
+    var rest = document.querySelectorAll('.band-head h2, .finale h2');
+
+    function mark(el) { if (el) { el.classList.add('press'); } }
+    mark(hero);
+    rest.forEach(mark);
+
+    // Ждём шрифты, иначе прокатка пройдёт по подстановочному начертанию.
+    // Но не дольше 1.5 с: если шрифты не доедут, заголовок обязан появиться,
+    // иначе он останется скрытым маской навсегда.
+    var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    var guard = new Promise(function (resolve) { setTimeout(resolve, 1500); });
+    Promise.race([fonts, guard]).then(function () {
+      if (hero) { requestAnimationFrame(function () { hero.classList.add('is-printed'); }); }
+    });
+
+    if (!('IntersectionObserver' in window)) {
+      rest.forEach(function (el) { el.classList.add('is-printed'); });
       return;
     }
-
-    currentPath = path;
-
-    /* choice panel cards */
-    document.querySelectorAll('.cp-card').forEach(function(c) {
-      c.classList.toggle('is-active', c.dataset.path === path);
-    });
-
-    /* zones: activate clicked zone, dim others */
-    document.querySelectorAll('.zone').forEach(function(z) {
-      var isActive = z.dataset.path === path;
-      z.classList.toggle('is-active', isActive);
-      z.classList.toggle('dimmed', !isActive);
-    });
-  }
-
-  function closeOverlay(e) {
-    if (e) e.stopPropagation();
-    document.querySelectorAll('.zone').forEach(function(z) {
-      z.classList.remove('is-active', 'dimmed');
-    });
-    document.querySelectorAll('.cp-card').forEach(function(c) {
-      c.classList.remove('is-active');
-    });
-    currentPath = null;
-  }
-
-  // Intro
-  function skipIntro() {
-    var el = document.getElementById('intro');
-    el.classList.add('fade-out');
-    document.body.classList.add('intro-done');
-    setTimeout(function() { el.style.display = 'none'; }, 900);
-  }
-  function toggleSound() {
-    var v = document.getElementById('intro-video');
-    var btn = document.getElementById('intro-sound-btn');
-    v.muted = !v.muted;
-    btn.textContent = v.muted ? '🔇' : '🔊';
-  }
-  (function() {
-    var v = document.getElementById('intro-video');
-    if (!v) return;
-    v.addEventListener('ended', skipIntro);
-    v.addEventListener('error', skipIntro);
-  })();
-
-  // ── SCROLL REVEAL ──
-  (function() {
-    function sg(sel, ms) {
-      document.querySelectorAll(sel).forEach(function(p) {
-        Array.from(p.children).forEach(function(c, i) { c.classList.add('sr'); c.style.transitionDelay = i * ms + 'ms'; });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) { return; }
+        e.target.classList.add('is-printed');
+        io.unobserve(e.target);
       });
-    }
-    function rv(sel) { document.querySelectorAll(sel).forEach(function(el) { el.classList.add('sr'); }); }
-
-    sg('.ci-grid', 80);
-    rv('.cases-idx-head, .about-inner, .cta-wrap');
-
-    if (!window.IntersectionObserver) { document.querySelectorAll('.sr').forEach(function(e) { e.classList.add('visible'); }); return; }
-    var io = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-    document.querySelectorAll('.sr').forEach(function(el) { io.observe(el); });
+    }, { threshold: 0.35, rootMargin: '0px 0px -8% 0px' });
+    rest.forEach(function (el) { io.observe(el); });
   })();
+
+})();
+</script>
+
+
+<div class="cookie" id="cookieBar" role="region" aria-label="Уведомление о файлах cookie">
+  <p>Сайт использует файлы cookie, чтобы корректно работать. Аналитики и рекламных трекеров здесь нет. Подробности в <a href="privacy.html">политике конфиденциальности</a>.</p>
+  <button type="button" id="cookieOk">Хорошо</button>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var KEY = 'eza-cookie-notice';
+  var bar = document.getElementById('cookieBar');
+  var btn = document.getElementById('cookieOk');
+  if (!bar || !btn) { return; }
+  var seen = null;
+  try { seen = localStorage.getItem(KEY); } catch (e) {}   // приватный режим кидает исключение
+  if (seen === 'ok') { return; }
+  bar.classList.add('is-on');
+  btn.addEventListener('click', function () {
+    try { localStorage.setItem(KEY, 'ok'); } catch (e) {}
+    bar.classList.remove('is-on');
+  });
+})();
 </script>
 
 </body>

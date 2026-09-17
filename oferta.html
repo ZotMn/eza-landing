@@ -1,52 +1,80 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Публичная оферта — EZA Group</title>
-  <link rel="icon" type="image/png" href="assets/logo-eza.png">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-size: 16px; line-height: 1.7; color: #2c2c40;
-      background: #f7f8fc; -webkit-font-smoothing: antialiased;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Публичная оферта — EZA Group</title>
+<link rel="icon" type="image/png" href="assets/logo-eza.png">
+<meta name="robots" content="noindex">
+
+<link rel="canonical" href="https://ezagroup.ru/oferta.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EZA Group">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Публичная оферта — EZA Group">
+<meta property="og:description" content="">
+<meta property="og:url" content="https://ezagroup.ru/oferta.html">
+<meta property="og:image" content="https://ezagroup.ru/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EZA Group — внедрение ИИ в работу людей и компаний">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Публичная оферта — EZA Group">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://ezagroup.ru/assets/og-cover.jpg">
+<meta name="theme-color" content="#f5f3f1">
+<link rel="stylesheet" href="assets/eza.css">
+<style>
+    /* ── ССЫЛКА К СОДЕРЖИМОМУ ───────────────────────────────────────
+       Для тех, кто ходит с клавиатуры: не проходить шапку каждый раз. */
+    .skip {
+      position: absolute; left: -9999px; top: 0; z-index: 400;
+      background: var(--ink); color: var(--paper); font-size: 0.875rem; font-weight: 600;
+      padding: 12px 20px; text-decoration: none;
     }
-    .nav { background: #1a1a2e; padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { color: #fff; font-weight: 700; font-size: 1rem; text-decoration: none; opacity: .9; }
-    .nav-back { color: rgba(255,255,255,.6); font-size: .875rem; text-decoration: none; display: flex; align-items: center; gap: .4rem; transition: color .18s; }
-    .nav-back:hover { color: #fff; }
-    .container { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; background: #fff; min-height: calc(100vh - 56px); }
-    h1 { font-size: 26px; font-weight: 800; color: #1a1a2e; margin-bottom: 6px; letter-spacing: -.02em; }
-    .meta { font-size: 13px; color: #6b6b8a; margin-bottom: 40px; }
-    h2 { font-size: 16px; font-weight: 700; color: #1a1a2e; margin: 32px 0 10px; }
-    h3 { font-size: 14px; font-weight: 700; color: #1a1a2e; margin: 18px 0 8px; }
-    p { margin-bottom: 10px; color: #2c2c40; }
-    p.clause { margin-bottom: 8px; }
-    ul { margin: 6px 0 10px 20px; color: #2c2c40; }
-    ul li { margin-bottom: 5px; }
-    a { color: #0a9468; }
-    .requisites { background: #f7f8fc; border: 1px solid #e4e5ef; border-radius: 8px; padding: 16px 20px; margin-top: 10px; font-size: 15px; }
-    .requisites p { margin-bottom: 4px; }
-    footer { background: #1a1a2e; padding: 20px 24px; text-align: center; font-size: 13px; color: rgba(255,255,255,.4); }
-    .table-wrap { overflow-x: auto; margin: 12px 0 14px; -webkit-overflow-scrolling: touch; }
-    table.tariffs { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 620px; }
-    table.tariffs th, table.tariffs td { border: 1px solid #e4e5ef; padding: 9px 11px; text-align: left; vertical-align: top; }
-    table.tariffs th { background: #f7f8fc; font-weight: 700; color: #1a1a2e; }
-    table.tariffs tbody tr:nth-child(even) td { background: #fbfbfe; }
-    p.note { font-size: 13px; color: #6b6b8a; margin-bottom: 8px; }
-  </style>
+    .skip:focus { left: 0; }
+
+
+/* ── ЮРИДИЧЕСКИЕ СТРАНИЦЫ ───────────────────────────────────────── */
+.legal { max-width: 860px; margin: 0 auto; padding: clamp(32px, 5vw, 72px) var(--gutter) clamp(48px, 6vw, 88px); }
+.legal h1 { font-size: clamp(1.75rem, 3.4vw, 2.75rem); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: var(--space-lg); padding-bottom: var(--space-md); border-bottom: 2px solid var(--ink); }
+.legal h2 { font-size: clamp(1.125rem, 1.8vw, 1.375rem); line-height: 1.2; margin: var(--space-2xl) 0 var(--space-sm); padding-top: var(--space-md); border-top: 1px solid var(--rule); }
+.legal h3 { font-size: 1rem; margin: var(--space-lg) 0 var(--space-xs); }
+.legal p { font-size: 0.9375rem; line-height: 1.7; color: var(--ink-soft); max-width: 72ch; margin-bottom: var(--space-sm); }
+.legal ul, .legal ol { margin: 0 0 var(--space-md) var(--space-lg); }
+.legal li { font-size: 0.9375rem; line-height: 1.65; color: var(--ink-soft); margin-bottom: 6px; max-width: 70ch; }
+.legal strong, .legal b { font-weight: 600; color: var(--ink); }
+.legal a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--faint); }
+.legal a:hover { border-bottom-color: var(--red); color: var(--red-deep); }
+.legal table { width: 100%; border-collapse: collapse; margin-bottom: var(--space-md); table-layout: fixed; }
+.legal td, .legal th { overflow-wrap: anywhere; }
+/* на узком экране таблица услуг не помещается: складываем её в строки,
+   разметку документа при этом не трогаем */
+@media (max-width: 620px) {
+  .legal table, .legal tbody, .legal tr, .legal td { display: block; width: 100%; }
+  .legal thead { display: none; }
+  .legal tr { border-bottom: 1px solid var(--rule); padding-block: var(--space-sm); }
+  .legal td { border: 0; padding: 3px 0; }
+  .legal td:first-child { font-weight: 600; color: var(--ink); }
+}
+.legal th, .legal td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--rule-soft); font-size: 0.875rem; vertical-align: top; }
+.legal th { font-size: 0.8125rem; font-weight: 600; letter-spacing: .02em; color: var(--ink); border-bottom: 1px solid var(--rule); }  /* без uppercase: регистр в оферте менять нельзя */
+.legal-date { font-family: var(--font-note); font-style: italic; font-size: 0.875rem; color: var(--muted); margin-bottom: var(--space-xl); }
+</style>
 </head>
 <body>
+<a class="skip" href="#main">Перейти к содержимому</a>
 
-<nav class="nav">
-  <a href="index.html" class="nav-logo">EZA Group</a>
-  <a href="index.html" class="nav-back">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    На главную
-  </a>
-</nav>
+<header class="masthead">
+  <div class="masthead-in">
+    <a href="index.html" aria-label="EZA Group"><img src="assets/logo-eza.png" alt="EZA Group"></a>
+    <span class="masthead-issue">Публичная оферта</span>
+    <a class="masthead-back" href="index.html">На главную</a>
+    <a class="masthead-cta" href="https://t.me/Aleksei_Zotov" target="_blank" rel="noopener">Написать в Telegram</a>
+  </div>
+</header>
 
+<main id="main" tabindex="-1" class="legal">
 <div class="container">
   <h1>Публичная оферта</h1>
   <div class="meta">о заключении договора об оказании услуг · редакция от 8 сентября 2026 г.</div>
@@ -62,7 +90,7 @@
   <p><strong>Исполнитель</strong> — Индивидуальный предприниматель Зотова Екатерина Олеговна (ОГРНИП 326774600333751, ИНН 772880993414).</p>
   <p><strong>Заказчик</strong> — физическое лицо (в том числе зарегистрированное в качестве индивидуального предпринимателя) либо юридическое лицо, акцептовавшее настоящую Оферту.</p>
   <p><strong>Конклюдентные действия</strong> — поведение, которое выражает согласие с предложением контрагента заключить, изменить или расторгнуть договор. Действия состоят в полном или частичном выполнении условий, которые предложил контрагент.</p>
-  <p><strong>Сайт Исполнителя в сети «Интернет»</strong> — совокупность программ для электронных вычислительных машин и иной информации, содержащейся в информационной системе, доступ к которой обеспечивается посредством сети «Интернет» по доменному имени и сетевому адресу: <a href="https://ezagroup.ru" target="_blank">https://ezagroup.ru</a></p>
+  <p><strong>Сайт Исполнителя в сети «Интернет»</strong> — совокупность программ для электронных вычислительных машин и иной информации, содержащейся в информационной системе, доступ к которой обеспечивается посредством сети «Интернет» по доменному имени и сетевому адресу: <a href="https://ezagroup.ru" target="_blank" rel="noopener">https://ezagroup.ru</a></p>
   <p><strong>Стороны Договора (Стороны)</strong> — Исполнитель и Заказчик.</p>
   <p><strong>Услуга</strong> — информационно-консультационная услуга, оказываемая Исполнителем Заказчику дистанционно в порядке и на условиях, установленных настоящей Офертой.</p>
   <p><strong>Тариф</strong> — определённый Приложением № 1 к настоящей Оферте набор Услуг с фиксированными наименованием, составом, количеством Консультаций и стоимостью.</p>
@@ -238,10 +266,48 @@
   <p class="note">Стоимость экспресс-диагностики засчитывается в стоимость Тарифа, если Тариф оплачен Заказчиком в течение 7 (семи) календарных дней с даты проведения экспресс-диагностики.</p>
   <p class="note">Для Услуг, стоимость которых указана со словом «от», окончательная стоимость определяется по пункту 4.1 Оферты и фиксируется в счёте на оплату до момента оплаты.</p>
 </div>
+</main>
 
-<footer>
-  © 2026 EZA Group · ИП Зотова Е.О. · ИНН 772880993414 · ОГРНИП 326774600333751
+<footer class="colophon">
+  <div class="wrap colophon-in">
+    <img loading="lazy" decoding="async" src="assets/logo-eza.png" alt="EZA Group">
+    <span class="colophon-legal">© 2026 EZA Group · ИП Зотова Екатерина Олеговна · ИНН 772880993414 · ОГРНИП 326774600333751</span>
+    <span class="sep"><a href="oferta.html">Публичная оферта</a></span>
+    <span><a href="privacy.html">Политика конфиденциальности</a></span>
+    <span><a href="https://t.me/Aleksei_Zotov" target="_blank" rel="noopener">@Aleksei_Zotov</a></span>
+  </div>
 </footer>
+
+<script>
+(function () {
+  var el = document.querySelector('.colophon-in span');
+  if (el) { el.textContent = el.textContent.replace(/© \d{4}/, '© ' + new Date().getFullYear()); }
+})();
+</script>
+
+
+<div class="cookie" id="cookieBar" role="region" aria-label="Уведомление о файлах cookie">
+  <p>Сайт использует файлы cookie, чтобы корректно работать. Аналитики и рекламных трекеров здесь нет. Подробности в <a href="privacy.html">политике конфиденциальности</a>.</p>
+  <button type="button" id="cookieOk">Хорошо</button>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var KEY = 'eza-cookie-notice';
+  var bar = document.getElementById('cookieBar');
+  var btn = document.getElementById('cookieOk');
+  if (!bar || !btn) { return; }
+  var seen = null;
+  try { seen = localStorage.getItem(KEY); } catch (e) {}   // приватный режим кидает исключение
+  if (seen === 'ok') { return; }
+  bar.classList.add('is-on');
+  btn.addEventListener('click', function () {
+    try { localStorage.setItem(KEY, 'ok'); } catch (e) {}
+    bar.classList.remove('is-on');
+  });
+})();
+</script>
 
 </body>
 </html>
