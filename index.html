@@ -104,29 +104,120 @@
 .role-price b { font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; color: var(--ink); letter-spacing: -0.02em; white-space: nowrap; }
 .role-price span { font-size: 0.78rem; color: var(--muted); }
 
-/* ── ПРОЕКТЫ ────────────────────────────────────────────────────── */
+/* ── ПОДШИВКА: СВОДКА ───────────────────────────────────────────
+   Четыре числа перед списком работ: читатель понимает масштаб
+   раньше, чем начнёт читать строки. */
 
-.projects { border-top: 2px solid var(--ink); }
+.sum {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule);
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+.sum-i { display: flex; flex-direction: column; gap: 3px; padding: var(--space-md) var(--space-lg) var(--space-md) 0; }
+.sum-i + .sum-i { border-inline-start: 1px solid var(--rule); padding-inline-start: var(--space-lg); }
+.sum-i b { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.5rem, 2.4vw, 2.125rem); line-height: 1; color: var(--ink); letter-spacing: -0.02em; }
+.sum-i span { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
+@media (max-width: 720px) {
+  .sum-i + .sum-i { border-inline-start: 0; border-top: 1px solid var(--rule-soft); padding-inline-start: 0; }
+}
+
+/* ── ПОДШИВКА: МАТЕРИАЛ НОМЕРА ──────────────────────────────────
+   Первая работа подана как вырезка, наклеенная на полосу: свой лист
+   бумаги поверх тонированной полосы, рамка, было и стало в две
+   колонки, под ними цифры и врезка-вывод. */
+
+.case {
+  background-color: var(--paper);
+  background-image: url('assets/paper-grain.png');
+  background-repeat: repeat; background-blend-mode: multiply;
+  border: 1px solid var(--ink); border-top: 3px solid var(--ink);
+  padding: clamp(22px, 3vw, 44px);
+  margin-bottom: clamp(32px, 4vw, 56px);
+}
+.case-top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-md); flex-wrap: wrap; margin-bottom: var(--space-sm); }
+.case-top .kicker span { color: var(--red-deep); }
+.case-when { font-family: var(--font-note); font-style: italic; font-size: 0.8125rem; color: var(--muted); }
+.case h3 { font-size: clamp(1.625rem, 3vw, 2.5rem); line-height: 1.06; max-width: 24ch; margin-bottom: var(--space-sm); }
+.case-sub { font-family: var(--font-note); font-style: italic; font-size: clamp(0.9375rem, 1.2vw, 1.0625rem); line-height: 1.5; color: var(--muted); max-width: 60ch; }
+
+.ba { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 48px); margin-top: clamp(22px, 3vw, 36px); }
+.ba-t { display: block; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding-bottom: var(--space-xs); margin-bottom: var(--space-sm); border-bottom: 1px solid var(--rule); }
+.ba-now .ba-t { color: var(--red-deep); border-bottom-color: var(--red); }
+.ba p { font-size: 0.9375rem; line-height: 1.6; color: var(--ink-soft); }
+@media (max-width: 680px) { .ba { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); } }
+
+.case-nums {
+  list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+  gap: var(--space-md) clamp(16px, 2.5vw, 36px);
+  margin-top: clamp(22px, 3vw, 36px); padding-top: var(--space-md); border-top: 1px solid var(--rule);
+}
+.case-nums b { display: block; overflow-wrap: normal; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.5rem, 2.6vw, 2.25rem); line-height: 1; color: var(--red-deep); letter-spacing: -0.02em; margin-bottom: 3px; }
+.case-nums span { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
+
+.case-q {
+  margin-top: clamp(20px, 2.6vw, 30px);
+  padding-inline-start: var(--space-md); border-inline-start: 2px solid var(--red);
+  font-family: var(--font-note); font-style: italic;
+  font-size: clamp(1.0625rem, 1.5vw, 1.3125rem); line-height: 1.45; color: var(--ink); max-width: 62ch;
+}
+.case .proj-stack { margin-top: clamp(18px, 2.4vw, 26px); }
+
+/* ── ПОДШИВКА: СТРОКИ ───────────────────────────────────────────
+   Оглавление подшивки: слева цифра результата, дальше сама работа,
+   справа чем сделано. Нумерация идёт счётчиком, материал номера
+   занял первый номер, поэтому счётчик стартует с единицы. */
+
+.projects { border-top: 2px solid var(--ink); counter-reset: proj 1; }
 .proj {
-  display: grid; grid-template-columns: 170px minmax(0, 1fr) auto;
+  display: grid; grid-template-columns: 196px minmax(0, 1fr) auto;
   gap: var(--space-md) clamp(16px, 2.5vw, 36px);
   padding-block: var(--space-lg); border-bottom: 1px solid var(--rule);
   transition: background .25s var(--ease);
 }
-.proj:hover { background: color-mix(in oklch, var(--paper-2) 60%, transparent); }
+.proj:hover { background: color-mix(in oklch, var(--paper) 70%, transparent); }
 .proj-m { display: flex; flex-direction: column; gap: 2px; }
-.proj-m b { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.75rem, 2.8vw, 2.5rem); line-height: 1; color: var(--red-deep); letter-spacing: -0.02em; }
+.proj-m b { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.625rem, 2.5vw, 2.25rem); line-height: 1.04; color: var(--red-deep); letter-spacing: -0.02em; overflow-wrap: normal; hyphens: none; }
 .proj-m span { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
 .proj-b { min-width: 0; }
 .proj-tag { font-size: 0.6875rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: var(--space-2xs); }
+.proj-tag::before { counter-increment: proj; content: counter(proj, decimal-leading-zero) " · "; color: var(--red-deep); }
 .proj h3 { font-size: 1.1875rem; line-height: 1.2; margin-bottom: var(--space-xs); }
+/* тонкая киноварная подчёркивающая линия набегает под заголовком:
+   ряд отзывается на курсор, но страница остаётся неподвижной */
+.proj h3 span { display: inline; background-image: linear-gradient(var(--red), var(--red)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0 1px; transition: background-size .38s var(--ease); padding-bottom: 2px; }
+.proj:hover h3 span, .proj:focus-within h3 span { background-size: 100% 1px; }
 .proj p { font-size: 0.9375rem; line-height: 1.55; color: var(--ink-soft); max-width: 62ch; }
+.proj p i { font-family: var(--font-note); font-style: italic; color: var(--red-deep); }
+
+/* что осталось у клиента: короткие строки с киноварной насечкой */
+.proj-out { list-style: none; margin-top: var(--space-sm); max-width: 62ch; }
+.proj-out li { position: relative; font-size: 0.875rem; line-height: 1.5; color: var(--ink-soft); padding-block: 6px; padding-inline-start: 16px; border-top: 1px solid var(--rule-soft); }
+.proj-out li::before { content: ''; position: absolute; inset-inline-start: 0; top: 14px; width: 8px; height: 1px; background: var(--red); }
+
 .proj-stack { display: flex; gap: var(--space-xs); flex-wrap: wrap; align-content: flex-start; }
-.proj-stack span { font-size: 0.72rem; color: var(--muted); border: 1px solid var(--rule); padding: 2px 8px; white-space: nowrap; }
+.proj-stack span { font-size: 0.72rem; color: var(--muted); border: 1px solid var(--rule); padding: 2px 8px; white-space: nowrap; transition: border-color .25s var(--ease), color .25s var(--ease); }
+.proj:hover .proj-stack span { border-color: var(--faint); color: var(--ink-soft); }
+
+/* правило, выросшее из работы: врезка в ту же сетку, без номера */
+.proj-note {
+  display: grid; grid-template-columns: 196px minmax(0, 1fr);
+  gap: var(--space-sm) clamp(16px, 2.5vw, 36px);
+  padding-block: var(--space-lg); border-bottom: 1px solid var(--rule);
+}
+.proj-note .kicker { color: var(--red-deep); line-height: 1.4; }
+.proj-note p { font-family: var(--font-note); font-style: italic; font-size: clamp(1rem, 1.35vw, 1.1875rem); line-height: 1.5; color: var(--ink); max-width: 64ch; }
+
 @media (max-width: 860px) {
-  .proj { grid-template-columns: minmax(0, 1fr); }
+  .proj, .proj-note { grid-template-columns: minmax(0, 1fr); }
   .proj-stack { grid-column: 1; }
 }
+
+/* ── ПЕЧАТЬ СТРОК ───────────────────────────────────────────────
+   Строки проявляются по мере прокрутки, как оттиск по бумаге.
+   Скрывающий класс вешает только скрипт: без JS и при отключённой
+   анимации подшивка видна сразу. */
+.projects.roll .proj, .projects.roll .proj-note { opacity: 0; transform: translateY(12px); }
+.projects.roll .is-set { opacity: 1; transform: none; transition: opacity .55s var(--ease), transform .55s var(--ease); }
 
 /* ── РАЗВОРОТ О КОМПАНИИ ────────────────────────────────────────── */
 
@@ -173,7 +264,7 @@
       <p class="lead front-lead">Три маршрута: прокачать навыки, разобраться с процессами или автоматизировать бизнес. Мы не читаем лекции о будущем, а делаем вашу работу вместе с вами.</p>
 
       <div class="front-nums">
-        <span class="front-num"><b>8 работ</b><span>внедрений на восьми разных рынках</span></span>
+        <span class="front-num"><b>8 работ</b><span>разобранных внедрений в семи отраслях</span></span>
         <span class="front-num"><b>20–30%</b><span>процессов под автоматизацию находим при каждом аудите</span></span>
         <span class="front-num"><b>2 недели</b><span>от диагностики до первого результата</span></span>
       </div>
@@ -279,94 +370,145 @@
   <div class="spread">
     <aside class="marg">
       <b>Подшивка</b>
-      Наставничество и проекты. Имена компаний не раскрываем без их согласия, цифры приведены так, как их считает сам клиент.
+      Восемь работ, которые можно проверить. Имена компаний не раскрываем без их согласия, отрасль и цифры приводим так, как их считает сам клиент.
     </aside>
     <div class="col">
       <div class="band-head">
         <span class="kicker">Сделано</span>
-        <h2>Восемь работ на восьми разных рынках</h2>
-        <p class="lead">Часть — программы наставничества, часть — собранные под клиента системы. Всё из реальной работы, а не из презентации о возможностях ИИ.</p>
+        <h2>Восемь работ, которые <em>работают без нас</em></h2>
+        <p class="lead">Ни одного демо и ни одной презентации о возможностях ИИ. Каждая строка это живая задача клиента, разобранная на встрече, и инструмент, который остался у него после.</p>
       </div>
 
+      <div class="sum">
+        <span class="sum-i"><b>7 отраслей</b><span>от выездного сервиса и медиа до стоматологии и образования</span></span>
+        <span class="sum-i"><b>1 встреча</b><span>типовой срок до первого работающего инструмента</span></span>
+        <span class="sum-i"><b>0-20 $</b><span>столько стоит месяц работы собранных решений</span></span>
+        <span class="sum-i"><b>1,5-2 раза</b><span>во столько участники сократили свои рутины, по их замерам</span></span>
+      </div>
+
+      <article class="case">
+        <div class="case-top">
+          <span class="kicker"><span>01</span> · Материал номера</span>
+          <span class="case-when">Выездной сервис по заявкам управляющих компаний</span>
+        </div>
+        <h3>Аудит CRM и парсер заявок за одну встречу</h3>
+        <p class="case-sub">Собственник с женой ведут ремонт и установку окон. Заявки приходят с чужой платформы, куда у них три личных кабинета.</p>
+
+        <div class="ba">
+          <div class="ba-col">
+            <span class="ba-t">Было</span>
+            <p>Менеджер открывал каждый кабинет руками, читал заявку, звонил и переносил данные в amoCRM. Часть заявок терялась просто потому, что их не успевали прочитать. Что происходит в самой базе, никто не проверял ни разу.</p>
+          </div>
+          <div class="ba-col ba-now">
+            <span class="ba-t">Стало</span>
+            <p>Агент нашёл у платформы внутренний API вместо того, чтобы изображать браузер. Скрипт держит сессию, забирает заявки каждые 5 минут и кладёт телефон, адрес объекта, источник и услугу прямо в карточку сделки. Проверили на живой заявке: сделка встала в нужную воронку.</p>
+          </div>
+        </div>
+
+        <ul class="case-nums">
+          <li><b>1 ч 36 мин</b><span>одна встреча: от разведки сервиса до рабочего скрипта</span></li>
+          <li><b>0 ₽</b><span>стоит месяц работы: модель нужна была только на сборке</span></li>
+          <li><b>114</b><span>сделок-дублей на 53 телефона агент нашёл в базе заодно</span></li>
+        </ul>
+
+        <p class="case-q">Аудит CRM, за который агентства берут отдельный чек, собственник получил за тот же сеанс: источник не заполнен у 60 процентов сделок, из четырёх воронок живёт одна, 73 поля в карточке и список из десяти быстрых побед по приоритету.</p>
+
+        <span class="proj-stack"><span>Python</span><span>amoCRM API</span><span>Планировщик</span><span>Инструкция на тираж</span></span>
+      </article>
+
       <div class="projects">
+
         <article class="proj">
-          <span class="proj-m"><b>2 группы</b><span>обучены отделами</span></span>
+          <span class="proj-m"><b>18 часов</b><span>две группы, девять встреч, месяц работы</span></span>
           <div class="proj-b">
-            <span class="proj-tag">Наставничество · агентство</span>
-            <h3>PR- и SMM-агентство, до 10 человек</h3>
-            <p>Корпоративный формат: две группы по четыре занятия под задачи своего отдела, плюс настройка рабочего места каждому.</p>
+            <span class="proj-tag">Наставничество · медиа и PR</span>
+            <h3><span>Коммуникационное агентство с собственным изданием</span></h3>
+            <p>Корпоративный формат: две группы по четыре занятия, у каждой свои задачи. Учились на живой работе, поэтому унесли из программы не конспекты, а работающие инструменты.</p>
+            <ul class="proj-out">
+              <li>Новостной Wire редакции: рубрики, тренды, архив за три дня. Поиск инфоповодов быстрее в полтора-два раза</li>
+              <li>Личный ассистент руководителя в Telegram на своём сервере: утром задачи, вечером отчёт и вопрос, почему не сделано</li>
+              <li>Бот-модератор чата, собранный за вечер сотрудником без опыта разработки</li>
+            </ul>
           </div>
-          <span class="proj-stack"><span>Корпоративный формат</span><span>VS Code</span><span>Скиллы</span></span>
+          <span class="proj-stack"><span>Perplexity API</span><span>n8n</span><span>VPS</span><span>Telegram</span></span>
+        </article>
+
+        <aside class="proj-note">
+          <span class="kicker">Правило, которое из этого выросло</span>
+          <p>Один и тот же обзор источников: через Perplexity по API это полсотни инфоповодов за 0,05 доллара, напрямую у модели в тридцать раз дороже и заметно хуже, потому что СМИ закрывают двери её боту. Поиск отдаём одному сервису, обработку другому. Теперь так работает вся группа.</p>
+        </aside>
+
+        <article class="proj">
+          <span class="proj-m"><b>5 минут</b><span>от сметы в xlsx до готового финансового документа</span></span>
+          <div class="proj-b">
+            <span class="proj-tag">Наставничество · инсталляции звука и света</span>
+            <h3><span>Компания с двадцатилетней историей и 500 объектами</span></h3>
+            <p>Собственник после программы собирает инструменты сам. Кладёт смету в папку "Входящие", по одной команде агент отдаёт финансовый документ нужной формы. Заодно переделал корпоративный сайт и научил агента показывать список своих проектов при старте сессии.</p>
+          </div>
+          <span class="proj-stack"><span>Claude Code</span><span>xlsx</span><span>Память проекта</span></span>
         </article>
 
         <article class="proj">
-          <span class="proj-m"><b>32 встречи</b><span>длинная программа</span></span>
+          <span class="proj-m"><b>435 приёмов</b><span>база под управлением агента, данные не уходят в облако</span></span>
           <div class="proj-b">
-            <span class="proj-tag">Наставничество · сеть</span>
-            <h3>Сеть салонов, санаторий и обучающий проект</h3>
-            <p>Индивидуальная программа на три направления бизнеса сразу: контент, аналитика и внутренние регламенты.</p>
+            <span class="proj-tag">Наставничество · частная медицина</span>
+            <h3><span>Врач вносит расписание фотографией рукописного листа</span></h3>
+            <p>Агент подключён к локальной программе учёта: 126 пациентов, 435 приёмов. Читает фото рукописного расписания, сверяет фамилии с базой и вносит приёмы одной транзакцией. Перед любой правкой сам делает резервную копию.</p>
+            <ul class="proj-out">
+              <li>Нашёл дубли пациентов из-за ошибок ввода и расхождения между приёмами и формами обследования</li>
+              <li>Собрал сегмент "были один раз и не вернулись" как готовую базу для обзвона</li>
+            </ul>
           </div>
-          <span class="proj-stack"><span>Индивидуально</span><span>Аналитика</span><span>Контент</span></span>
+          <span class="proj-stack"><span>Локальная база</span><span>Распознавание</span><span>152-ФЗ</span></span>
         </article>
 
         <article class="proj">
-          <span class="proj-m"><b>3 встречи</b><span>по два часа</span></span>
+          <span class="proj-m"><b>12 встреч</b><span>восемь про инструменты, четыре про делегирование</span></span>
           <div class="proj-b">
-            <span class="proj-tag">Наставничество · монтаж</span>
-            <h3>Монтажная компания</h3>
-            <p>Ассистент поставлен на рабочие машины: работает с файлами компании, помнит контекст и забирает документооборот.</p>
+            <span class="proj-tag">Наставничество · образование</span>
+            <h3><span>Операционный директор института гастрономии</span></h3>
+            <p>Половина сопротивления внедрению это не техника. Поэтому рядом с документооборотом шёл коучинговый блок про то, почему процессы все равно возвращаются к одному человеку.</p>
+            <ul class="proj-out">
+              <li>Скилл "Протоколы встреч": запись на входе, готовый протокол в своём формате на выходе</li>
+              <li>Договоры, согласия и акты собираются скриптом в фирменном стиле</li>
+              <li>Отдельный скилл под научную работу</li>
+            </ul>
           </div>
-          <span class="proj-stack"><span>Claude Code</span><span>Память</span><span>MCP</span></span>
+          <span class="proj-stack"><span>Скиллы</span><span>Документы кодом</span><span>ICF-коучинг</span></span>
         </article>
 
         <article class="proj">
-          <span class="proj-m"><b>0 кликов</b><span>от голосового до встречи в календаре</span></span>
+          <span class="proj-m"><b>3 встречи</b><span>от браузерного чата до собранной рабочей среды</span></span>
           <div class="proj-b">
-            <span class="proj-tag">Проект · сервис</span>
-            <h3>Телеграм-бот с голосовым вводом</h3>
-            <p>Принимает голос, текст и фото, распознаёт речь и сам ведёт календарь встреч. Собран на встречах с клиентом.</p>
+            <span class="proj-tag">Наставничество · свои цифровые проекты</span>
+            <h3><span>Предприниматель собрал себе рабочее место с нуля</span></h3>
+            <p>VS Code, два агента параллельно, голосовой ввод, структура папок под проекты. Тридцать один скилл агент установил сам, по одному, с отчётом. Архив старых чатов выгрузили и разложили по проектам.</p>
+            <ul class="proj-out">
+              <li>Deep Research по сотне с лишним источников превратился в интерактивный дашборд с калькулятором</li>
+              <li>Зоопарк из двенадцати сервисов сжался до ядра из пяти</li>
+            </ul>
           </div>
-          <span class="proj-stack"><span>n8n</span><span>Whisper</span><span>AI Agent</span></span>
+          <span class="proj-stack"><span>VS Code</span><span>Скиллы</span><span>Deep Research</span></span>
         </article>
 
         <article class="proj">
-          <span class="proj-m"><b>2 в день</b><span>постов без участия автора</span></span>
+          <span class="proj-m"><b>4 встречи</b><span>идёт сейчас: администратор и заместитель главврача</span></span>
           <div class="proj-b">
-            <span class="proj-tag">Проект · личный бренд</span>
-            <h3>Эксперт с авторским каналом</h3>
-            <p>n8n и GPT-4: темы из списка интересов, стиль автора, контент выходит автоматически.</p>
+            <span class="proj-tag">Наставничество · медцентр и косметология</span>
+            <h3><span>Клиника делает визуал и контент своими силами</span></h3>
+            <p>Методика вместо случайных промптов: свет, ракурс, оптика, формат кадра. Дальше лист-референс бренд-персонажа, с которого собирается вся серия, комиксы под соцсети и обложки постов по шаблону.</p>
           </div>
-          <span class="proj-stack"><span>n8n</span><span>GPT-4</span><span>Telegram API</span></span>
+          <span class="proj-stack"><span>Промпт-методика</span><span>Референс героя</span><span>Комиксы</span></span>
         </article>
 
         <article class="proj">
-          <span class="proj-m"><b>+30%</b><span>времени врача на приём</span></span>
+          <span class="proj-m"><b>1 час</b><span>лендинг под конференцию вместо подрядчика и недели ожидания</span></span>
           <div class="proj-b">
-            <span class="proj-tag">Проект · медицина</span>
-            <h3>Врач-гомеопат: частная практика</h3>
-            <p>"Цифровой ординатор": ИИ собирает анамнез до визита, плюс поиск по медицинским книгам.</p>
+            <span class="proj-tag">Своя практика · проверка на себе</span>
+            <h3><span>Этот сайт собран тем же способом, что и клиентские</span></h3>
+            <p>Одностраничник на пять экранов под конференцию собрали примерно за час на подписке, пакеты продавались прямо с него. Подрядчик за ту же работу просил тридцать-сорок тысяч и неделю. <i>Страница, которую вы читаете, сделана так же:</i> ведущий агент пишет бриф, второй собирает, ведущий принимает работу.</p>
           </div>
-          <span class="proj-stack"><span>RAG</span><span>AI Interview</span><span>Med-Bot</span></span>
-        </article>
-
-        <article class="proj">
-          <span class="proj-m"><b>−7 часов</b><span>рутины в неделю</span></span>
-          <div class="proj-b">
-            <span class="proj-tag">Проект · психология</span>
-            <h3>Психолог-игропрактик: практика и блог</h3>
-            <p>Автозапись, оплаты, посты из голосовых сообщений и Midjourney для метафорических карт.</p>
-          </div>
-          <span class="proj-stack"><span>Midjourney</span><span>Voice-to-Text</span><span>Content Auto</span></span>
-        </article>
-
-        <article class="proj">
-          <span class="proj-m"><b>3 секунды</b><span>подбор аналогов</span></span>
-          <div class="proj-b">
-            <span class="proj-tag">Проект · автозапчасти</span>
-            <h3>РемКуб: магазин запчастей</h3>
-            <p>AI-бот-консультант с базой знаний: мгновенно сопоставляет автомобиль и запчасть.</p>
-          </div>
-          <span class="proj-stack"><span>AI Knowledge Base</span><span>Catalog Search</span></span>
+          <span class="proj-stack"><span>Claude</span><span>Codex</span><span>GitHub Pages</span></span>
         </article>
       </div>
     </div>
@@ -473,6 +615,38 @@
 })();
 </script>
 
+
+<script>
+(function () {
+  'use strict';
+
+  // Подшивка: строки проявляются по мере прокрутки.
+  // Класс roll вешается только тогда, когда проявить их точно есть чем:
+  // нет IntersectionObserver или человек просил не двигать интерфейс, значит
+  // список остаётся видимым с самого начала.
+  var list = document.querySelector('.projects');
+  if (!list) { return; }
+  if (!('IntersectionObserver' in window)) { return; }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
+
+  var rows = list.querySelectorAll('.proj, .proj-note');
+  if (!rows.length) { return; }
+  list.classList.add('roll');
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) { return; }
+      e.target.classList.add('is-set');
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.18, rootMargin: '0px 0px -6% 0px' });
+
+  rows.forEach(function (row, i) {
+    row.style.transitionDelay = Math.min(i, 4) * 60 + 'ms';
+    io.observe(row);
+  });
+})();
+</script>
 
 <div class="cookie" id="cookieBar" role="region" aria-label="Уведомление о файлах cookie">
   <p>Сайт использует файлы cookie, чтобы корректно работать. Аналитики и рекламных трекеров здесь нет. Подробности в <a href="privacy.html">политике конфиденциальности</a>.</p>
